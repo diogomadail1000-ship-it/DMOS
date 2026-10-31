@@ -112,6 +112,13 @@ bash scripts/dev_preview.sh desktop
 Os modos são `desktop`, `sddm` e `splash`, e as capturas ficam em `art/preview/`.
 `scripts/test_vm.sh` arranca a ISO em QEMU e controla a máquina virtual a partir da linha de comandos.
 
+## Site
+
+O site do projeto está em `docs/` (`index.html`, `style.css`, `main.js`) e usa as capturas de
+`docs/screenshots/`. Não precisa de compilação: abra `docs/index.html` no browser. Para o publicar
+no GitHub Pages, em **Settings > Pages** escolha **Deploy from a branch**, o ramo `main` e a pasta
+`/docs`.
+
 ## Licença
 
 O código e os temas deste repositório estão sob a [GPL-3.0-or-later](LICENSE). Exceção: o wallpaper
