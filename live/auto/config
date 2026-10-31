@@ -20,6 +20,7 @@ lb config noauto \
     --updates true \
     --memtest none \
     --cache true \
+    --source true \
     --chroot-squashfs-compression-type zstd \
     --iso-application "DMOS" \
     --iso-publisher "DMOS" \
