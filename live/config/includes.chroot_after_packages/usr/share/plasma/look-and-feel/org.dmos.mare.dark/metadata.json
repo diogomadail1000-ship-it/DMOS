@@ -1,0 +1,12 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{ "Name": "DMOS" }],
+        "Description": "O visual do DMOS, em tons de noite sobre o mar.",
+        "Id": "org.dmos.mare.dark",
+        "License": "GPL-3.0-or-later",
+        "Name": "DMOS Maré Escuro",
+        "Version": "1.0"
+    },
+    "X-KDE-ParentApp": "org.kde.plasmashell"
+}

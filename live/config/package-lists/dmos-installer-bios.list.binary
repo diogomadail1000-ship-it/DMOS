@@ -1,0 +1,4 @@
+# Pool on the ISO, BIOS half. See dmos-installer-efi.list.binary.
+grub-pc
+grub-pc-bin
+grub2-common

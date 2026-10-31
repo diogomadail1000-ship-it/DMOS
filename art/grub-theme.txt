@@ -1,0 +1,61 @@
+desktop-image: "background.jpg"
+desktop-color: "#060A18"
+title-text: ""
+terminal-font: "GNU Unifont Regular 16"
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+terminal-border: "0"
+
++ image {
+	left = 50%-44
+	top = 14%
+	width = 88
+	height = 88
+	file = "logo.png"
+}
+
++ label {
+	left = 0
+	width = 100%
+	top = 14%+104
+	height = 52
+	align = "center"
+	color = "#F5F7FC"
+	font = "Inter Light Regular 40"
+	text = "DMOS"
+}
+
+# GRUB draws the selection pixmap around the item, so its corners add to the height:
+# item_height + 2 * radius (10) must stay below item_height + item_spacing.
++ boot_menu {
+	left = 50%-280
+	width = 560
+	top = 40%
+	height = 44%
+	item_font = "Inter Regular 24"
+	item_color = "#C8D0E2"
+	selected_item_font = "Inter Regular 24"
+	selected_item_color = "#FFFFFF"
+	selected_item_pixmap_style = "select_*.png"
+	item_height = 38
+	item_padding = 14
+	item_spacing = 26
+	icon_width = 0
+	icon_height = 0
+	item_icon_space = 0
+	scrollbar = false
+}
+
++ label {
+	id = "__timeout__"
+	left = 0
+	width = 100%
+	top = 100%-64
+	height = 24
+	align = "center"
+	color = "#A8B2C9"
+	font = "Inter Regular 16"
+	text = "Arranque automático em %d s"
+}

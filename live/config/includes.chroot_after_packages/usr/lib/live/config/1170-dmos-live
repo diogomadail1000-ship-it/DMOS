@@ -1,0 +1,26 @@
+#!/bin/sh
+# Runs only on live boots. A live session has no password to unlock with, and an
+# installation can outlast the idle timers, so the screen must never lock or sleep.
+# The changes go to the live overlay; the installed system keeps the normal defaults.
+cat >> /etc/xdg/kscreenlockerrc <<'EOF'
+
+[Daemon]
+Autolock=false
+LockOnResume=false
+EOF
+
+cat > /etc/xdg/powerdevilrc <<'EOF'
+[AC][Display]
+DimDisplayWhenIdle=false
+TurnOffDisplayWhenIdle=false
+
+[AC][SuspendAndShutdown]
+AutoSuspendAction=0
+
+[Battery][Display]
+DimDisplayWhenIdle=false
+TurnOffDisplayWhenIdle=false
+
+[Battery][SuspendAndShutdown]
+AutoSuspendAction=0
+EOF

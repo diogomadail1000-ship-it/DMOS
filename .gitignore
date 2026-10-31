@@ -1,0 +1,4 @@
+# Build output: the ISO is far above GitHub's 100 MB file limit.
+dist/
+art/preview/
+.claude/

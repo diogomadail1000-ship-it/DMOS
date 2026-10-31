@@ -1,0 +1,9 @@
+#!/bin/sh
+# Removes what would break the DMOS identity on first login.
+set -e
+
+apt-get purge -y plasma-welcome konqueror >/dev/null 2>&1 || true
+apt-get autoremove -y >/dev/null 2>&1 || true
+
+# Debian's wallpapers and look-and-feel stay out of the selectors.
+rm -rf /usr/share/plasma/look-and-feel/org.debian.desktop

@@ -1,0 +1,12 @@
+[SddmGreeterTheme]
+Name=DMOS Maré
+Description=Ecrã de início de sessão do DMOS
+Author=DMOS
+Type=sddm-theme
+Version=1.0
+License=GPL-3.0-or-later
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=dmos
+Theme-API=2.0
+QtVersion=6

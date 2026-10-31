@@ -1,0 +1,12 @@
+# Pool on the ISO: Calamares installs the bootloader from here, without a network.
+# BIOS and UEFI GRUB conflict with each other, so each has its own list.
+grub-efi
+grub-efi-amd64
+grub-efi-amd64-bin
+grub-efi-amd64-signed
+grub2-common
+shim-signed
+efibootmgr
+cryptsetup-initramfs
+cryptsetup
+keyutils

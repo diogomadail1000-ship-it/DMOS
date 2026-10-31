@@ -1,0 +1,74 @@
+#!/bin/sh
+# Rebrands the system as DMOS and activates the theme system-wide.
+set -e
+
+# Identity. The diversions stop base-files upgrades from restoring the Debian text.
+dpkg-divert --quiet --local --rename --add --divert /usr/lib/os-release.debian /usr/lib/os-release
+cat > /usr/lib/os-release <<'EOF'
+PRETTY_NAME="DMOS 1.0 (Maré)"
+NAME="DMOS"
+VERSION_ID="1.0"
+VERSION="1.0 (Maré)"
+VERSION_CODENAME=trixie
+ID=dmos
+ID_LIKE=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+LOGO=dmos-logo
+ANSI_COLOR="38;2;45;212;191"
+EOF
+ln -sf ../usr/lib/os-release /etc/os-release
+
+for f in /etc/issue /etc/issue.net; do
+    dpkg-divert --quiet --local --rename --add --divert "$f.debian" "$f"
+done
+printf 'DMOS 1.0 \\n \\l\n\n' > /etc/issue
+printf 'DMOS 1.0\n' > /etc/issue.net
+cat > /etc/lsb-release <<'EOF'
+DISTRIB_ID=DMOS
+DISTRIB_RELEASE=1.0
+DISTRIB_CODENAME=mare
+DISTRIB_DESCRIPTION="DMOS 1.0 (Maré)"
+EOF
+
+# Boot splash. live-build regenerates the initramfs after the hooks.
+if command -v plymouth-set-default-theme >/dev/null 2>&1; then
+    plymouth-set-default-theme dmos
+fi
+
+# Debian's GRUB script would paint its own artwork behind the boot messages.
+if [ -e /etc/grub.d/05_debian_theme ]; then
+    chmod -x /etc/grub.d/05_debian_theme
+fi
+
+# The icon theme is shared with the login screen, GTK and the desktop.
+gtk-update-icon-cache -q /usr/share/icons/hicolor 2>/dev/null || true
+cat > /usr/share/icons/default/index.theme <<'EOF'
+[Icon Theme]
+Inherits=Bibata-Modern-Ice
+EOF
+
+# Papirus teal folders match the accent colour.
+if [ -d /usr/share/icons/Papirus-Dark ]; then
+    for size in 16 22 24 32 48 64; do
+        dir="/usr/share/icons/Papirus-Dark/${size}x${size}/places"
+        [ -d "$dir" ] || continue
+        for icon in "$dir"/folder-teal*.svg; do
+            [ -e "$icon" ] || continue
+            name="$(basename "$icon" | sed 's/folder-teal/folder/')"
+            ln -sf "$(basename "$icon")" "$dir/$name"
+        done
+    done
+fi
+
+# fontconfig: Inter and JetBrains Mono are the default faces.
+cat > /etc/fonts/conf.d/60-dmos.conf <<'EOF'
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <alias><family>sans-serif</family><prefer><family>Inter</family></prefer></alias>
+  <alias><family>monospace</family><prefer><family>JetBrains Mono</family></prefer></alias>
+</fontconfig>
+EOF
+fc-cache -f >/dev/null 2>&1 || true

@@ -1,0 +1,29 @@
+#!/bin/sh
+# DMOS live-build configuration. Run through scripts/build.sh.
+set -e
+
+lb config noauto \
+    --mode debian \
+    --distribution trixie \
+    --architectures amd64 \
+    --linux-flavours amd64 \
+    --archive-areas "main contrib non-free non-free-firmware" \
+    --debian-installer none \
+    --bootloaders "grub-pc,grub-efi" \
+    --uefi-secure-boot enable \
+    --binary-images iso-hybrid \
+    --firmware-chroot false \
+    --firmware-binary false \
+    --apt-recommends true \
+    --apt-indices false \
+    --security true \
+    --updates true \
+    --memtest none \
+    --cache true \
+    --chroot-squashfs-compression-type zstd \
+    --iso-application "DMOS" \
+    --iso-publisher "DMOS" \
+    --iso-volume "DMOS 1.0" \
+    --image-name "dmos-1.0-mare" \
+    --bootappend-live "boot=live components quiet splash loglevel=3 locales=pt_PT.UTF-8 keyboard-layouts=pt timezone=Europe/Lisbon username=dmos hostname=dmos user-fullname=DMOS" \
+    "${@}"

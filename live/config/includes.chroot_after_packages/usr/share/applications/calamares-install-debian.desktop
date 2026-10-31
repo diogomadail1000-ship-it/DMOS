@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Instalar o DMOS
+Name[en]=Install DMOS
+GenericName=Instalador do sistema
+Exec=calamares-install-debian
+Comment=Instala o DMOS neste computador
+Keywords=calamares;system;install;dmos;instalar
+Icon=dmos-logo
+Terminal=false
+Categories=Qt;System;
+StartupWMClass=calamares
+StartupNotify=True

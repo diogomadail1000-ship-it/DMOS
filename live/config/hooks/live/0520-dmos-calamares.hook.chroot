@@ -1,0 +1,10 @@
+#!/bin/sh
+# Points Calamares at the DMOS branding and keeps the desktop theme for its root window.
+set -e
+
+sed -i 's/^branding: .*/branding: dmos/' /etc/calamares/settings.conf
+rm -rf /etc/calamares/branding/debian
+
+# The session's QPA theme does not survive pkexec, so the installer asks for it directly.
+sed -i 's/^pkexec calamares$/pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" QT_QPA_PLATFORMTHEME=kde XDG_CURRENT_DESKTOP=KDE KDE_SESSION_VERSION=6 calamares/' \
+    /usr/bin/calamares-install-debian

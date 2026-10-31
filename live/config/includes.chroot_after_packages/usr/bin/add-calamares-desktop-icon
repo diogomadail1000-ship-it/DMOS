@@ -1,0 +1,8 @@
+#!/bin/sh
+# Puts the installer on the live desktop. Replaces Debian's script, which breaks on
+# translated folder names with spaces ("Área de Trabalho") and can run before they exist.
+xdg-user-dirs-update
+DESKTOP="$(xdg-user-dir DESKTOP)"
+mkdir -p "$DESKTOP"
+cp /usr/share/applications/calamares-install-debian.desktop "$DESKTOP/"
+chmod +x "$DESKTOP/calamares-install-debian.desktop"
