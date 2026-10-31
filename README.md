@@ -111,3 +111,11 @@ bash scripts/dev_preview.sh desktop
 
 Os modos são `desktop`, `sddm` e `splash`, e as capturas ficam em `art/preview/`.
 `scripts/test_vm.sh` arranca a ISO em QEMU e controla a máquina virtual a partir da linha de comandos.
+
+## Licença
+
+O código e os temas deste repositório estão sob a [GPL-3.0-or-later](LICENSE). Exceção: o wallpaper
+"Maré" que `art/gen_wallpaper.py` gera está sob a CC BY-SA 4.0.
+
+O Debian, o KDE Plasma, as fontes, os ícones e as outras aplicações incluídas na ISO mantêm as
+licenças próprias.
