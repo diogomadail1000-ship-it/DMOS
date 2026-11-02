@@ -63,7 +63,7 @@
 
   // Entrada suave das secções.
   if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var targets = document.querySelectorAll(".section-head, .card, .shot, .app-group, .try-card, .specs, .table-wrap, .pending, .terminal, .palette");
+    var targets = document.querySelectorAll(".section-head, .card, .shot, .app-group, .feature-text, .mini, .try-card, .specs, .table-wrap, .pending, .terminal, .palette");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
