@@ -3,6 +3,10 @@
 Distribuição Linux baseada no Debian 13 (trixie), com KDE Plasma 6 e uma identidade visual
 própria, gerada a partir do código deste repositório.
 
+[![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
+
+**[▶ Ver o vídeo de apresentação no YouTube](https://youtu.be/6xOphpjiomE)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
+
 ![Ambiente de trabalho escuro](docs/screenshots/4-ambiente-escuro.jpg)
 
 | | |
