@@ -731,47 +731,49 @@ kbd {
 
 /* ---------- Vídeo ---------- */
 
+.video-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.55fr;
+  gap: 48px;
+  align-items: center;
+}
+.video-text h2 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; }
+.video-text > p:not(.eyebrow):not(.small) { color: var(--muted); margin: 14px 0 0; }
+.chapters { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 6px; }
+.chapters button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--text);
+  font: 500 15.5px var(--font);
+  text-align: left;
+  cursor: pointer;
+}
+.chapters button:hover { background: var(--surface); border-color: var(--border); }
+.chapters span {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
 .video {
-  max-width: 1000px;
-  margin: 0 auto;
   aspect-ratio: 16 / 9;
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  background: #000;
+  background: #0C1122;
 }
 .video iframe { width: 100%; height: 100%; border: 0; display: block; }
-.video-play {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-.video-play img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease, filter 0.4s ease; }
-.video-play:hover img { transform: scale(1.02); filter: brightness(0.9); }
-.play-icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 92px;
-  height: 92px;
-  margin: -46px 0 0 -46px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--accent);
-  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6), 0 0 0 10px rgba(45, 212, 191, 0.25);
-  transition: transform 0.2s ease;
-}
-.video-play:hover .play-icon { transform: scale(1.08); }
-.play-icon svg { width: 40px; height: 40px; fill: #04201C; margin-left: 5px; }
-.video-play:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
-@media (max-width: 640px) {
-  .play-icon { width: 68px; height: 68px; margin: -34px 0 0 -34px; }
-  .play-icon svg { width: 30px; height: 30px; }
+@media (max-width: 980px) {
+  .video-layout { grid-template-columns: 1fr; gap: 24px; }
+  .video { order: -1; }
+  .video-text { text-align: left; }
 }

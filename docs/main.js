@@ -48,16 +48,15 @@
     if (e.key === "ArrowRight") show(current + 1);
   });
 
-  // Vídeo: o YouTube só é contactado quando se clica no botão.
+  // Vídeo: os capítulos põem o leitor do YouTube a tocar a partir desse ponto.
   document.querySelectorAll(".video").forEach(function (box) {
-    var btn = box.querySelector(".video-play");
-    btn.addEventListener("click", function () {
-      var frame = document.createElement("iframe");
-      frame.src = "https://www.youtube-nocookie.com/embed/" + box.dataset.id + "?autoplay=1&rel=0";
-      frame.title = "Vídeo de apresentação do DMOS";
-      frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-      frame.allowFullscreen = true;
-      box.replaceChild(frame, btn);
+    var frame = box.querySelector("iframe");
+    box.closest("section").querySelectorAll(".chapters button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        frame.src = "https://www.youtube.com/embed/" + box.dataset.id +
+          "?rel=0&autoplay=1&start=" + parseInt(b.dataset.start, 10);
+        if (box.getBoundingClientRect().top < 0) box.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
     });
   });
 
