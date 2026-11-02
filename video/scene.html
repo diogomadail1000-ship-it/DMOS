@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS vídeo</title>
+<style>
+  :root {
+    --bg: #0C1122;
+    --text: #E8ECF5;
+    --muted: #A7B0C8;
+    --accent: #2DD4BF;
+    --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+  .shot {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    will-change: transform;
+  }
+  .scrim {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 420px;
+    background: linear-gradient(to top, rgba(8, 11, 24, 0.92) 0%, rgba(8, 11, 24, 0.72) 45%, transparent 100%);
+  }
+  .caption { position: absolute; left: 120px; bottom: 104px; max-width: 1300px; }
+  .kicker {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .title { font-size: 84px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; }
+  .sub { font-size: 34px; color: var(--muted); margin-top: 18px; line-height: 1.35; }
+  .bar { height: 6px; width: 120px; border-radius: 3px; background: var(--tide); margin-bottom: 26px; transform-origin: left; }
+
+  /* Fundo abstrato para a abertura, os destaques e o fecho */
+  .backdrop {
+    position: absolute;
+    inset: -80px;
+    background: url(../docs/screenshots/4-ambiente-escuro.jpg) center 70% / cover;
+    filter: blur(28px) saturate(1.25);
+  }
+  .backdrop-dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(12,17,34,0.35), rgba(12,17,34,0.85)); }
+  .center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .logo { width: 220px; height: 220px; filter: drop-shadow(0 20px 50px rgba(45, 212, 191, 0.35)); }
+  .big { font-size: 150px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; margin-top: 36px; }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .tag { font-size: 36px; color: var(--muted); margin-top: 26px; }
+  .tag strong { color: var(--text); font-weight: 700; }
+
+  .facts { display: grid; grid-template-columns: repeat(2, 560px); gap: 28px; margin-top: 60px; }
+  .fact {
+    text-align: left;
+    padding: 34px 40px;
+    border-radius: 28px;
+    background: rgba(17, 23, 43, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+  }
+  .fact b { display: block; font-size: 50px; font-weight: 800; letter-spacing: -0.03em; }
+  .fact span { font-size: 28px; color: var(--muted); }
+  .h2 { font-size: 80px; font-weight: 800; letter-spacing: -0.035em; }
+
+  .links { margin-top: 54px; display: grid; gap: 18px; }
+  .link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 34px;
+    padding: 18px 34px;
+    border-radius: 18px;
+    background: rgba(17, 23, 43, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .link em { font-style: normal; color: var(--accent); font-family: "Inter", sans-serif; font-weight: 700; margin-right: 18px; }
+
+  .watermark {
+    position: absolute;
+    right: 56px;
+    bottom: 52px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: 0.02em;
+    opacity: 0;
+  }
+  .watermark img { width: 44px; height: 44px; }
+  .progress { display: none; position: absolute; left: 0; bottom: 0; height: 5px; background: var(--tide); width: 0; }
+
+  /* Miniatura do YouTube */
+  body.thumb .scene, body.thumb .watermark, body.thumb .progress { display: none; }
+  #thumbnail { display: none; position: absolute; inset: 0; }
+  body.thumb #thumbnail { display: block; }
+  #thumbnail .tshot {
+    position: absolute;
+    right: 70px;
+    top: 250px;
+    width: 1000px;
+    border-radius: 26px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+    border: 2px solid rgba(255,255,255,0.15);
+    transform: perspective(1800px) rotateY(-14deg) rotate(-2deg);
+  }
+  #thumbnail .ttext { position: absolute; left: 90px; top: 140px; width: 780px; }
+  #thumbnail .tlogo { width: 170px; height: 170px; }
+  #thumbnail .tbig { font-size: 200px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.9; margin-top: 30px; }
+  #thumbnail .tsub { font-size: 70px; font-weight: 800; line-height: 1.02; letter-spacing: -0.03em; margin-top: 26px; }
+  #thumbnail .tpill {
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 40px;
+    font-weight: 800;
+    padding: 14px 30px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #04201C;
+  }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"><img src="../art/logo.svg" alt="">DMOS</div>
+  <div class="progress" id="progress"></div>
+
+  <div id="thumbnail">
+    <div class="backdrop"></div><div class="backdrop-dim"></div>
+    <img class="tshot" src="../docs/screenshots/11-hub.jpg" alt="">
+    <div class="ttext">
+      <img class="tlogo" src="../art/logo.svg" alt="">
+      <div class="tbig tide-text">DMOS</div>
+      <div class="tsub">Um Linux com<br>maré própria</div>
+      <div class="tpill">Debian 13 · Plasma 6</div>
+    </div>
+  </div>
+
+<script>
+// Cada cena: duração em segundos. As cenas sobrepõem-se durante FADE segundos.
+var FADE = 0.8;
+var SCENES = [
+  { type: "intro", dur: 5.5 },
+  { img: "1-menu-arranque", kicker: "Arranque", title: "Desenhado desde o primeiro ecrã", sub: "Menu de arranque próprio, em BIOS e em UEFI.", zoom: [1.0, 1.08], origin: "50% 45%" },
+  { img: "2-animacao-arranque", kicker: "Animação de arranque", title: "A mesma identidade, sempre", sub: "Do menu ao início de sessão, sem quebras.", zoom: [1.1, 1.0], origin: "50% 40%" },
+  { img: "3-inicio-sessao", kicker: "Início de sessão", title: "Entrada em vidro", sub: "Com o wallpaper «Maré», gerado a partir do código.", zoom: [1.0, 1.07], origin: "50% 35%" },
+  { img: "4-ambiente-escuro", kicker: "Ambiente de trabalho", title: "Barra e dock flutuantes", sub: "KDE Plasma 6 em Wayland, sobre o Debian 13.", zoom: [1.06, 1.0], origin: "60% 40%" },
+  { img: "9-bem-vindo", kicker: "Novo · Bem-vindo ao DMOS", title: "Quatro passos e fica a seu gosto", sub: "Visual, internet, notícias e atalhos, logo na primeira sessão.", zoom: [1.0, 1.08], origin: "50% 45%" },
+  { img: "10-noticias", kicker: "As suas notícias", title: "Escolha as suas fontes", sub: "Dez fontes portuguesas e internacionais. Nenhuma vem ligada.", zoom: [1.0, 1.08], origin: "50% 45%" },
+  { img: "11-hub", kicker: "Novo · DMOS Hub", title: "A hora e as notícias, à vista", sub: "Um painel no ambiente de trabalho, só com o que escolheu.", zoom: [1.0, 1.14], origin: "88% 40%" },
+  { img: "5-aplicacoes", kicker: "Pronto a usar", title: "Tudo o que precisa, em português", sub: "Firefox, LibreOffice, Dolphin, VLC, Okular e mais.", zoom: [1.07, 1.0], origin: "45% 45%" },
+  { img: "6-menu-aplicacoes", kicker: "Menu de aplicações", title: "Tudo à mão", sub: "Carregue em Super para abrir o menu.", zoom: [1.0, 1.07], origin: "30% 40%" },
+  { img: "7-tema-claro", kicker: "Claro ou escuro", title: "Mude de visual num clique", sub: "Dois temas completos, do terminal às janelas.", zoom: [1.07, 1.0], origin: "50% 45%" },
+  { img: "8-instalador", kicker: "Instalação", title: "Experimente antes de instalar", sub: "Arranca de uma pen USB. Instalar ocupa cerca de 7 GB.", zoom: [1.0, 1.07], origin: "50% 45%" },
+  { type: "facts", dur: 6 },
+  { type: "outro", dur: 7 }
+];
+
+var stage = document.getElementById("stage");
+var start = 0;
+SCENES.forEach(function (s, i) {
+  s.dur = s.dur || 5.2;
+  s.start = start;
+  start += s.dur - FADE;
+  var el = document.createElement("div");
+  el.className = "scene";
+  if (s.img) {
+    el.innerHTML =
+      '<img class="shot" src="../docs/screenshots/' + s.img + '.jpg" alt="">' +
+      '<div class="scrim"></div>' +
+      '<div class="caption"><div class="bar"></div><div class="kicker">' + s.kicker + '</div>' +
+      '<div class="title">' + s.title + '</div><div class="sub">' + s.sub + '</div></div>';
+  } else if (s.type === "intro") {
+    el.innerHTML =
+      '<div class="backdrop"></div><div class="backdrop-dim"></div>' +
+      '<div class="center"><img class="logo" src="../art/logo.svg" alt="">' +
+      '<div class="big">DMOS <span class="tide-text">Maré</span></div>' +
+      '<div class="tag">Um Linux com maré própria · <strong>versão 1.0</strong></div></div>';
+  } else if (s.type === "facts") {
+    el.innerHTML =
+      '<div class="backdrop"></div><div class="backdrop-dim"></div>' +
+      '<div class="center"><div class="h2">Feito sobre bases sólidas</div><div class="facts">' +
+      '<div class="fact"><b>Debian 13</b><span>base estável «trixie»</span></div>' +
+      '<div class="fact"><b>KDE Plasma 6</b><span>Wayland por omissão</span></div>' +
+      '<div class="fact"><b>BIOS + UEFI</b><span>uma ISO híbrida para tudo</span></div>' +
+      '<div class="fact"><b>GPL-3.0</b><span>código e temas abertos</span></div>' +
+      '</div></div>';
+  } else if (s.type === "outro") {
+    el.innerHTML =
+      '<div class="backdrop"></div><div class="backdrop-dim"></div>' +
+      '<div class="center"><img class="logo" src="../art/logo.svg" alt="" style="width:170px;height:170px">' +
+      '<div class="big" style="font-size:120px">DMOS <span class="tide-text">Maré</span></div>' +
+      '<div class="tag">Livre para usar, estudar e alterar.</div>' +
+      '<div class="links">' +
+      '<div class="link"><em>Site</em>diogomadail1000-ship-it.github.io/DMOS</div>' +
+      '<div class="link"><em>Código</em>github.com/diogomadail1000-ship-it/DMOS</div>' +
+      '</div></div>';
+  }
+  stage.appendChild(el);
+  s.el = el;
+});
+var TOTAL = start + FADE;
+window.TOTAL = TOTAL;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+
+// Aparece com subida suave a partir do instante t0 (segundos dentro da cena).
+function rise(el, local, t0, dist) {
+  if (!el) return;
+  var k = out((local - t0) / 0.7);
+  el.style.opacity = k;
+  el.style.transform = "translateY(" + ((1 - k) * (dist || 30)) + "px)";
+}
+
+window.seek = function (t) {
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start;
+    var el = s.el;
+    if (local < 0 || local > s.dur) { el.style.opacity = 0; el.style.display = "none"; return; }
+    el.style.display = "block";
+    var fadeIn = i === 0 ? clamp(local / 0.6) : clamp(local / FADE);
+    var fadeOut = i === SCENES.length - 1 ? clamp((s.dur - local) / 1.0) : clamp((s.dur - local) / FADE);
+    el.style.opacity = Math.min(ease(fadeIn), ease(fadeOut));
+    el.style.zIndex = i;
+    var p = local / s.dur;
+
+    if (s.img) {
+      var img = el.querySelector(".shot");
+      var z = lerp(s.zoom[0], s.zoom[1], p);
+      img.style.transformOrigin = s.origin;
+      img.style.transform = "scale(" + z + ")";
+      rise(el.querySelector(".bar"), local, 0.35, 0);
+      el.querySelector(".bar").style.transform = "scaleX(" + out((local - 0.35) / 0.8) + ")";
+      rise(el.querySelector(".kicker"), local, 0.45, 24);
+      rise(el.querySelector(".title"), local, 0.6, 34);
+      rise(el.querySelector(".sub"), local, 0.85, 30);
+      // A legenda sai um pouco antes da imagem.
+      var leave = clamp((s.dur - local - FADE * 0.4) / 0.5);
+      el.querySelector(".caption").style.opacity = ease(leave);
+      el.querySelector(".scrim").style.opacity = 0.35 + 0.65 * ease(Math.min(clamp((local - 0.2) / 0.6), leave));
+    } else {
+      var bd = el.querySelector(".backdrop");
+      bd.style.transform = "scale(" + lerp(1.05, 1.15, p) + ") translateX(" + lerp(-20, 20, p) + "px)";
+      if (s.type === "intro" || s.type === "outro") {
+        var logo = el.querySelector(".logo");
+        var k = out((local - 0.2) / 1.0);
+        logo.style.opacity = k;
+        logo.style.transform = "scale(" + lerp(0.7, 1, k) + ") rotate(" + lerp(-8, 0, k) + "deg)";
+        rise(el.querySelector(".big"), local, 0.8, 40);
+        rise(el.querySelector(".tag"), local, 1.4, 30);
+        if (s.type === "outro") {
+          var links = el.querySelectorAll(".link");
+          links.forEach(function (l, j) { rise(l, local, 2.0 + j * 0.35, 30); });
+        }
+      } else {
+        rise(el.querySelector(".h2"), local, 0.3, 34);
+        el.querySelectorAll(".fact").forEach(function (f, j) { rise(f, local, 0.8 + j * 0.22, 40); });
+      }
+    }
+  });
+  var wm = document.getElementById("wm");
+  var first = SCENES[1].start, last = SCENES[SCENES.length - 2].start;
+  wm.style.opacity = 0.85 * Math.min(clamp((t - first - 0.5) / 0.8), clamp((last - t) / 0.8));
+  document.getElementById("progress").style.width = (100 * clamp(t / TOTAL)) + "%";
+};
+
+window.thumbnail = function () { document.body.classList.add("thumb"); };
+
+if (location.hash) window.seek(parseFloat(location.hash.slice(1)) || 0); else window.seek(0);
+</script>
+</body>
+</html>
