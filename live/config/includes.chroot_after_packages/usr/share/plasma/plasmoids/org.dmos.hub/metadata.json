@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "DMOS" }],
+        "Category": "Date and Time",
+        "Description": "Hora, saudação e as notícias das fontes que escolher.",
+        "Icon": "dmos-logo",
+        "Id": "org.dmos.hub",
+        "License": "GPL-3.0-or-later",
+        "Name": "DMOS Hub",
+        "Version": "1.0"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

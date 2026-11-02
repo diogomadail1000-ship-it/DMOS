@@ -26,7 +26,26 @@ O sistema arranca sem instalar nada e entra sozinho com o utilizador `dmos`. Par
 o ícone **Instalar o DMOS** no ambiente de trabalho. A instalação ocupa cerca de 7 GB e pede um
 disco com pelo menos 15 GB.
 
-Para mudar entre claro e escuro: **Definições do Sistema > Tema Global**.
+Para mudar entre claro e escuro: **Definições do Sistema > Tema Global**, ou pelo assistente
+**Bem-vindo ao DMOS**, no menu de aplicações.
+
+## Experiência DMOS
+
+- **Bem-vindo ao DMOS**: na primeira sessão, um assistente em vidro guia por quatro passos. São
+  eles: escolher o visual claro ou escuro, ver a ligação à internet, escolher as fontes de notícias
+  e conhecer três atalhos. No modo de demonstração, oferece também a instalação.
+- **DMOS Hub**: painel no ambiente de trabalho com a hora, a data, uma saudação e as últimas
+  notícias, intercaladas entre as fontes escolhidas. Há dez fontes, portuguesas e internacionais.
+  Só as que o utilizador liga são contactadas, e por omissão nenhuma está ligada.
+| | |
+|---|---|
+| ![Bem-vindo ao DMOS](docs/screenshots/9-bem-vindo.jpg) | ![Escolha das notícias](docs/screenshots/10-noticias.jpg) |
+
+![DMOS Hub com notícias](docs/screenshots/11-hub.jpg)
+
+- **Português de Portugal completo** nos ecrãs de bloqueio e de "Sair", que no Debian ficavam em
+  inglês. As traduções em falta ficam em `/usr/local/share/locale` e não substituem os ficheiros
+  dos pacotes.
 
 ## O que foi testado
 
@@ -69,6 +88,9 @@ o fundo escuro. A cor vem do Calamares e não do tema.
 | Animação de arranque (Plymouth) | `live/config/includes.chroot_after_packages/usr/share/plymouth/themes/dmos/` |
 | Menu de arranque (GRUB) | `live/config/bootloaders/grub-pc/`, `art/grub-theme.txt` |
 | Instalador (Calamares) | `live/config/includes.chroot_after_packages/etc/calamares/` |
+| Assistente "Bem-vindo ao DMOS" | `live/config/includes.chroot_after_packages/usr/share/dmos/welcome/` |
+| Painel DMOS Hub e lista de fontes de notícias | `live/config/includes.chroot_after_packages/usr/share/plasma/plasmoids/org.dmos.hub/` |
+| Traduções em falta (pt) | `live/config/hooks/live/0530-dmos-pt-translations.hook.chroot` |
 
 Fontes: Inter e JetBrains Mono. Ícones: Papirus. Cursor: Bibata.
 

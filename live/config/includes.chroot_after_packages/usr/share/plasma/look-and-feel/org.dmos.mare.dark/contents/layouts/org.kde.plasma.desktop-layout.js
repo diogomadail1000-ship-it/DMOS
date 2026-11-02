@@ -4,6 +4,23 @@ for (var j = 0; j < desktopsArray.length; j++) {
     desktopsArray[j].wallpaperPlugin = "org.kde.image";
 }
 
+// DMOS Hub (clock, greeting and news) on the right of the first screen's desktop.
+if (desktopsArray.length > 0) {
+    var desk = desktopsArray[0];
+    var geo = screenGeometry(desk.screen);
+    var hubWidth = 400;
+    var hubHeight = Math.min(660, geo.height - 200);
+    var hubX = geo.width - hubWidth - 48;
+    var hubY = 88;
+    var hub = desk.addWidget("org.dmos.hub", hubX, hubY, hubWidth, hubHeight);
+    // The folder view keeps applet positions in these keys and ignores addWidget's
+    // geometry on the next start, which would move the hub to the top-left corner.
+    var placement = "Applet-" + hub.id + ":" + hubX + "," + hubY + "," + hubWidth + "," + hubHeight + ",0;";
+    desk.currentConfigGroup = [];
+    desk.writeConfig("ItemGeometries-" + geo.width + "x" + geo.height, placement);
+    desk.writeConfig("ItemGeometriesHorizontal", placement);
+}
+
 var bar = new Panel;
 bar.location = "top";
 bar.height = 38;

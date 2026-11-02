@@ -30,6 +30,13 @@ qml6-module-qt5compat-graphicaleffects
 qml6-module-qtquick-layouts
 qml6-module-qtquick-controls
 
+# Runtime for the DMOS welcome app and desktop hub
+qml-qt6
+qml6-module-qtqml-xmllistmodel
+qml6-module-org-kde-plasma-plasma5support
+qml6-module-org-kde-networkmanager
+qml6-module-org-kde-coreaddons
+
 # Look and feel
 fonts-inter
 fonts-jetbrains-mono

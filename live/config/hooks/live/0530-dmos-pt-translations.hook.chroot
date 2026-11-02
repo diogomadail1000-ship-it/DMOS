@@ -1,0 +1,124 @@
+#!/usr/bin/python3
+"""Completes Plasma's European Portuguese catalogues for the lock and logout screens.
+
+Debian's "pt" catalogues lack these strings, so those screens appeared in English.
+The merged catalogues go to /usr/local/share, which comes before /usr/share in
+XDG_DATA_DIRS: the packaged files stay untouched, and the existing translations are
+kept. Plurals use pt's two forms (nplurals=2; plural=n != 1).
+"""
+import os
+import struct
+
+CTX = "\x04"
+NUL = "\x00"
+
+ADDITIONS = {
+    "plasma_shell_org.kde.plasma.desktop": {
+        "Unlocking failed": "O desbloqueio falhou",
+        "Caps Lock is on": "O Caps Lock está ligado",
+        "Slee&p": "&Suspender",
+        "&Hibernate": "&Hibernar",
+        "Switch &User": "Mudar de &utilizador",
+        "Button to show/hide virtual keyboard" + CTX + "Virtual Keyboard": "Teclado virtual",
+        "Button to change keyboard layout" + CTX + "Switch layout": "Mudar a disposição",
+        "Password": "Palavra-passe",
+        "Unlock": "Desbloquear",
+        "(or scan your fingerprint on the reader)": "(ou use a impressão digital no leitor)",
+        "(or scan your smartcard)": "(ou use o seu cartão inteligente)",
+        "No title": "Sem título",
+        "No media playing": "Nada a reproduzir",
+        "Previous track": "Faixa anterior",
+        "Play or Pause media": "Reproduzir ou pausar",
+        "Next track": "Faixa seguinte",
+        "@title: group" + CTX + "Clock:": "Relógio:",
+        "@option:check" + CTX + "Show clock": "Mostrar o relógio",
+        "@title: group" + CTX + "Media controls:": "Controlos multimédia:",
+        "@option:check" + CTX + "Show under unlocking prompt": "Mostrar sob o pedido de desbloqueio",
+    },
+    "plasma_lookandfeel_org.kde.lookandfeel": {
+        "Installing software updates and restarting in 1 second" + NUL
+        + "Installing software updates and restarting in %1 seconds":
+            "A instalar atualizações e a reiniciar dentro de 1 segundo" + NUL
+            + "A instalar atualizações e a reiniciar dentro de %1 segundos",
+        "Restarting in 1 second" + NUL + "Restarting in %1 seconds":
+            "A reiniciar dentro de 1 segundo" + NUL + "A reiniciar dentro de %1 segundos",
+        "Logging out in 1 second" + NUL + "Logging out in %1 seconds":
+            "A terminar a sessão dentro de 1 segundo" + NUL + "A terminar a sessão dentro de %1 segundos",
+        "Installing software updates and shutting down in 1 second" + NUL
+        + "Installing software updates and shutting down in %1 seconds":
+            "A instalar atualizações e a desligar dentro de 1 segundo" + NUL
+            + "A instalar atualizações e a desligar dentro de %1 segundos",
+        "Shutting down in 1 second" + NUL + "Shutting down in %1 seconds":
+            "A desligar dentro de 1 segundo" + NUL + "A desligar dentro de %1 segundos",
+        "One other user is currently logged in. If the computer is shut down or restarted, that user may lose work."
+        + NUL + "%1 other users are currently logged in. If the computer is shut down or restarted, those users may lose work.":
+            "Está outro utilizador com sessão iniciada. Se o computador for desligado ou reiniciado, esse utilizador pode perder trabalho."
+            + NUL + "Estão %1 outros utilizadores com sessão iniciada. Se o computador for desligado ou reiniciado, esses utilizadores podem perder trabalho.",
+        "When restarted, the computer will enter the boot loader menu.":
+            "Ao reiniciar, o computador vai abrir o menu do gestor de arranque.",
+        "Suspend to RAM" + CTX + "Slee&p": "&Suspender",
+        "Suspend to RAM" + CTX + "Slee&p Now": "&Suspender agora",
+        "&Hibernate": "&Hibernar",
+        "&Hibernate Now": "&Hibernar agora",
+        "@action:button Keep short" + CTX + "Install Updates and Restart": "Atualizar e reiniciar",
+        "@action:button Keep short" + CTX + "Install Updates and Shut Down": "Atualizar e desligar",
+        "&Restart": "&Reiniciar",
+        "&Restart Now": "&Reiniciar agora",
+        "&Shut Down": "&Desligar",
+        "&Shut Down Now": "&Desligar agora",
+        "&Log Out": "&Terminar sessão",
+        "&Log Out Now": "&Terminar sessão agora",
+        "&Cancel": "&Cancelar",
+    },
+}
+
+
+def read_mo(path):
+    """Raw (original, translation) byte pairs, plural and context markers intact."""
+    data = open(path, "rb").read()
+    magic = struct.unpack("<I", data[:4])[0]
+    endian = "<" if magic == 0x950412DE else ">"
+    _, count, originals, translations = struct.unpack(endian + "4I", data[4:20])
+    pairs = {}
+    for i in range(count):
+        olen, ooff = struct.unpack(endian + "2I", data[originals + 8 * i:originals + 8 * i + 8])
+        tlen, toff = struct.unpack(endian + "2I", data[translations + 8 * i:translations + 8 * i + 8])
+        pairs[data[ooff:ooff + olen]] = data[toff:toff + tlen]
+    return pairs
+
+
+def write_mo(path, pairs):
+    """Sorted table without a hash table; gettext then uses binary search."""
+    keys = sorted(pairs)
+    count = len(keys)
+    header = 7 * 4
+    originals = header
+    translations = originals + 8 * count
+    offset = translations + 8 * count
+    otable, ttable, blob = [], [], b""
+    for key in keys:
+        otable.append((len(key), offset + len(blob)))
+        blob += key + b"\0"
+    for key in keys:
+        value = pairs[key]
+        ttable.append((len(value), offset + len(blob)))
+        blob += value + b"\0"
+    out = struct.pack("<7I", 0x950412DE, 0, count, originals, translations, 0, offset)
+    for entry in otable + ttable:
+        out += struct.pack("<2I", *entry)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "wb") as handle:
+        handle.write(out + blob)
+
+
+for domain, additions in ADDITIONS.items():
+    source = f"/usr/share/locale/pt/LC_MESSAGES/{domain}.mo"
+    pairs = read_mo(source) if os.path.exists(source) else {}
+    added = 0
+    for original, translation in additions.items():
+        key = original.encode("utf-8")
+        if not pairs.get(key):
+            pairs[key] = translation.encode("utf-8")
+            added += 1
+    write_mo(f"/usr/local/share/locale/pt/LC_MESSAGES/{domain}.mo", pairs)
+    print(f"{domain}: {added} translations added, {len(pairs)} entries")

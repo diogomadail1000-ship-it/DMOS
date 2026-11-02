@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Bem-vindo ao DMOS
+Name[en]=Welcome to DMOS
+Comment=Aparência, ligação à internet e notícias
+Exec=dmos-welcome
+Icon=dmos-logo
+Terminal=false
+Categories=Qt;KDE;System;
+Keywords=dmos;bem-vindo;welcome;tema;notícias

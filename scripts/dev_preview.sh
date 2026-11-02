@@ -88,6 +88,7 @@ fi
 if [ -n "${HOST_CMD:-}" ]; then
     DISPLAY="$DISPLAY_NUM" bash -c "$HOST_CMD"
 fi
+mkdir -p "$(dirname "$SHOT")"
 DISPLAY="$DISPLAY_NUM" import -window root "$SHOT"
 echo "screenshot: $SHOT"
 tail -n "${LOG_LINES:-25}" /tmp/plasma.log | cut -c1-220
