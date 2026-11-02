@@ -1,0 +1,33 @@
+TÍTULO
+DMOS 1.0 «Maré»: um Linux com maré própria (Debian 13 + KDE Plasma 6)
+
+DESCRIÇÃO
+O DMOS é uma distribuição Linux baseada no Debian 13, com KDE Plasma 6 e uma identidade visual desenhada de raiz: menu de arranque, animação, início de sessão, tema de vidro, wallpaper «Maré» e instalador.
+
+Novidades desta versão:
+• Bem-vindo ao DMOS: um assistente de quatro passos na primeira sessão (visual claro ou escuro, internet, notícias e atalhos).
+• DMOS Hub: a hora, uma saudação e as notícias das fontes que escolher. Nenhuma fonte vem ligada por omissão.
+• Português de Portugal completo, incluindo os ecrãs de bloqueio e de sair.
+
+Arranca de uma pen USB ou numa máquina virtual sem instalar nada. A instalação ocupa cerca de 7 GB.
+
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+💻 Código (GPL-3.0): https://github.com/diogomadail1000-ship-it/DMOS
+
+Capítulos
+0:00 Apresentação e arranque
+0:22 Bem-vindo ao DMOS e DMOS Hub
+0:39 Aplicações, temas e instalação
+0:53 Bases e ligações
+
+Música original gerada para este vídeo (video/music.py no repositório).
+O DMOS não é um projeto oficial do Debian nem do KDE.
+
+ETIQUETAS
+DMOS, Linux, Debian 13, Debian trixie, KDE Plasma 6, distribuição Linux, Linux português, open source, código aberto, Wayland, Calamares, GNU/Linux
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+miniatura.png (1280x720), gerada por video/render.js

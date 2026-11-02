@@ -48,6 +48,19 @@
     if (e.key === "ArrowRight") show(current + 1);
   });
 
+  // Vídeo: o YouTube só é contactado quando se clica no botão.
+  document.querySelectorAll(".video").forEach(function (box) {
+    var btn = box.querySelector(".video-play");
+    btn.addEventListener("click", function () {
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.youtube-nocookie.com/embed/" + box.dataset.id + "?autoplay=1&rel=0";
+      frame.title = "Vídeo de apresentação do DMOS";
+      frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      frame.allowFullscreen = true;
+      box.replaceChild(frame, btn);
+    });
+  });
+
   // Copiar comandos do terminal.
   document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {
