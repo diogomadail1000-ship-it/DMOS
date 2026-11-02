@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: imagens do canal</title>
+<!--
+  Imagem de faixa (2560x1440) e foto do perfil (800x800) do canal do YouTube.
+  O fundo é o wallpaper "Maré": python3 art/gen_wallpaper.py dark 2560 1440 video/out/wallpaper-2560.png
+  Abrir com #faixa ou #perfil. video/render-canal.js gera os dois ficheiros.
+-->
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0C1122; color: #E8ECF5; font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
+  .tide-text {
+    background: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Faixa: tudo o que importa fica na área visível em todos os ecrãs (1546x423 ao centro). */
+  #faixa { position: relative; width: 2560px; height: 1440px; display: none; }
+  #faixa .bg { position: absolute; inset: 0; background: url(out/wallpaper-2560.png) center / cover; }
+  #faixa .scrim {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 440px;
+    height: 560px;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(8, 11, 24, 0.72), rgba(8, 11, 24, 0.25) 70%, transparent 100%);
+  }
+  #faixa .safe {
+    position: absolute;
+    left: 507px;
+    top: 508px;
+    width: 1546px;
+    height: 423px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+  }
+  #faixa .brand { display: flex; align-items: center; gap: 40px; white-space: nowrap; }
+  #faixa .brand img { width: 200px; height: 200px; filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.45)); }
+  #faixa .name { font-size: 132px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.9; }
+  #faixa .tagline { font-size: 42px; font-weight: 600; margin-top: 18px; color: #E8ECF5; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5); }
+  #faixa .pills { display: grid; gap: 18px; justify-items: end; }
+  #faixa .pill {
+    font-size: 30px;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 12px 26px;
+    border-radius: 999px;
+    background: rgba(12, 17, 34, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(12px);
+  }
+  #faixa .pill.accent { background: #2DD4BF; color: #04201C; border-color: transparent; }
+
+  /* Foto do perfil: o YouTube mostra-a num círculo. */
+  #perfil { position: relative; width: 800px; height: 800px; display: none; overflow: hidden; }
+  #perfil .bg {
+    position: absolute;
+    inset: 0;
+    background: url(out/wallpaper-2560.png) 62% 70% / 2200px auto;
+    filter: blur(6px) saturate(1.1);
+    transform: scale(1.05);
+  }
+  #perfil .dim { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(8, 11, 24, 0.15), rgba(8, 11, 24, 0.6)); }
+  #perfil img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 460px;
+    height: 460px;
+    margin: -230px 0 0 -230px;
+    filter: drop-shadow(0 24px 50px rgba(0, 0, 0, 0.55));
+  }
+  body.faixa #faixa, body.perfil #perfil { display: block; }
+</style>
+</head>
+<body>
+  <div id="faixa">
+    <div class="bg"></div>
+    <div class="scrim"></div>
+    <div class="safe">
+      <div class="brand">
+        <img src="../art/logo.svg" alt="">
+        <div>
+          <div class="name">DMOS <span class="tide-text">Maré</span></div>
+          <div class="tagline">Um Linux com maré própria</div>
+        </div>
+      </div>
+      <div class="pills">
+        <div class="pill">Debian 13 · KDE Plasma 6</div>
+        <div class="pill">Em português de Portugal</div>
+        <div class="pill accent">Código aberto · GPL-3.0</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="perfil">
+    <div class="bg"></div>
+    <div class="dim"></div>
+    <img src="../art/logo.svg" alt="">
+  </div>
+
+  <script>document.body.className = (location.hash || "#faixa").slice(1);</script>
+</body>
+</html>

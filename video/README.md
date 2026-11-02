@@ -16,3 +16,16 @@ node video/render.js video/out
 
 Cria `video/out/dmos-mare.mp4`, `video/out/miniatura.png` e `video/out/musica.wav`. A pasta `video/out/`
 não entra no repositório.
+
+## Imagens do canal
+
+`canal.html` desenha a imagem de faixa (2560x1440, com o texto na área de 1546x423 que o YouTube
+mostra em todos os ecrãs) e a foto do perfil (800x800). O fundo é o wallpaper "Maré", que tem de ser
+gerado primeiro:
+
+```bash
+python3 art/gen_wallpaper.py dark 2560 1440 video/out/wallpaper-2560.png
+node video/render-canal.js
+```
+
+Cria `video/out/faixa-canal.png` e `video/out/perfil-canal.png`.
