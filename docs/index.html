@@ -30,6 +30,7 @@
         <span>DMOS</span>
       </a>
       <nav class="nav" aria-label="Secções">
+        <a href="#experiencia">Experiência</a>
         <a href="#identidade">Identidade</a>
         <a href="#galeria">Galeria</a>
         <a href="#incluido">Incluído</a>
@@ -83,6 +84,61 @@
           <img class="shot-light" src="screenshots/7-tema-claro.jpg" width="1920" height="1080" alt="Ambiente de trabalho do DMOS no tema claro, com o Konsole aberto" loading="lazy">
         </div>
       </figure>
+    </section>
+
+    <section id="experiencia" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Novo · Experiência DMOS</p>
+        <h2>Recebe-o à porta e fica ao seu lado.</h2>
+        <p>Um assistente para a primeira sessão e um painel no ambiente de trabalho com a hora e as notícias que escolher. Tudo em português de Portugal.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-text">
+          <span class="tag">Bem-vindo ao DMOS</span>
+          <h3>Quatro passos e fica a seu gosto.</h3>
+          <p>Na primeira sessão abre-se um assistente em vidro. Pode voltar a ele quando quiser, a partir do menu de aplicações.</p>
+          <ol class="steps">
+            <li><strong>Visual</strong> claro ou escuro, aplicado de imediato a todo o sistema.</li>
+            <li><strong>Ligação à internet</strong>, para as notícias, as atualizações e as aplicações.</li>
+            <li><strong>Notícias</strong>: escolha as fontes que aparecem no painel.</li>
+            <li><strong>Atalhos</strong> para começar. Na sessão live oferece também a instalação.</li>
+          </ol>
+        </div>
+        <button class="shot feature-shot" type="button" data-src="screenshots/9-bem-vindo.jpg" data-caption="Assistente Bem-vindo ao DMOS"><img src="screenshots/9-bem-vindo.jpg" width="1920" height="1080" loading="lazy" alt="Assistente Bem-vindo ao DMOS, com o painel DMOS Hub à direita"></button>
+      </div>
+
+      <div class="feature feature-flip">
+        <div class="feature-text">
+          <span class="tag">DMOS Hub</span>
+          <h3>A hora, uma saudação e as suas notícias.</h3>
+          <p>Um painel à direita do ambiente de trabalho junta as últimas notícias das fontes que ligou, intercaladas, com a hora de cada uma. Um clique abre o artigo.</p>
+          <p class="privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span><strong>Privado por omissão.</strong> Nenhuma fonte vem ligada, e só as que ligar são contactadas.</span></p>
+          <ul class="sources" aria-label="Fontes de notícias disponíveis">
+            <li>Público</li><li>Observador</li><li>RTP Notícias</li><li>ECO</li><li>SAPO Tek</li>
+            <li>Pplware</li><li>BBC News</li><li>The Verge</li><li>Ars Technica</li><li>Hacker News</li>
+          </ul>
+        </div>
+        <div class="feature-pair">
+          <button class="shot feature-shot" type="button" data-src="screenshots/11-hub.jpg" data-caption="DMOS Hub com notícias"><img src="screenshots/11-hub.jpg" width="1920" height="1080" loading="lazy" alt="Painel DMOS Hub com a hora e as últimas notícias"></button>
+          <button class="shot feature-shot" type="button" data-src="screenshots/10-noticias.jpg" data-caption="Escolha das fontes de notícias"><img src="screenshots/10-noticias.jpg" width="1920" height="1080" loading="lazy" alt="Passo do assistente para escolher as fontes de notícias"></button>
+        </div>
+      </div>
+
+      <div class="mini-cards">
+        <article class="mini">
+          <h3>Três atalhos para começar</h3>
+          <ul class="keys">
+            <li><span><kbd>Super</kbd></span>Abre o menu de aplicações</li>
+            <li><span><kbd>Super</kbd>+<kbd>W</kbd></span>Mostra todas as janelas e áreas de trabalho</li>
+            <li><span><kbd>Alt</kbd>+<kbd>Espaço</kbd></span>Procura aplicações, ficheiros e definições</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Português de Portugal completo</h3>
+          <p>Os ecrãs de bloqueio e de "Sair", que no Debian ficavam em inglês, estão traduzidos. As traduções em falta ficam em <code>/usr/local/share/locale</code> e não substituem os ficheiros dos pacotes.</p>
+        </article>
+      </div>
     </section>
 
     <section id="identidade" class="section">
@@ -140,6 +196,30 @@
           <p>Ecrã do SDDM e o instalador Calamares com a marca e as cores do DMOS.</p>
           <code>sddm/themes/dmos · calamares</code>
         </article>
+        <article class="card">
+          <div class="card-icon" style="--c1:#5EEAD4;--c2:#C4A5FF">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="12" height="14" rx="2.5"/><rect x="17" y="5" width="4" height="14" rx="2"/><path d="M6.5 10h5M6.5 13.5h3.5"/></svg>
+          </div>
+          <h3>Assistente e painel Hub</h3>
+          <p>"Bem-vindo ao DMOS" e o painel com a hora e as notícias, escritos em QML.</p>
+          <code>dmos/welcome · plasmoids/org.dmos.hub</code>
+        </article>
+        <article class="card">
+          <div class="card-icon" style="--c1:#7CC8FF;--c2:#4ADE80">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h9M8.5 3v2M6 5c0 4 3 7 6 8M11 5c-1 4-4 7-7 8"/><path d="M13 21l4-10 4 10M14.5 17.5h5"/></svg>
+          </div>
+          <h3>Traduções em falta</h3>
+          <p>Português de Portugal nos ecrãs de bloqueio e de sair, sem tocar nos pacotes.</p>
+          <code>0530-dmos-pt-translations.hook.chroot</code>
+        </article>
+        <article class="card">
+          <div class="card-icon" style="--c1:#FFC38A;--c2:#5EEAD4">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></svg>
+          </div>
+          <h3>Tudo no mesmo repositório</h3>
+          <p>Cada peça vem de um ficheiro que pode ler, alterar e compilar.</p>
+          <code>github.com/diogomadail1000-ship-it/DMOS</code>
+        </article>
       </div>
       <div class="palette" aria-label="Paleta de cores do DMOS">
         <div class="swatch" style="--s:#0C1122"><span>#0C1122</span></div>
@@ -158,7 +238,7 @@
       <div class="section-head">
         <p class="eyebrow">Galeria</p>
         <h2>Veja-o a funcionar.</h2>
-        <p>Capturas tiradas da ISO a correr numa máquina virtual. Clique numa imagem para a ampliar.</p>
+        <p>Capturas do sistema a correr numa máquina virtual. Clique numa imagem para a ampliar.</p>
       </div>
       <div class="gallery">
         <button class="shot" type="button" data-src="screenshots/1-menu-arranque.jpg" data-caption="Menu de arranque (GRUB)"><img src="screenshots/1-menu-arranque.jpg" width="1920" height="1080" loading="lazy" alt="Menu de arranque do DMOS"><span>Menu de arranque</span></button>
@@ -168,6 +248,9 @@
         <button class="shot" type="button" data-src="screenshots/5-aplicacoes.jpg" data-caption="Aplicações abertas"><img src="screenshots/5-aplicacoes.jpg" width="1920" height="1080" loading="lazy" alt="Aplicações abertas no DMOS"><span>Aplicações</span></button>
         <button class="shot" type="button" data-src="screenshots/6-menu-aplicacoes.jpg" data-caption="Menu de aplicações"><img src="screenshots/6-menu-aplicacoes.jpg" width="1920" height="1080" loading="lazy" alt="Menu de aplicações do DMOS"><span>Menu de aplicações</span></button>
         <button class="shot" type="button" data-src="screenshots/7-tema-claro.jpg" data-caption="Ambiente de trabalho, tema claro"><img src="screenshots/7-tema-claro.jpg" width="1920" height="1080" loading="lazy" alt="Ambiente de trabalho claro"><span>Tema claro</span></button>
+        <button class="shot" type="button" data-src="screenshots/9-bem-vindo.jpg" data-caption="Assistente Bem-vindo ao DMOS"><img src="screenshots/9-bem-vindo.jpg" width="1920" height="1080" loading="lazy" alt="Assistente Bem-vindo ao DMOS"><span>Bem-vindo ao DMOS</span></button>
+        <button class="shot" type="button" data-src="screenshots/10-noticias.jpg" data-caption="Escolha das fontes de notícias"><img src="screenshots/10-noticias.jpg" width="1920" height="1080" loading="lazy" alt="Escolha das fontes de notícias"><span>As suas notícias</span></button>
+        <button class="shot" type="button" data-src="screenshots/11-hub.jpg" data-caption="DMOS Hub com notícias"><img src="screenshots/11-hub.jpg" width="1920" height="1080" loading="lazy" alt="Painel DMOS Hub"><span>DMOS Hub</span></button>
         <button class="shot" type="button" data-src="screenshots/8-instalador.jpg" data-caption="Instalador (Calamares)"><img src="screenshots/8-instalador.jpg" width="1920" height="1080" loading="lazy" alt="Instalador do DMOS"><span>Instalador</span></button>
       </div>
     </section>
@@ -193,7 +276,7 @@
         </div>
         <div class="app-group">
           <h3>Sistema</h3>
-          <ul><li>Konsole</li><li>Discover + Flatpak</li><li>Gestor de Partições</li><li>Centro de Informação</li><li>KCalc</li></ul>
+          <ul><li>Bem-vindo ao DMOS</li><li>DMOS Hub</li><li>Konsole</li><li>Discover + Flatpak</li><li>Gestor de Partições</li><li>Centro de Informação</li><li>KCalc</li></ul>
         </div>
         <div class="app-group">
           <h3>Hardware</h3>
@@ -210,7 +293,7 @@
       <div class="section-head">
         <p class="eyebrow">Experimentar</p>
         <h2>Arranca sem instalar nada.</h2>
-        <p>A sessão live entra sozinha com o utilizador <code>dmos</code>. Para instalar, use o ícone <strong>Instalar o DMOS</strong> no ambiente de trabalho.</p>
+        <p>A sessão live entra sozinha com o utilizador <code>dmos</code>. O assistente <strong>Bem-vindo ao DMOS</strong> abre-se sozinho. Para instalar, use o ícone <strong>Instalar o DMOS</strong> no ambiente de trabalho.</p>
       </div>
       <div class="try">
         <article class="try-card">
@@ -233,7 +316,7 @@
         <div><strong>~7 GB</strong><span>ocupados após a instalação</span></div>
         <div><strong>15 GB</strong><span>de disco, no mínimo</span></div>
         <div><strong>amd64</strong><span>arquitetura</span></div>
-        <div><strong>Claro / escuro</strong><span>Definições &gt; Tema Global</span></div>
+        <div><strong>Claro / escuro</strong><span>no assistente ou em Definições &gt; Tema Global</span></div>
       </div>
     </section>
 
