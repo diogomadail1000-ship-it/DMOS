@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: publicação da comunidade</title>
+<!--
+  Imagem quadrada (1080x1080) para uma publicação no separador Comunidade do YouTube.
+  Gerar: node video/render-canal.js publicacao
+-->
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1080px; height: 1080px; overflow: hidden; background: #0C1122; color: #E8ECF5; font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  .bg { position: absolute; inset: -60px; background: url(../docs/screenshots/4-ambiente-escuro.jpg) 60% 75% / cover; filter: blur(22px) saturate(1.2); }
+  .dim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,17,34,0.55) 0%, rgba(12,17,34,0.2) 45%, rgba(12,17,34,0.85) 100%); }
+  .top { position: absolute; left: 72px; right: 72px; top: 70px; }
+  .row { display: flex; align-items: center; gap: 22px; }
+  .row img { width: 84px; height: 84px; }
+  .pill { font-size: 30px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 24px; border-radius: 999px; background: #FFB86B; color: #2A1A06; }
+  h1 { margin: 34px 0 0; font-size: 92px; line-height: 0.98; letter-spacing: -0.045em; font-weight: 900; }
+  .tide { background: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .shot {
+    position: absolute;
+    left: 150px;
+    top: 405px;
+    width: 780px;
+    border-radius: 22px;
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  }
+  .steps { position: absolute; left: 60px; right: 60px; bottom: 50px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .steps span { font-size: 24px; font-weight: 700; padding: 10px 20px; border-radius: 999px; background: rgba(17, 23, 43, 0.75); border: 1px solid rgba(255, 255, 255, 0.16); }
+  .steps b { color: #2DD4BF; margin-right: 8px; }
+</style>
+</head>
+<body>
+  <div class="bg"></div><div class="dim"></div>
+  <div class="top">
+    <div class="row"><img src="../art/logo.svg" alt=""><span class="pill">Novo tutorial</span></div>
+    <h1>Instalar o <span class="tide">DMOS</span><br>passo a passo</h1>
+  </div>
+  <img class="shot" src="../docs/screenshots/8-instalador.jpg" alt="">
+  <div class="steps">
+    <span><b>1</b>ISO</span><span><b>2</b>VM ou pen</span><span><b>3</b>Arrancar</span>
+    <span><b>4</b>Bem-vindo</span><span><b>5</b>Instalar</span><span><b>6</b>Primeiros passos</span>
+  </div>
+</body>
+</html>
