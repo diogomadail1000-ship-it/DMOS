@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: tutorial</title>
+<!--
+  Tutorial "Como experimentar e instalar o DMOS". seek(t) mostra o instante t; thumbnail() mostra a miniatura.
+  Gerar: node video/render.js video/out tutorial.html dmos-tutorial
+-->
+<style>
+  :root {
+    --bg: #0C1122;
+    --text: #E8ECF5;
+    --muted: #A7B0C8;
+    --accent: #2DD4BF;
+    --warn: #FFB86B;
+    --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; display: none; }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Fundo abstrato */
+  .backdrop {
+    position: absolute;
+    inset: -80px;
+    background: url(../docs/screenshots/4-ambiente-escuro.jpg) center 70% / cover;
+    filter: blur(28px) saturate(1.25);
+  }
+  .backdrop-dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(12,17,34,0.45), rgba(12,17,34,0.9)); }
+
+  /* Capturas com destaque */
+  .zoomer { position: absolute; inset: 0; width: 1920px; height: 1080px; will-change: transform; }
+  .zoomer img { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  .spot {
+    position: absolute;
+    border-radius: 14px;
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 0 9999px rgba(6, 9, 20, 0.55), 0 0 40px rgba(45, 212, 191, 0.55);
+    opacity: 0;
+  }
+  .scrim { position: absolute; left: 0; right: 0; height: 380px; }
+  .scrim.bottom { bottom: 0; background: linear-gradient(to top, rgba(8, 11, 24, 0.94) 0%, rgba(8, 11, 24, 0.75) 50%, transparent 100%); }
+  .scrim.top { top: 0; background: linear-gradient(to bottom, rgba(8, 11, 24, 0.94) 0%, rgba(8, 11, 24, 0.75) 50%, transparent 100%); }
+  .caption { position: absolute; left: 110px; max-width: 1450px; }
+  .caption.bottom { bottom: 90px; }
+  .caption.top { top: 90px; }
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .kicker .num {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--tide);
+    color: #0C1122;
+    letter-spacing: 0;
+    font-size: 24px;
+    font-weight: 900;
+  }
+  .title { font-size: 70px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .sub { font-size: 32px; color: var(--muted); margin-top: 16px; line-height: 1.4; }
+  .sub b, .item b { color: var(--text); }
+  kbd {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 0.85em;
+    color: var(--text);
+    padding: 2px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Cartões */
+  .card-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .card {
+    width: 1320px;
+    padding: 64px 76px;
+    border-radius: 36px;
+    background: rgba(17, 23, 43, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.5);
+  }
+  .card .title { font-size: 64px; }
+  .card .sub { margin-top: 12px; }
+  .list { margin-top: 40px; display: grid; gap: 22px; }
+  .list.two { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+  .item { display: flex; align-items: flex-start; gap: 22px; font-size: 34px; color: var(--muted); line-height: 1.35; }
+  .item .dot {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #0C1122;
+    background: var(--tide);
+    margin-top: -2px;
+  }
+  .item .dot.check { background: var(--accent); }
+  .note {
+    margin-top: 40px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 28px;
+    color: var(--text);
+    padding: 20px 26px;
+    border-radius: 18px;
+    background: rgba(255, 184, 107, 0.12);
+    border: 1px solid rgba(255, 184, 107, 0.4);
+  }
+  .note::before { content: "!"; flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--warn); color: #2A1A06; font-weight: 900; }
+  .note.tip { background: rgba(45, 212, 191, 0.1); border-color: rgba(45, 212, 191, 0.4); }
+  .note.tip::before { content: "i"; background: var(--accent); color: #04201C; }
+
+  /* Terminal */
+  .term {
+    margin-top: 36px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0A0E1C;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .term-bar { display: flex; gap: 10px; align-items: center; padding: 16px 20px; background: #10162A; }
+  .term-bar i { width: 15px; height: 15px; border-radius: 50%; display: block; }
+  .term-bar span { margin: 0 auto; color: #8D96B0; font-size: 20px; padding-right: 70px; }
+  .term-body { padding: 26px 30px; font-family: "JetBrains Mono", monospace; font-size: 32px; line-height: 1.7; min-height: 250px; }
+  .term-body .p { color: var(--accent); }
+  .term-body .c { color: #6B7594; }
+  .cursor { display: inline-block; width: 18px; height: 34px; background: var(--text); vertical-align: -6px; margin-left: 2px; }
+
+  /* Abertura e fecho */
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .logo { width: 180px; height: 180px; filter: drop-shadow(0 20px 50px rgba(45, 212, 191, 0.35)); }
+  .badge {
+    margin-top: 40px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 26px;
+    border-radius: 999px;
+    color: #04201C;
+    background: var(--accent);
+  }
+  .big { font-size: 112px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; margin-top: 30px; }
+  .tag { font-size: 36px; color: var(--muted); margin-top: 24px; }
+  .links { margin-top: 50px; display: grid; gap: 18px; }
+  .link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 32px;
+    padding: 16px 32px;
+    border-radius: 18px;
+    background: rgba(17, 23, 43, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .link em { font-style: normal; color: var(--accent); font-family: "Inter", sans-serif; font-weight: 700; margin-right: 18px; }
+
+  .watermark { position: absolute; right: 50px; bottom: 44px; display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 26px; opacity: 0; z-index: 100; }
+  .watermark img { width: 38px; height: 38px; }
+
+  /* Miniatura */
+  #thumbnail { display: none; position: absolute; inset: 0; }
+  body.thumb #stage, body.thumb .watermark { display: none; }
+  body.thumb #thumbnail { display: block; }
+  #thumbnail .tshot {
+    position: absolute;
+    right: 70px;
+    top: 230px;
+    width: 1000px;
+    border-radius: 26px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+    border: 2px solid rgba(255,255,255,0.15);
+    transform: perspective(1800px) rotateY(-14deg) rotate(-2deg);
+  }
+  #thumbnail .ttext { position: absolute; left: 90px; top: 150px; width: 780px; }
+  #thumbnail .tlogo { width: 150px; height: 150px; }
+  #thumbnail .tpill { display: table; margin-top: 34px; font-size: 44px; font-weight: 900; letter-spacing: 0.08em; padding: 12px 30px; border-radius: 999px; background: #FFB86B; color: #2A1A06; }
+  #thumbnail .tbig { font-size: 104px; font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; margin-top: 28px; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"><img src="../art/logo.svg" alt="">DMOS · Tutorial</div>
+
+  <div id="thumbnail">
+    <div class="backdrop"></div><div class="backdrop-dim"></div>
+    <img class="tshot" src="../docs/screenshots/8-instalador.jpg" alt="">
+    <div class="ttext">
+      <img class="tlogo" src="../art/logo.svg" alt="">
+      <div class="tpill">Tutorial</div>
+      <div class="tbig">Instalar o <span class="tide-text">DMOS</span> passo a passo</div>
+    </div>
+  </div>
+
+<script>
+var FADE = 0.7;
+// Tipos: intro, outro, card (cartão com lista), term (terminal), shot (captura com destaque).
+// spot: [x, y, largura, altura] na captura de 1920x1080. focus: ponto para onde o zoom se aproxima.
+var SCENES = [
+  { type: "intro", dur: 6 },
+  { type: "card", dur: 8, title: "Neste tutorial", sub: "Do download ao primeiro dia com o DMOS.", two: true, items: [
+      "Obter a ISO", "Preparar uma máquina virtual ou uma pen USB", "Arrancar e experimentar sem instalar",
+      "O assistente Bem-vindo ao DMOS", "Instalar no disco", "Primeiros passos" ], numbered: true },
+  { type: "card", dur: 9, title: "Do que precisa", sub: "Requisitos mínimos para o DMOS 1.0.", check: true, items: [
+      "Computador de 64 bits (<b>amd64</b>), com BIOS ou UEFI",
+      "<b>4 GB</b> de RAM e <b>2</b> núcleos de processador",
+      "<b>15 GB</b> livres no disco para instalar (a instalação ocupa cerca de 7 GB)",
+      "Uma pen USB, ou um programa de máquinas virtuais" ] },
+
+  { type: "term", dur: 13, step: 1, kicker: "Obter a ISO", title: "Compilar a ISO no Windows",
+    sub: "Precisa do WSL 2, de cerca de 20 GB livres e de uns 20 minutos.",
+    lines: [ ["c", "# PowerShell"], ["p", "git clone https://github.com/diogomadail1000-ship-it/DMOS"], ["p", "cd DMOS"], ["p", ".\\build.ps1"] ],
+    note: "A ISO fica em <b>dist\\dmos-1.0-mare-amd64.hybrid.iso</b>, com o checksum em dist\\SHA256SUMS." },
+
+  { type: "card", dur: 10, step: 2, kicker: "Opção A · Máquina virtual", title: "Criar a máquina virtual",
+    sub: "No VirtualBox, VMware ou Hyper-V:", numbered: true, items: [
+      "Tipo <b>Linux</b>, versão <b>Debian (64 bits)</b>",
+      "Memória: <b>4096 MB</b> · Processadores: <b>2</b>",
+      "Disco novo com <b>20 GB</b> ou mais",
+      "Ative a <b>aceleração 3D</b>, se existir, e ligue a ISO ao leitor ótico" ] },
+  { type: "card", dur: 11, step: 2, kicker: "Opção B · Pen USB", title: "Gravar a ISO numa pen",
+    sub: "Com o Rufus ou o balenaEtcher:", numbered: true, items: [
+      "Abra o programa e escolha a <b>pen</b> e a <b>ISO</b> do DMOS",
+      "No Rufus, quando perguntar, escolha o modo <b>DD</b>",
+      "Grave e reinicie o computador com a pen ligada",
+      "Abra o menu de arranque (<kbd>F12</kbd>, <kbd>F11</kbd> ou <kbd>Esc</kbd>, conforme o computador) e escolha a pen" ],
+    warn: "A gravação apaga tudo o que estiver na pen." },
+
+  { type: "shot", dur: 8, img: "1-menu-arranque", step: 3, kicker: "Arrancar", title: "Escolha «Experimentar o DMOS»",
+    sub: "Se não carregar em nada, arranca sozinho ao fim de alguns segundos.", spot: [688, 444, 542, 62], focus: [960, 470], zoom: 1.12 },
+  { type: "shot", dur: 8, img: "1-menu-arranque", step: 3, kicker: "Arrancar", title: "Ecrã preto? Use o modo de compatibilidade",
+    sub: "A entrada «Modo de compatibilidade gráfica» ajuda em placas gráficas mais difíceis.", spot: [688, 568, 542, 50], focus: [960, 560], zoom: 1.12 },
+  { type: "shot", dur: 5.5, img: "2-animacao-arranque", step: 3, kicker: "Arrancar", title: "Aguarde um pouco",
+    sub: "A sessão de demonstração entra sozinha, com o utilizador <b>dmos</b>.", zoom: 1.06, focus: [960, 540] },
+
+  { type: "shot", dur: 8, img: "9-bem-vindo", step: 4, kicker: "Bem-vindo ao DMOS", title: "O assistente abre sozinho",
+    sub: "São quatro passos: visual, internet, notícias e atalhos. Carregue em <b>Começar</b>.", spot: [1294, 774, 126, 60], focus: [1300, 700], zoom: 1.1 },
+  { type: "shot", dur: 9, img: "10-noticias", step: 4, kicker: "Bem-vindo ao DMOS", title: "Ligue as fontes de notícias que quiser",
+    sub: "Nenhuma vem ligada. Só as que ligar são contactadas.", spot: [524, 380, 872, 372], focus: [960, 540], zoom: 1.08 },
+  { type: "card", dur: 9, step: 4, kicker: "Bem-vindo ao DMOS", title: "Três atalhos para começar", items: [
+      "<kbd>Super</kbd>&nbsp; abre o menu de aplicações",
+      "<kbd>Super</kbd> + <kbd>W</kbd>&nbsp; mostra todas as janelas e áreas de trabalho",
+      "<kbd>Alt</kbd> + <kbd>Espaço</kbd>&nbsp; procura aplicações, ficheiros e definições" ], check: true,
+    tip: "Pode voltar ao assistente quando quiser: está no menu de aplicações." },
+
+  { type: "shot", dur: 8, img: "8-instalador", step: 5, kicker: "Instalar", title: "Abra «Instalar o DMOS»",
+    sub: "O ícone está no canto do ambiente de trabalho da sessão de demonstração.", spot: [2, 56, 118, 104], focus: [0, 0], zoom: 1.12, cap: "bottom" },
+  { type: "shot", dur: 10, img: "8-instalador", step: 5, kicker: "Instalar", title: "Siga os passos do instalador",
+    sub: "Localização, teclado, partições, utilizador e palavra-passe. O resumo mostra tudo antes de começar.", spot: [428, 390, 206, 244], focus: [530, 510], zoom: 1.08 },
+  { type: "card", dur: 9, step: 5, kicker: "Instalar · Partições", title: "Cuidado com o disco",
+    sub: "Na página de partições, escolha onde o DMOS fica.", items: [
+      "<b>Apagar disco</b>: o DMOS ocupa o disco inteiro, e tudo o que lá estava é apagado",
+      "Numa máquina virtual, escolha sempre o disco virtual novo" ], check: true,
+    warn: "Faça uma cópia de segurança dos seus ficheiros antes de instalar num computador real." },
+  { type: "card", dur: 7, step: 5, kicker: "Instalar", title: "No fim, reinicie", items: [
+      "A instalação demora alguns minutos e pode continuar a usar o computador",
+      "Quando terminar, reinicie e <b>retire a pen</b> (ou a ISO da máquina virtual)" ], check: true },
+  { type: "shot", dur: 8, img: "3-inicio-sessao", step: 5, kicker: "Primeiro arranque", title: "Entre com a sua palavra-passe",
+    sub: "Use o utilizador e a palavra-passe que criou no instalador.", spot: [770, 664, 380, 76], focus: [960, 560], zoom: 1.1, cap: "bottom" },
+
+  { type: "shot", dur: 8, img: "6-menu-aplicacoes", step: 6, kicker: "Primeiros passos", title: "O menu de aplicações",
+    sub: "Carregue em <kbd>Super</kbd> ou no logótipo no canto. Escreva para procurar.", spot: [6, 6, 52, 40], spot2: [250, 74, 316, 40], focus: [0, 0], zoom: 1.12 },
+  { type: "shot", dur: 8, img: "4-ambiente-escuro", step: 6, kicker: "Primeiros passos", title: "Instale mais aplicações no Discover",
+    sub: "A loja do sistema, com Flatpak. Também mostra as atualizações.", spot: [1188, 1008, 54, 56], focus: [1200, 900], zoom: 1.1, cap: "top" },
+  { type: "shot", dur: 8, img: "11-hub", step: 6, kicker: "Primeiros passos", title: "As notícias ficam no DMOS Hub",
+    sub: "O painel à direita mostra a hora e as notícias das fontes que ligou.", spot: [1468, 146, 408, 664], focus: [1600, 480], zoom: 1.08 },
+  { type: "shot", dur: 8, img: "7-tema-claro", step: 6, kicker: "Primeiros passos", title: "Prefere o tema claro?",
+    sub: "Mude em <b>Definições do Sistema › Tema Global</b>, ou no assistente Bem-vindo ao DMOS.", zoom: 1.06, focus: [960, 500] },
+
+  { type: "outro", dur: 8 }
+];
+
+var stage = document.getElementById("stage");
+
+function captionHtml(s) {
+  return '<div class="kicker">' + (s.step ? '<span class="num">' + s.step + '</span>' : "") +
+    (s.step ? "Passo " + s.step + " · " : "") + s.kicker + '</div>' +
+    '<div class="title">' + s.title + '</div>' + (s.sub ? '<div class="sub">' + s.sub + '</div>' : "");
+}
+
+var start = 0;
+SCENES.forEach(function (s) {
+  s.start = start;
+  start += s.dur - FADE;
+  var el = document.createElement("div");
+  el.className = "scene";
+  var bg = '<div class="backdrop"></div><div class="backdrop-dim"></div>';
+  if (s.type === "shot") {
+    // A legenda fica do lado oposto ao destaque.
+    var pos = s.cap || (s.spot && s.spot[1] + s.spot[3] / 2 > 600 ? "top" : "bottom");
+    var spots = "";
+    [s.spot, s.spot2].forEach(function (r) {
+      if (!r) return;
+      spots += '<div class="spot" style="left:' + r[0] + 'px;top:' + r[1] + 'px;width:' + r[2] + 'px;height:' + r[3] + 'px"></div>';
+    });
+    el.innerHTML = '<div class="zoomer"><img src="../docs/screenshots/' + s.img + '.jpg" alt="">' + spots + '</div>' +
+      '<div class="scrim ' + pos + '"></div><div class="caption ' + pos + '">' + captionHtml(s) + '</div>';
+  } else if (s.type === "card" || s.type === "term") {
+    var body = "";
+    if (s.items) {
+      body += '<div class="list' + (s.two ? " two" : "") + '">' + s.items.map(function (it, j) {
+        return '<div class="item"><span class="dot' + (s.check ? " check" : "") + '">' + (s.check ? "✓" : j + 1) + '</span><span>' + it + '</span></div>';
+      }).join("") + '</div>';
+    }
+    if (s.lines) {
+      body += '<div class="term"><div class="term-bar"><i style="background:#FF7A6B"></i><i style="background:#F5BE5B"></i><i style="background:#2DD4BF"></i><span>PowerShell</span></div><div class="term-body"></div></div>';
+    }
+    if (s.note) body += '<div class="note tip"><span>' + s.note + '</span></div>';
+    if (s.tip) body += '<div class="note tip"><span>' + s.tip + '</span></div>';
+    if (s.warn) body += '<div class="note"><span>' + s.warn + '</span></div>';
+    el.innerHTML = bg + '<div class="card-wrap"><div class="card">' +
+      (s.kicker || s.step ? '<div class="kicker">' + (s.step ? '<span class="num">' + s.step + '</span>Passo ' + s.step + ' · ' : "") + (s.kicker || "") + '</div>' : "") +
+      '<div class="title">' + s.title + '</div>' + (s.sub ? '<div class="sub">' + s.sub + '</div>' : "") + body + '</div></div>';
+  } else if (s.type === "intro") {
+    el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="">' +
+      '<div class="badge">Tutorial</div>' +
+      '<div class="big">Experimentar e instalar<br>o <span class="tide-text">DMOS</span></div>' +
+      '<div class="tag">Passo a passo, do download ao primeiro dia</div></div>';
+  } else if (s.type === "outro") {
+    el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="" style="width:150px;height:150px">' +
+      '<div class="big" style="font-size:96px">Bem-vindo ao <span class="tide-text">DMOS</span></div>' +
+      '<div class="tag">Dúvidas, ideias ou problemas? Fale connosco no GitHub.</div>' +
+      '<div class="links"><div class="link"><em>Site</em>diogomadail1000-ship-it.github.io/DMOS</div>' +
+      '<div class="link"><em>Código</em>github.com/diogomadail1000-ship-it/DMOS</div></div></div>';
+  }
+  stage.appendChild(el);
+  s.el = el;
+});
+var TOTAL = start + FADE;
+window.TOTAL = TOTAL;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function rise(el, local, t0, dist) {
+  if (!el) return;
+  var k = out((local - t0) / 0.7);
+  el.style.opacity = k;
+  el.style.transform = "translateY(" + ((1 - k) * (dist || 30)) + "px)";
+}
+
+function typeTerm(s, local) {
+  var body = s.el.querySelector(".term-body");
+  var t = local - 1.0, html = "", done = true;
+  for (var i = 0; i < s.lines.length; i++) {
+    var kind = s.lines[i][0], text = s.lines[i][1];
+    var n = kind === "c" ? text.length : Math.floor(t * 34);
+    if (t < 0) { done = false; break; }
+    var shown = text.slice(0, Math.max(0, n));
+    var esc = shown.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    html += kind === "c" ? '<div class="c">' + esc + '</div>' : '<div><span class="p">PS&gt;</span> ' + esc + (n < text.length ? '<span class="cursor"></span>' : "") + '</div>';
+    if (n < text.length) { done = false; break; }
+    t -= (kind === "c" ? 0.3 : text.length / 34 + 0.5);
+  }
+  if (done) html += '<div><span class="p">PS&gt;</span> <span class="cursor" style="opacity:' + (Math.floor(local * 2) % 2) + '"></span></div>';
+  body.innerHTML = html;
+}
+
+window.seek = function (t) {
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start, el = s.el;
+    if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+    el.style.display = "block";
+    var fin = i === 0 ? clamp(local / 0.6) : clamp(local / FADE);
+    var fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 1.0) : clamp((s.dur - local) / FADE);
+    el.style.opacity = Math.min(ease(fin), ease(fout));
+    el.style.zIndex = i;
+    var p = local / s.dur;
+    var bd = el.querySelector(".backdrop");
+    if (bd) bd.style.transform = "scale(" + lerp(1.05, 1.15, p) + ") translateX(" + lerp(-20, 20, p) + "px)";
+
+    if (s.type === "shot") {
+      var z = el.querySelector(".zoomer");
+      var k = ease((local - 0.6) / 2.4);
+      var f = s.focus || [960, 540];
+      z.style.transformOrigin = f[0] + "px " + f[1] + "px";
+      z.style.transform = "scale(" + lerp(1, s.zoom || 1.06, k) + ")";
+      el.querySelectorAll(".spot").forEach(function (sp) {
+        var a = out((local - 1.6) / 0.6);
+        var pulse = 1 + 0.025 * Math.sin(Math.max(0, local - 2.2) * 4);
+        sp.style.opacity = a;
+        sp.style.transform = "scale(" + (lerp(1.15, 1, a) * pulse) + ")";
+      });
+      var leave = clamp((s.dur - local - FADE * 0.4) / 0.5);
+      var cap = el.querySelector(".caption");
+      ["kicker", "title", "sub"].forEach(function (c, j) { rise(cap.querySelector("." + c), local, 0.4 + j * 0.2, 30); });
+      cap.style.opacity = ease(leave);
+      el.querySelector(".scrim").style.opacity = ease(Math.min(clamp((local - 0.2) / 0.6), leave));
+    } else if (s.type === "card" || s.type === "term") {
+      var card = el.querySelector(".card");
+      rise(card, local, 0.2, 40);
+      rise(card.querySelector(".kicker"), local, 0.35, 20);
+      rise(card.querySelector(".title"), local, 0.45, 26);
+      rise(card.querySelector(".sub"), local, 0.6, 22);
+      card.querySelectorAll(".item").forEach(function (it, j) { rise(it, local, 1.0 + j * 0.45, 26); });
+      if (s.lines) { rise(card.querySelector(".term"), local, 0.8, 26); typeTerm(s, local); }
+      var notes = card.querySelectorAll(".note");
+      var tn = s.lines ? 7.5 : 1.0 + (s.items ? s.items.length : 0) * 0.45 + 0.6;
+      notes.forEach(function (n, j) { rise(n, local, tn + j * 0.4, 20); });
+    } else {
+      var logo = el.querySelector(".logo");
+      var kk = out((local - 0.2) / 1.0);
+      logo.style.opacity = kk;
+      logo.style.transform = "scale(" + lerp(0.7, 1, kk) + ")";
+      rise(el.querySelector(".badge"), local, 0.6, 20);
+      rise(el.querySelector(".big"), local, 0.9, 40);
+      rise(el.querySelector(".tag"), local, 1.4, 30);
+      el.querySelectorAll(".link").forEach(function (l, j) { rise(l, local, 2.0 + j * 0.35, 30); });
+    }
+  });
+  var wm = document.getElementById("wm");
+  var first = SCENES[1].start, last = SCENES[SCENES.length - 1].start;
+  wm.style.opacity = 0.8 * Math.min(clamp((t - first - 0.5) / 0.8), clamp((last - t) / 0.8));
+};
+window.thumbnail = function () { document.body.classList.add("thumb"); };
+window.seek(location.hash ? parseFloat(location.hash.slice(1)) || 0 : 0);
+</script>
+</body>
+</html>

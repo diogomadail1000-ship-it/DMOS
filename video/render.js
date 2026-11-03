@@ -1,5 +1,7 @@
 // Gera o vídeo do DMOS: desenha cada fotograma de scene.html no Chromium e junta-os com o ffmpeg.
-// Uso: node video/render.js PASTA_DE_SAIDA
+// Uso: node video/render.js [PASTA_DE_SAIDA] [PÁGINA] [NOME]
+//   node video/render.js video/out                                -> dmos-mare.mp4 (apresentação)
+//   node video/render.js video/out tutorial.html dmos-tutorial    -> dmos-tutorial.mp4
 const { chromium } = require("playwright");
 const { spawn, execFileSync } = require("child_process");
 const path = require("path");
@@ -7,21 +9,23 @@ const path = require("path");
 const FPS = 30;
 const outDir = path.resolve(process.argv[2] || "video/out");
 const here = __dirname;
+const pageFile = process.argv[3] || "scene.html";
+const name = process.argv[4] || "dmos-mare";
 
 (async () => {
   require("fs").mkdirSync(outDir, { recursive: true });
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   page.on("pageerror", (e) => console.error("Erro na página:", e.message));
-  await page.goto("file://" + path.join(here, "scene.html"));
+  await page.goto("file://" + path.join(here, pageFile));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(500);
   const total = await page.evaluate(() => window.TOTAL);
 
-  const music = path.join(outDir, "musica.wav");
+  const music = path.join(outDir, name + "-musica.wav");
   execFileSync("python3", [path.join(here, "music.py"), String(total), music], { stdio: "inherit" });
 
-  const video = path.join(outDir, "dmos-mare.mp4");
+  const video = path.join(outDir, name + ".mp4");
   const ff = spawn("ffmpeg", [
     "-y", "-loglevel", "error",
     "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "-",
@@ -43,9 +47,9 @@ const here = __dirname;
 
   // Miniatura para o YouTube (1280x720).
   await page.evaluate(() => window.thumbnail());
-  const big = path.join(outDir, "miniatura-1920.png");
+  const big = path.join(outDir, name + "-miniatura-1920.png");
   await page.screenshot({ path: big });
-  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", big, "-vf", "scale=1280:720:flags=lanczos", path.join(outDir, "miniatura.png")]);
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", big, "-vf", "scale=1280:720:flags=lanczos", path.join(outDir, name + "-miniatura.png")]);
   require("fs").unlinkSync(big);
 
   await browser.close();
