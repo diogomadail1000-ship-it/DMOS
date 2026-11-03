@@ -1,0 +1,20 @@
+SHORT: «Criei o meu próprio Linux»
+Vídeo: dmos-short.mp4 (1080x1920, 29 s), gerado por: node video/render.js video/out short.html dmos-short
+
+TÍTULO (até 100 caracteres; #Shorts ajuda o YouTube a mostrá-lo como Short)
+Criei o meu próprio Linux 🌊 #Shorts
+
+DESCRIÇÃO
+O DMOS 1.0 «Maré»: uma distribuição Linux baseada no Debian 13 e no KDE Plasma 6, com identidade visual própria e em português de Portugal. Grátis e de código aberto.
+
+▶️ Tutorial completo: https://youtu.be/glLq_Hi9V1A
+🎬 Apresentação: https://youtu.be/6xOphpjiomE
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+
+#DMOS #Linux #Debian #KDE #opensource #Shorts
+
+VÍDEO RELACIONADO (no YouTube Studio, campo «Vídeo relacionado»)
+Como experimentar e instalar o DMOS: tutorial passo a passo
+
+ETIQUETAS
+DMOS, Linux, Shorts, Debian 13, KDE Plasma 6, sistema operativo, Linux português, open source

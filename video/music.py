@@ -1,6 +1,6 @@
 """Gera a banda sonora do vídeo: um ambiente calmo, original, sem direitos de terceiros.
 
-Uso: python3 video/music.py SEGUNDOS saida.wav
+Uso: python3 video/music.py SEGUNDOS saida.wav [SEGUNDOS_POR_ACORDE]
 """
 import sys
 import wave
@@ -10,7 +10,8 @@ import numpy as np
 SR = 44100
 DUR = float(sys.argv[1])
 OUT = sys.argv[2]
-BAR = 4.0  # segundos por acorde (60 bpm, 4 tempos)
+# Segundos por acorde: 4.0 é calmo (60 bpm); 2.4 dá 100 bpm, para vídeos curtos e rápidos.
+BAR = float(sys.argv[3]) if len(sys.argv) > 3 else 4.0
 
 rng = np.random.default_rng(7)
 n = int(DUR * SR)
@@ -73,21 +74,21 @@ for b in range(bars):
     bass = pad(hz(root), BAR + 1.0)
     add(0.11 * bass, start - 0.2)
     # Arpejo em colcheias a partir do 2.º compasso, mais denso a meio do vídeo.
-    if b >= 1 and start < DUR - 6:
+    if b >= 1 and start < DUR - min(6, BAR * 1.5):
         pattern = [0, 2, 1, 3, 2, 1, 3, 2]
         for s in range(8):
             if b == 1 and s < 4:
                 continue
             m = notes[pattern[s]] + 12
             vel = 0.06 * (0.8 + 0.2 * rng.random()) * (1.0 if s % 2 == 0 else 0.7)
-            add(vel * pluck(hz(m)), start + s * 0.5, pan=0.35 if s % 2 else -0.35)
+            add(vel * pluck(hz(m)), start + s * BAR / 8, pan=0.35 if s % 2 else -0.35)
     # Uma batida suave (bombo) a partir do 3.º compasso.
-    if 2 <= b and start < DUR - 6:
+    if 2 <= b and start < DUR - min(6, BAR * 1.5):
         for s in range(4):
             m = int(0.35 * SR)
             x = np.arange(m) / SR
             kick = np.sin(2 * np.pi * (55 + 70 * np.exp(-x * 30)) * x) * np.exp(-x * 9)
-            add(0.16 * kick, start + s * 1.0)
+            add(0.16 * kick, start + s * BAR / 4)
 
 # Eco estéreo simples, para dar espaço.
 for delay, gain in ((0.375, 0.28), (0.75, 0.16), (1.125, 0.09)):
