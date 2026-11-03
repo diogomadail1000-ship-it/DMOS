@@ -1,6 +1,5 @@
 PUBLICAÇÃO PARA A COMUNIDADE DO YOUTUBE
 Imagem: publicacao-tutorial.png (1080x1080), gerada por: node video/render-canal.js publicacao
-Antes de publicar, troque [LINK DO TUTORIAL] pelo link do vídeo.
 
 TEXTO
 
@@ -15,7 +14,7 @@ Em menos de 3 minutos, mostramos tudo, do download ao primeiro dia:
 5️⃣ Instalar no disco
 6️⃣ Dar os primeiros passos
 
-▶️ Veja aqui: [LINK DO TUTORIAL]
+▶️ Veja aqui: https://youtu.be/glLq_Hi9V1A
 
 Já experimentou o DMOS? Conte-nos nos comentários como correu, ou o que gostava de ver na próxima versão. 👇
 
