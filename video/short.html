@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: short</title>
+<!--
+  YouTube Short vertical (1080x1920, ~30 s). seek(t) mostra o instante t.
+  Gerar: node video/render.js video/out short.html dmos-short
+  O texto fica entre y=230 e y=1500 e longe da margem direita, fora das zonas que o YouTube tapa.
+-->
+<style>
+  :root { --text: #E8ECF5; --muted: #B4BCD2; --accent: #2DD4BF; --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0C1122; color: var(--text); font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; width: 1920px; height: 1080px; }
+  .blur { position: absolute; inset: -80px; background-size: cover; background-position: center; filter: blur(34px) saturate(1.2) brightness(0.7); }
+  .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,11,24,0.9) 0%, rgba(8,11,24,0.6) 22%, rgba(8,11,24,0) 34%, rgba(8,11,24,0) 78%, rgba(8,11,24,0.45) 100%); }
+  .cap { position: absolute; left: 70px; right: 140px; top: 250px; text-align: left; }
+  .kicker { font-size: 34px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+  .title { font-size: 104px; font-weight: 900; letter-spacing: -0.04em; line-height: 0.98; text-shadow: 0 6px 30px rgba(0,0,0,0.45); }
+  .backdrop { position: absolute; inset: -100px; background: url(../docs/screenshots/4-ambiente-escuro.jpg) 62% 70% / auto 120%; filter: blur(30px) saturate(1.3); }
+  .dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(12,17,34,0.3), rgba(12,17,34,0.88)); }
+  .center { position: absolute; left: 70px; right: 70px; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .logo { width: 260px; height: 260px; filter: drop-shadow(0 24px 60px rgba(45,212,191,0.4)); }
+  .hook { font-size: 132px; font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; margin-top: 50px; }
+  .hook-sub { font-size: 50px; font-weight: 600; color: var(--muted); margin-top: 34px; }
+  .pills { display: grid; gap: 22px; margin-top: 60px; }
+  .pill { font-size: 44px; font-weight: 800; padding: 20px 40px; border-radius: 999px; background: rgba(17,23,43,0.7); border: 1px solid rgba(255,255,255,0.16); }
+  .pill.accent { background: var(--accent); color: #04201C; border-color: transparent; }
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 50; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="flash" id="flash"></div>
+<script>
+window.SIZE = [1080, 1920];
+window.MUSIC_BAR = 2.4;
+var CUT = 0.35;
+// cx/cy: ponto da captura (1920x1080) que fica no centro da zona da imagem, por baixo da legenda.
+// z: zoom (1 = a captura com a altura do ecrã).
+var SCENES = [
+  { type: "hook", dur: 3.2 },
+  { img: "1-menu-arranque", dur: 2.9, kicker: "Arranque", title: "Menu de arranque próprio", cx: [900, 1000], cy: 400, z: [1.05, 1.15] },
+  { img: "2-animacao-arranque", dur: 2.3, kicker: "Arranque", title: "Animação feita de raiz", cx: [960, 960], cy: 560, z: [1.25, 1.0] },
+  { img: "3-inicio-sessao", dur: 2.7, kicker: "Início de sessão", title: "Entrada em vidro", cx: [960, 960], cy: 520, z: [1.0, 1.1] },
+  { img: "4-ambiente-escuro", dur: 3.1, kicker: "KDE Plasma 6", title: "Barra e dock flutuantes", cx: [650, 1270], cy: 650, z: [1.0, 1.0] },
+  { img: "9-bem-vindo", dur: 2.8, kicker: "Primeira sessão", title: "Um assistente de boas-vindas", cx: [820, 1080], cy: 560, z: [0.95, 1.0] },
+  { img: "11-hub", dur: 3.0, kicker: "DMOS Hub", title: "As notícias que escolhe", cx: [1560, 1660], cy: 478, z: [0.95, 1.02] },
+  { img: "5-aplicacoes", dur: 2.7, kicker: "Pronto a usar", title: "Tudo em português", cx: [700, 1150], cy: 560, z: [1.0, 1.0] },
+  { img: "7-tema-claro", dur: 2.8, kicker: "Num clique", title: "Claro ou escuro", cx: [960, 960], cy: 560, z: [1.1, 1.0], flash: true },
+  { img: "8-instalador", dur: 2.8, kicker: "Instalação", title: "Instala em minutos", cx: [760, 960], cy: 700, z: [1.0, 1.08] },
+  { type: "outro", dur: 4.6 }
+];
+
+var stage = document.getElementById("stage");
+var start = 0;
+SCENES.forEach(function (s) {
+  s.start = start;
+  start += s.dur - CUT;
+  var el = document.createElement("div");
+  el.className = "scene";
+  if (s.img) {
+    el.innerHTML = '<div class="blur" style="background-image:url(../docs/screenshots/' + s.img + '.jpg)"></div>' +
+      '<img class="shot" src="../docs/screenshots/' + s.img + '.jpg" alt=""><div class="shade"></div>' +
+      '<div class="cap"><div class="kicker">' + s.kicker + '</div><div class="title">' + s.title + '</div></div>';
+  } else if (s.type === "hook") {
+    el.innerHTML = '<div class="backdrop"></div><div class="dim"></div><div class="center">' +
+      '<img class="logo" src="../art/logo.svg" alt="">' +
+      '<div class="hook">Criei o meu<br>próprio <span class="tide-text">Linux</span></div>' +
+      '<div class="hook-sub">Vê como ficou</div></div>';
+  } else {
+    el.innerHTML = '<div class="backdrop"></div><div class="dim"></div><div class="center">' +
+      '<img class="logo" src="../art/logo.svg" alt="" style="width:200px;height:200px">' +
+      '<div class="hook" style="font-size:120px">DMOS <span class="tide-text">Maré</span></div>' +
+      '<div class="pills"><div class="pill">Grátis e de código aberto</div>' +
+      '<div class="pill">Debian 13 · KDE Plasma 6</div>' +
+      '<div class="pill accent">Tutorial completo no canal</div></div></div>';
+  }
+  stage.appendChild(el);
+  s.el = el;
+});
+var TOTAL = start + CUT;
+window.TOTAL = TOTAL;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function back(x) { x = clamp(x); var c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function pop(el, local, t0, from) {
+  if (!el) return;
+  var k = clamp((local - t0) / 0.45);
+  el.style.opacity = out(k);
+  el.style.transform = "translateY(" + (1 - out(k)) * 40 + "px) scale(" + lerp(from || 0.88, 1, back(k)) + ")";
+}
+
+window.seek = function (t) {
+  var flash = 0;
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start, el = s.el;
+    if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+    el.style.display = "block";
+    el.style.zIndex = i;
+    var fin = i === 0 ? clamp(local / 0.3) : clamp(local / CUT);
+    var fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 0.8) : 1;
+    el.style.opacity = Math.min(ease(fin), ease(fout));
+    var p = local / s.dur;
+    // Pequeno "soco" de escala em cada corte.
+    var punch = 1 + 0.06 * (1 - out(local / 0.5));
+    if (s.img) {
+      var z = lerp(s.z[0], s.z[1], ease(p)) * punch;
+      var k = (1920 / 1080) * z;
+      var cx = lerp(s.cx[0], s.cx[1], ease(p)), cy = s.cy || 540;
+      var w = 1920 * k, h = 1080 * k;
+      var left = Math.min(0, Math.max(1080 - w, 540 - cx * k));
+      // O ponto de interesse fica a meio da zona por baixo da legenda (y 520 a 1900).
+      var top = Math.min(520, Math.max(1920 - h, 1210 - cy * k));
+      el.querySelector(".shot").style.transform = "translate(" + left + "px," + top + "px) scale(" + k + ")";
+      pop(el.querySelector(".kicker"), local, 0.15);
+      pop(el.querySelector(".title"), local, 0.28);
+      if (s.flash) flash = Math.max(flash, 0.85 * (1 - clamp(local / 0.35)));
+    } else {
+      var bd = el.querySelector(".backdrop");
+      bd.style.transform = "scale(" + lerp(1.0, 1.12, p) * punch + ")";
+      var logo = el.querySelector(".logo");
+      var lk = clamp((local - 0.05) / 0.6);
+      logo.style.opacity = out(lk);
+      logo.style.transform = "scale(" + lerp(0.5, 1, back(lk)) + ") rotate(" + lerp(-12, 0, out(lk)) + "deg)";
+      pop(el.querySelector(".hook"), local, 0.3, 0.8);
+      pop(el.querySelector(".hook-sub"), local, 0.9);
+      el.querySelectorAll(".pill").forEach(function (pl, j) { pop(pl, local, 0.9 + j * 0.3); });
+    }
+  });
+  document.getElementById("flash").style.opacity = flash;
+};
+window.thumbnail = function () { window.seek(1.6); };
+window.seek(location.hash ? parseFloat(location.hash.slice(1)) || 0 : 0);
+</script>
+</body>
+</html>

@@ -38,3 +38,13 @@ node video/render-canal.js
 ```
 
 Cria `video/out/faixa-canal.png` e `video/out/perfil-canal.png`.
+
+## Short
+
+`short.html` é um Short vertical (1080x1920, cerca de 30 s), com cortes rápidos e música a 100 bpm. O
+texto fica fora das zonas que o YouTube tapa com botões. O título e a descrição estão em
+`youtube-short.txt`.
+
+```bash
+node video/render.js video/out short.html dmos-short
+```

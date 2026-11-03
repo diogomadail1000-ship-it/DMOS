@@ -2,6 +2,7 @@
 // Uso: node video/render.js [PASTA_DE_SAIDA] [PÁGINA] [NOME]
 //   node video/render.js video/out                                -> dmos-mare.mp4 (apresentação)
 //   node video/render.js video/out tutorial.html dmos-tutorial    -> dmos-tutorial.mp4
+//   node video/render.js video/out short.html dmos-short          -> dmos-short.mp4 (vertical)
 const { chromium } = require("playwright");
 const { spawn, execFileSync } = require("child_process");
 const path = require("path");
@@ -20,10 +21,14 @@ const name = process.argv[4] || "dmos-mare";
   await page.goto("file://" + path.join(here, pageFile));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(500);
+  // A página pode pedir outro tamanho (por exemplo 1080x1920 para Shorts) e outro andamento da música.
+  const size = await page.evaluate(() => window.SIZE || [1920, 1080]);
+  await page.setViewportSize({ width: size[0], height: size[1] });
+  const bar = await page.evaluate(() => window.MUSIC_BAR || 4);
   const total = await page.evaluate(() => window.TOTAL);
 
   const music = path.join(outDir, name + "-musica.wav");
-  execFileSync("python3", [path.join(here, "music.py"), String(total), music], { stdio: "inherit" });
+  execFileSync("python3", [path.join(here, "music.py"), String(total), music, String(bar)], { stdio: "inherit" });
 
   const video = path.join(outDir, name + ".mp4");
   const ff = spawn("ffmpeg", [
@@ -45,12 +50,17 @@ const name = process.argv[4] || "dmos-mare";
   ff.stdin.end();
   await new Promise((r) => ff.on("close", r));
 
-  // Miniatura para o YouTube (1280x720).
+  // Miniatura para o YouTube (1280x720; nos vídeos verticais, 1080x1920).
   await page.evaluate(() => window.thumbnail());
-  const big = path.join(outDir, name + "-miniatura-1920.png");
-  await page.screenshot({ path: big });
-  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", big, "-vf", "scale=1280:720:flags=lanczos", path.join(outDir, name + "-miniatura.png")]);
-  require("fs").unlinkSync(big);
+  const thumb = path.join(outDir, name + "-miniatura.png");
+  if (size[0] > size[1]) {
+    const big = path.join(outDir, name + "-miniatura-1920.png");
+    await page.screenshot({ path: big });
+    execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", big, "-vf", "scale=1280:720:flags=lanczos", thumb]);
+    require("fs").unlinkSync(big);
+  } else {
+    await page.screenshot({ path: thumb });
+  }
 
   await browser.close();
   console.log("Feito:", video);
