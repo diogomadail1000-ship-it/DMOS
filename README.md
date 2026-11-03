@@ -5,7 +5,7 @@ própria, gerada a partir do código deste repositório.
 
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
 
-**[▶ Ver o vídeo de apresentação no YouTube](https://youtu.be/6xOphpjiomE)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
+**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
 
 ![Ambiente de trabalho escuro](docs/screenshots/4-ambiente-escuro.jpg)
 
@@ -16,6 +16,8 @@ própria, gerada a partir do código deste repositório.
 | ![Menu de aplicações](docs/screenshots/6-menu-aplicacoes.jpg) | ![Instalador](docs/screenshots/8-instalador.jpg) |
 
 ## Experimentar
+
+O [tutorial em vídeo](https://youtu.be/glLq_Hi9V1A) mostra todos os passos, do download ao primeiro dia.
 
 A ISO não faz parte do repositório, por ser demasiado grande para o GitHub. Depois de a
 [compilar](#compilar-a-iso), fica em `dist/dmos-1.0-mare-amd64.hybrid.iso`, com o checksum em

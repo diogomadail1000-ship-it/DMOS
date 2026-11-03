@@ -1,0 +1,30 @@
+PUBLICAÇÃO PARA A COMUNIDADE DO YOUTUBE
+Imagem: publicacao-tutorial.png (1080x1080), gerada por: node video/render-canal.js publicacao
+
+TEXTO
+
+🌊 Novo tutorial: instalar o DMOS passo a passo!
+
+Em menos de 3 minutos, mostramos tudo, do download ao primeiro dia:
+
+1️⃣ Obter a ISO
+2️⃣ Preparar uma máquina virtual ou uma pen USB
+3️⃣ Arrancar e experimentar sem instalar
+4️⃣ Usar o assistente Bem-vindo ao DMOS
+5️⃣ Instalar no disco
+6️⃣ Dar os primeiros passos
+
+▶️ Veja aqui: https://youtu.be/glLq_Hi9V1A
+
+Já experimentou o DMOS? Conte-nos nos comentários como correu, ou o que gostava de ver na próxima versão. 👇
+
+#DMOS #Linux #Debian #KDEPlasma #tutorial
+
+
+SONDAGEM (opcional, numa publicação à parte)
+
+Pergunta: Onde vai experimentar o DMOS primeiro?
+• Numa máquina virtual
+• Numa pen USB
+• Vou instalar no computador
+• Ainda não decidi

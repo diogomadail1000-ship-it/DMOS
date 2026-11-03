@@ -1,0 +1,34 @@
+TÍTULO
+Como experimentar e instalar o DMOS: tutorial passo a passo (Linux Debian 13 + KDE Plasma 6)
+
+DESCRIÇÃO
+Neste tutorial vê como pôr o DMOS 1.0 «Maré» a funcionar, do download ao primeiro dia: obter a ISO, preparar uma máquina virtual ou uma pen USB, arrancar sem instalar, usar o assistente Bem-vindo ao DMOS, instalar no disco e dar os primeiros passos.
+
+Requisitos: computador de 64 bits (BIOS ou UEFI), 4 GB de RAM, 2 núcleos e 15 GB livres no disco.
+
+⚠️ A instalação com «Apagar disco» apaga tudo o que estiver no disco. Faça uma cópia de segurança antes de instalar num computador real.
+
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+💻 Código e instruções de compilação: https://github.com/diogomadail1000-ship-it/DMOS
+🎬 Apresentação do DMOS: https://youtu.be/6xOphpjiomE
+
+Capítulos
+0:00 Introdução e requisitos
+0:20 Passo 1: obter a ISO
+0:33 Passo 2: máquina virtual ou pen USB
+0:52 Passo 3: arrancar e experimentar
+1:12 Passo 4: Bem-vindo ao DMOS
+1:36 Passo 5: instalar no disco
+2:14 Passo 6: primeiros passos
+
+Música original gerada para este vídeo (video/music.py no repositório).
+O DMOS não é um projeto oficial do Debian nem do KDE.
+
+ETIQUETAS
+DMOS, tutorial Linux, instalar Linux, Linux português, Debian 13, KDE Plasma 6, máquina virtual, VirtualBox, pen USB, Rufus, Calamares, como instalar Linux
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-tutorial-miniatura.png (1280x720), gerada por video/render.js

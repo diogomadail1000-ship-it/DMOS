@@ -772,6 +772,11 @@ kbd {
   background: #0C1122;
 }
 .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+.video-flip { grid-template-columns: 1.55fr 1fr; margin-bottom: 40px; }
+.video-flip .video { order: -1; }
+.video-h { font-size: clamp(24px, 2.8vw, 32px); font-weight: 800; }
+.video-flip .chapters { gap: 2px; }
+.video-flip .chapters button { padding: 7px 12px; font-size: 15px; }
 @media (max-width: 980px) {
   .video-layout { grid-template-columns: 1fr; gap: 24px; }
   .video { order: -1; }
