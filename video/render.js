@@ -26,6 +26,11 @@ const name = process.argv[4] || "dmos-mare";
   await page.setViewportSize({ width: size[0], height: size[1] });
   const bar = await page.evaluate(() => window.MUSIC_BAR || 4);
   const total = await page.evaluate(() => window.TOTAL);
+  if (!total) {
+    console.error("A página não tem nada para gerar (por exemplo, faltam as medições do comparativo).");
+    await browser.close();
+    process.exit(1);
+  }
 
   const music = path.join(outDir, name + "-musica.wav");
   execFileSync("python3", [path.join(here, "music.py"), String(total), music, String(bar)], { stdio: "inherit" });

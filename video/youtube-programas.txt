@@ -1,0 +1,53 @@
+TÍTULO
+Programas essenciais para instalar depois do DMOS (Flathub, Discover e terminal)
+
+DESCRIÇÃO
+Acabou de instalar o DMOS? Estes são os programas que recomendamos para o completar, todos grátis e no Flathub.
+
+⚠️ Primeiro passo: o DMOS traz o Flatpak e o Discover, mas o Flathub tem de ser ativado uma vez. No terminal:
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+📦 Os programas (com o identificador do Flathub)
+• Thunderbird (email e calendário): org.mozilla.Thunderbird
+• GIMP (edição de imagem): org.gimp.GIMP
+• Krita (desenho e pintura): org.kde.krita
+• Kdenlive (edição de vídeo): org.kde.kdenlive
+• OBS Studio (gravação e diretos): com.obsproject.Studio
+• KeePassXC (palavras-passe): org.keepassxc.KeePassXC
+• Signal (mensagens): org.signal.Signal
+• Telegram (mensagens): org.telegram.desktop
+• Steam (jogos): com.valvesoftware.Steam
+• Flatseal (permissões Flatpak): com.github.tchx84.Flatseal
+
+Instalar pelo terminal, por exemplo: flatpak install flathub org.gimp.GIMP
+
+E o seu programa indispensável? Deixe a sugestão nos comentários! 👇
+
+🛠️ Tutorial de instalação do DMOS: https://youtu.be/glLq_Hi9V1A
+⌨️ 7 dicas para o dia a dia: https://youtu.be/r8VG6ZlcGRY
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+
+Capítulos
+0:00 Introdução
+0:11 O que já vem no DMOS
+0:20 Ativar o Flathub
+0:29 Email: Thunderbird
+0:40 Imagem: GIMP e Krita
+0:51 Vídeo: Kdenlive e OBS Studio
+1:02 Palavras-passe: KeePassXC
+1:12 Mensagens: Signal e Telegram
+1:23 Jogos: Steam
+1:34 Permissões: Flatseal
+1:45 Como instalar
+
+Os programas pertencem aos respetivos autores. O DMOS não está associado a nenhum deles.
+Música original gerada para este vídeo.
+
+ETIQUETAS
+DMOS, Linux, Flathub, Flatpak, Discover, programas Linux, GIMP, Kdenlive, OBS Studio, Thunderbird, Steam Linux, Linux português
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-programas-miniatura.png (1280x720), gerada por video/render.js

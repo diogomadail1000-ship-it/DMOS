@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: personalizar</title>
+<!--
+  "Personalizar o DMOS: 8 ajustes para o dia a dia" (1920x1080). Usa lista.css e lista.js.
+  Gerar: node video/render.js video/out personalizar.html dmos-personalizar
+  Os caminhos nas Definições indicam o que procurar na caixa de procura das Definições do Sistema,
+  porque os nomes dos menus do Plasma 6 mudam entre versões. As ilustrações são desenhos, não capturas.
+-->
+<link rel="stylesheet" href="lista.css">
+<style>
+  .dock { position: absolute; left: 50%; bottom: 18px; height: 54px; transform: translateX(-50%); display: flex; gap: 10px; align-items: center; padding: 0 14px; border-radius: 16px; background: rgba(17, 23, 43, 0.85); border: 1px solid rgba(255,255,255,0.14); }
+  .dock i { width: 34px; height: 34px; border-radius: 10px; display: block; }
+  .vd { position: absolute; inset: 0; padding: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .vd div { border-radius: 16px; background: url(../docs/screenshots/4-ambiente-escuro.jpg) center / cover; border: 3px solid transparent; position: relative; overflow: hidden; }
+  .vd div span { position: absolute; left: 12px; bottom: 10px; font-size: 20px; font-weight: 700; padding: 4px 12px; border-radius: 999px; background: rgba(12,17,34,0.8); }
+  .panel { position: absolute; left: 0; top: 0; bottom: 0; width: 300px; background: rgba(17, 23, 43, 0.95); border-right: 1px solid rgba(255,255,255,0.14); padding: 24px 18px; display: grid; gap: 12px; align-content: start; }
+  .panel h4 { margin: 0 0 6px; font-size: 22px; }
+  .panel div { padding: 14px 16px; border-radius: 12px; background: rgba(255,255,255,0.06); font-size: 20px; }
+  .note { position: absolute; right: 50px; top: 70px; width: 290px; height: 250px; border-radius: 14px; background: #FFE59A; color: #3A2E05; padding: 22px; font-size: 24px; line-height: 1.4; box-shadow: 0 20px 40px rgba(0,0,0,0.4); font-weight: 600; }
+  .settings { position: absolute; left: 60px; right: 60px; top: 70px; bottom: 70px; border-radius: 18px; background: rgba(17, 23, 43, 0.96); border: 1px solid rgba(255,255,255,0.14); overflow: hidden; }
+  .settings .sbar { height: 70px; display: flex; align-items: center; gap: 14px; padding: 0 22px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 26px; }
+  .settings .sbar svg { width: 26px; height: 26px; fill: none; stroke: var(--muted); stroke-width: 2.4; }
+  .settings .rows { padding: 18px 22px; display: grid; gap: 12px; }
+  .settings .row { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-radius: 12px; background: rgba(255,255,255,0.05); font-size: 24px; }
+  .settings .row.pick { background: rgba(45, 212, 191, 0.14); outline: 2px solid rgba(45, 212, 191, 0.6); }
+  .toggle { width: 60px; height: 32px; border-radius: 999px; background: rgba(255,255,255,0.18); position: relative; }
+  .toggle::after { content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: #E8ECF5; transition: none; }
+  .toggle.on { background: #2DD4BF; }
+  .toggle.on::after { left: 32px; background: #04201C; }
+  .rec { display: flex; gap: 10px; }
+  .rec .rk { font-size: 20px; font-weight: 800; padding: 4px 12px; border-radius: 8px; background: #232C4C; border: 1px solid rgba(255,255,255,0.2); }
+  .warm { position: absolute; inset: 0; background: #FF9A3C; mix-blend-mode: multiply; opacity: 0; }
+  .menu { position: absolute; border-radius: 12px; background: rgba(17, 23, 43, 0.97); border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 20px 50px rgba(0,0,0,0.5); padding: 8px; font-size: 20px; min-width: 300px; }
+  .menu div { padding: 10px 14px; border-radius: 8px; color: var(--muted); }
+  .menu div.hl { background: rgba(45, 212, 191, 0.18); color: var(--text); }
+  #thumbnail .ttext { position: absolute; left: 90px; top: 170px; width: 900px; }
+  #thumbnail .tbig { font-size: 140px; font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; }
+  #thumbnail .tshot { position: absolute; right: 70px; top: 250px; width: 900px; border-radius: 26px; box-shadow: 0 40px 120px rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.15); transform: perspective(1800px) rotateY(-14deg) rotate(-2deg); }
+  #thumbnail .tpill { display: table; margin-top: 40px; font-size: 44px; font-weight: 900; padding: 12px 30px; border-radius: 999px; background: #2DD4BF; color: #04201C; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"></div>
+  <div id="thumbnail">
+    <div class="backdrop"></div><div class="dim"></div>
+    <img class="tshot" src="../docs/screenshots/11-hub.jpg" alt="">
+    <div class="ttext"><div class="tbig">Deixe o <span class="tide-text">DMOS</span> à sua medida</div><div class="tpill">8 ajustes</div></div>
+  </div>
+<script>
+var ICON_SEARCH = '<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>';
+function dock(n) { var c = ["#FF8A70", "#46B6E0", "#2B3352", "#7CC8FF", "#C4A5FF", "#2DD4BF", "#5E8BFF", "#46B6E0", "#4ADE80", "#FFB86B"]; var h = ""; for (var i = 0; i < n; i++) h += '<i style="background:' + c[i] + '"></i>'; return h; }
+function settings(query, rows) {
+  return '<div class="desk"></div><div class="settings"><div class="sbar">' + ICON_SEARCH + '<span class="q" data-q="' + query + '"></span></div><div class="rows">' +
+    rows.map(function (r) { return '<div class="row">' + r[0] + (r[1] === "toggle" ? '<span class="toggle"></span>' : r[1] === "rec" ? '<span class="rec"></span>' : "<span>" + (r[1] || "") + "</span>") + '</div>'; }).join("") + '</div></div>';
+}
+
+window.VIDEO = {
+  mark: "DMOS · Personalizar",
+  itemWord: "Ajuste",
+  itemDur: 11,
+  intro: { title: 'Deixe o <span class="tide-text">DMOS</span><br>à sua medida', sub: "8 ajustes do KDE Plasma 6 para o dia a dia" },
+  outro: { title: 'Como é o <span class="tide-text">seu DMOS?</span>', sub: "Mostre a sua configuração nos comentários." },
+  items: [
+    { label: "Dock", short: "Fixar aplicações na dock", title: "Fixe as suas aplicações na dock",
+      desc: "Abra a aplicação, clique com o botão direito no ícone dela na dock e escolha <b>Fixar no Gestor de Tarefas</b>.", art: "pin" },
+    { label: "Menu", short: "Favoritos no menu", title: "Escolha os favoritos do menu",
+      desc: "No menu de aplicações, clique com o botão direito numa aplicação e escolha <b>Adicionar aos Favoritos</b>.", art: "fav" },
+    { label: "Áreas de trabalho", short: "Mais áreas de trabalho", title: "Separe o trabalho por áreas",
+      desc: "Acrescente áreas de trabalho e mude entre elas com o teclado.", keys: ["Ctrl", "F2"],
+      where: "Nas Definições, procure <b>Áreas de trabalho virtuais</b>", art: "vd" },
+    { label: "Dock", short: "Mostrar ou esconder a dock", title: "Decida quando a dock aparece",
+      desc: "Botão direito na dock, <b>Mostrar a Configuração do Painel</b>. Em <b>Visibilidade</b>: evitar janelas (como vem no DMOS), esconder automaticamente ou sempre visível.", art: "dodge" },
+    { label: "Widgets", short: "Widgets no ambiente de trabalho", title: "Acrescente widgets",
+      desc: "Botão direito no ambiente de trabalho, <b>Adicionar ou Gerir Widgets</b>. Há notas, meteorologia, calendário e muito mais.", art: "widgets" },
+    { label: "Atalhos", short: "Atalhos seus", title: "Crie os seus atalhos",
+      desc: "Escolha uma aplicação ou ação e grave a combinação que quiser. Por exemplo, <b>Super + F</b> para o Firefox.", keys: ["Super", "F"],
+      where: "Nas Definições, procure <b>Atalhos</b>", art: "shortcut" },
+    { label: "Ecrã", short: "Luz noturna", title: "Ligue a luz noturna",
+      desc: "À noite, o ecrã fica com cores mais quentes e cansa menos a vista. Pode seguir o pôr do sol ou um horário seu.",
+      where: "Nas Definições, procure <b>Luz noturna</b>", art: "night" },
+    { label: "Arranque", short: "Abrir aplicações ao entrar", title: "Abra aplicações ao entrar",
+      desc: "Escolha as aplicações que abrem sozinhas quando inicia a sessão.",
+      where: "Nas Definições, procure <b>Arranque automático</b>", art: "autostart" }
+  ],
+  bonusIndex: "Repor o visual",
+  bonus: [
+    { label: "Bónus", title: "Repor o visual do DMOS", desc: "Se mudou demasiado, aplique outra vez <b>DMOS Maré Escuro</b> ou <b>DMOS Maré Claro</b> para repor as cores e o estilo.",
+      where: "Nas Definições, procure <b>Tema global</b>", art: "reset" }
+  ],
+  artHtml: function (art) {
+    var desk = '<div class="desk"></div>';
+    switch (art) {
+      case "pin": return '<div class="real" style="background-image:url(../docs/screenshots/4-ambiente-escuro.jpg)"></div>' +
+        '<div class="menu" style="left:300px;top:390px"><div>Abrir uma janela nova</div><div class="hl">Fixar no Gestor de Tarefas</div><div>Mais</div><div>Fechar</div></div><div class="spot pinspot"></div>';
+        '<div class="menu" style="left:440px;top:300px"><div>Abrir uma janela nova</div><div class="hl">Fixar no Gestor de Tarefas</div><div>Mais</div><div>Fechar</div></div>';
+      case "fav": return '<div class="real" style="background-image:url(../docs/screenshots/6-menu-aplicacoes.jpg);background-size:2000px auto;background-position:0 0"></div><div class="spot favspot"></div>';
+      case "vd": return '<div class="vd"><div><span>1 · Trabalho</span></div><div><span>2 · Estudo</span></div><div><span>3 · Música</span></div><div><span>4 · Jogos</span></div></div>';
+      case "dodge": return desk + '<div class="settings" style="top:120px;bottom:120px"><div class="sbar">Visibilidade da dock</div><div class="rows">' +
+        ['Evitar janelas <span style="color:#2DD4BF;font-size:18px">como vem no DMOS</span>', "Esconder automaticamente", "Sempre visível"].map(function (o) { return '<div class="row opt">' + o + '</div>'; }).join("") + '</div></div>';
+      case "widgets": return desk + '<div class="note">Comprar pão<br>Ligar à avó<br>Ver o tutorial do DMOS</div><div class="panel"><h4>Widgets</h4><div>Notas</div><div>Meteorologia</div><div>Calendário</div><div>Monitor do sistema</div><div>Relógio analógico</div></div>';
+      case "shortcut": return settings("Atalhos", [["Firefox ESR", "rec"], ["Dolphin", ""], ["Konsole", "Ctrl+Alt+T"], ["Bloquear a sessão", "Super+L"]]);
+      case "night": return desk + '<div class="warm"></div>' + '<div class="settings" style="top:auto;height:150px;bottom:40px"><div class="sbar">' + ICON_SEARCH + '<span class="q" data-q="Luz noturna"></span></div><div class="rows"><div class="row">Ativar a luz noturna<span class="toggle"></span></div></div></div>';
+      case "autostart": return settings("Arranque automático", [["Firefox ESR", "toggle"], ["Elisa", "toggle"], ["Thunderbird", "toggle"], ["Konsole", "toggle"]]);
+      case "reset": return '<div class="real" style="background-image:url(../docs/screenshots/7-tema-claro.jpg)"></div><div class="real dark" style="background-image:url(../docs/screenshots/4-ambiente-escuro.jpg)"></div>';
+    }
+    return desk;
+  },
+  animateArt: function (s, el, a, local) {
+    var L = window.L;
+    var q = el.querySelector(".q");
+    if (q) { var full = q.getAttribute("data-q"); q.textContent = full.slice(0, Math.max(0, Math.floor((local - 1.5) * 12))); }
+    switch (s.art) {
+      case "pin": {
+        var m = el.querySelector(".menu");
+        m.style.opacity = L.out((local - 1.4) / 0.4) * (1 - L.clamp((local - 5.2) / 0.3));
+        var sp = el.querySelector(".pinspot");
+        // Dock na captura 4: de (560, 1003) a (1360, 1072); a captura cobre 880x640.
+        var sc = 640 / 1080, ox = (880 - 1920 * sc) / 2;
+        L.box(sp, 556 * sc + ox, 998 * sc, 808 * sc, 78 * sc);
+        var k = L.out((local - 5.4) / 0.6);
+        sp.style.opacity = k;
+        sp.style.transform = "scale(" + L.lerp(1.2, 1, k) + ")";
+        break;
+      }
+      case "fav": {
+        var sp = el.querySelector(".favspot");
+        // Favoritos do menu na captura 6: de (250, 132) a (660, 250); aqui a captura tem 2000 px de largura.
+        var sc = 2000 / 1920;
+        L.box(sp, 250 * sc, 132 * sc, 410 * sc, 118 * sc);
+        var k = L.out((local - 1.6) / 0.6);
+        sp.style.opacity = k;
+        sp.style.transform = "scale(" + L.lerp(1.2, 1, k) + ")";
+        break;
+      }
+      case "vd": {
+        var idx = local < 2.6 ? 0 : 1 + Math.min(2, Math.floor((local - 2.6) / 1.6));
+        el.querySelectorAll(".vd div").forEach(function (d, i) {
+          d.style.borderColor = i === idx ? "#2DD4BF" : "transparent";
+          d.style.filter = i === idx ? "none" : "brightness(0.55)";
+          d.style.transform = "scale(" + (i === idx ? 1.03 : 1) + ")";
+        });
+        el.querySelectorAll(".key").forEach(function (k) { k.classList.toggle("down", local > 2.4 && local % 1.6 < 0.5); });
+        break;
+      }
+      case "dodge": {
+        var idx = local < 2.8 ? -1 : Math.min(2, Math.floor((local - 2.8) / 1.9));
+        el.querySelectorAll(".opt").forEach(function (o, i) { o.classList.toggle("pick", i === idx); });
+        break;
+      }
+      case "widgets": {
+        var p = el.querySelector(".panel"), n = el.querySelector(".note");
+        var kp = L.out((local - 1.4) / 0.5);
+        p.style.transform = "translateX(" + (-300 * (1 - kp) - 300 * L.ease((local - 5) / 0.5)) + "px)";
+        p.querySelectorAll("div")[0].style.background = local > 3 ? "rgba(45,212,191,0.2)" : "";
+        var kk = L.out((local - 4.2) / 0.6);
+        n.style.opacity = kk;
+        n.style.transform = "scale(" + L.lerp(0.6, 1, kk) + ") rotate(" + L.lerp(-8, 2, kk) + "deg)";
+        break;
+      }
+      case "shortcut": {
+        var row = el.querySelectorAll(".row")[0];
+        row.classList.toggle("pick", local > 3);
+        var rec = el.querySelector(".rec");
+        var keys = [];
+        if (local > 4.4) keys.push("Super");
+        if (local > 5.0) keys.push("F");
+        rec.innerHTML = keys.map(function (k) { return '<span class="rk">' + k + '</span>'; }).join("");
+        break;
+      }
+      case "night": {
+        var on = local > 3.8;
+        el.querySelector(".toggle").classList.toggle("on", on);
+        el.querySelector(".warm").style.opacity = 0.42 * L.ease((local - 3.9) / 1.6);
+        break;
+      }
+      case "autostart": {
+        el.querySelectorAll(".toggle").forEach(function (tg, i) { tg.classList.toggle("on", (i === 0 && local > 3.4) || (i === 2 && local > 4.4)); });
+        break;
+      }
+      case "reset": {
+        el.querySelector(".dark").style.clipPath = "inset(0 " + (100 - 100 * L.ease((local - 2) / 1.2)) + "% 0 0)";
+        break;
+      }
+    }
+  }
+};
+</script>
+<script src="lista.js"></script>
+</body>
+</html>
