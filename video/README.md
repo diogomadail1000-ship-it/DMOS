@@ -66,3 +66,12 @@ texto fica fora das zonas que o YouTube tapa com botões. O título e a descriç
 ```bash
 node video/render.js video/out short.html dmos-short
 ```
+
+## Short «Escuro ou claro?»
+
+`short-tema.html` é um segundo Short (1080x1920, 20 s) que compara os temas DMOS Maré Escuro e Claro com as
+capturas reais e acaba a pedir uma resposta nos comentários. Texto em `youtube-short-tema.txt`.
+
+```bash
+node video/render.js video/out short-tema.html dmos-short-tema
+```

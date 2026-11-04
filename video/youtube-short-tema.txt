@@ -1,0 +1,24 @@
+SHORT: «Escuro ou claro?»
+Vídeo: dmos-short-tema.mp4 (1080x1920, 20 s), gerado por: node video/render.js video/out short-tema.html dmos-short-tema
+
+TÍTULO
+Escuro ou claro? 🌙☀️ O DMOS tem os dois #Shorts
+
+DESCRIÇÃO
+O DMOS traz dois temas completos, DMOS Maré Escuro e DMOS Maré Claro. Muda-se num clique, ou logo no assistente Bem-vindo ao DMOS.
+
+Qual preferes? Responde nos comentários: ESCURO ou CLARO? 👇
+
+▶️ Comece aqui: https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+
+#DMOS #Linux #KDE #temaescuro #Shorts
+
+VÍDEO RELACIONADO
+Deixe o DMOS à sua medida: 8 ajustes do KDE Plasma 6 para o dia a dia
+
+COMENTÁRIO FIXADO (opcional, publique-o logo a seguir e fixe-o)
+Eu uso o escuro 🌙 E tu?
+
+ETIQUETAS
+DMOS, Linux, Shorts, tema escuro, tema claro, KDE Plasma 6, personalizar Linux, Linux português
