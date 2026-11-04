@@ -1,7 +1,7 @@
 # Assistente da comunidade: responde a perguntas novas nas Discussões (Q&A e General)
 # e dá uma primeira resposta a Issues novos. Ver .github/assistente/responder.py.
-# Precisa do segredo ANTHROPIC_API_KEY (Settings › Secrets and variables › Actions).
-# Sem o segredo, o job termina sem fazer nada.
+# Sem o segredo ANTHROPIC_API_KEY responde com as perguntas frequentes (faq.json), de graça.
+# Com o segredo (Settings › Secrets and variables › Actions) responde com o Claude.
 name: Assistente da comunidade
 
 on:
