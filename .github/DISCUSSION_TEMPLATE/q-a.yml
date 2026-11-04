@@ -1,0 +1,22 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Faça a sua pergunta sobre instalar ou usar o DMOS. Se encontrou um erro, é melhor [reportar um problema](https://github.com/diogomadail1000-ship-it/DMOS/issues/new/choose).
+        Quando alguém responder bem, marque a resposta como solução.
+  - type: textarea
+    id: pergunta
+    attributes:
+      label: A sua pergunta
+    validations:
+      required: true
+  - type: dropdown
+    id: onde
+    attributes:
+      label: Onde está a usar o DMOS?
+      options:
+        - Ainda não instalei
+        - Máquina virtual
+        - Computador real
+    validations:
+      required: false

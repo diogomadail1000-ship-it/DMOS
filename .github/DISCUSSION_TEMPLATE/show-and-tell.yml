@@ -1,0 +1,19 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Mostre o seu DMOS! Uma captura do ambiente de trabalho, uma personalização, um computador antigo que ganhou vida nova…
+  - type: textarea
+    id: mostrar
+    attributes:
+      label: O que quer mostrar?
+      description: Arraste as capturas de ecrã para aqui.
+    validations:
+      required: true
+  - type: input
+    id: computador
+    attributes:
+      label: Em que computador? (opcional)
+      placeholder: ThinkPad T440, máquina virtual…
+    validations:
+      required: false

@@ -1,0 +1,45 @@
+name: Sugerir uma melhoria
+description: Uma ideia para o DMOS, um programa a incluir ou algo a mudar.
+title: "[Sugestão] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado pela ideia! Para conversas mais abertas, também pode usar as [Discussões › Ideias](https://github.com/diogomadail1000-ship-it/DMOS/discussions/categories/ideas).
+  - type: textarea
+    id: ideia
+    attributes:
+      label: Qual é a sugestão?
+      placeholder: Gostava que o DMOS trouxesse…
+    validations:
+      required: true
+  - type: textarea
+    id: porque
+    attributes:
+      label: Porque ajudaria?
+      description: Que problema resolve, ou a quem é útil.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Aspeto e temas
+        - Bem-vindo ao DMOS
+        - DMOS Hub
+        - Programas incluídos
+        - Instalador
+        - Arranque e hardware
+        - Traduções
+        - Site, vídeos e documentação
+        - Outra
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Já experimentou outra forma de o fazer?
+    validations:
+      required: false
