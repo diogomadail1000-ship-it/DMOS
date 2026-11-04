@@ -108,9 +108,35 @@ def normalize(text: str) -> str:
     return "".join(c for c in text if not unicodedata.combining(c))
 
 
+# Campos de texto livre dos formulários (.github/ISSUE_TEMPLATE e .github/DISCUSSION_TEMPLATE).
+# As escolhas das listas («Máquina virtual», «Sessão de demonstração (a correr da ISO ou da pen)»…)
+# e as caixas de confirmação não contam como pergunta, senão puxavam respostas sem relação.
+FREE_TEXT_FIELDS = {
+    "a sua pergunta",
+    "o que quer mostrar?",
+    "o que aconteceu?",
+    "como repetir o problema",
+    "o que esperava que acontecesse?",
+    "qual e a sugestao?",
+    "porque ajudaria?",
+}
+
+
+def question_text(body: str) -> str:
+    """O texto escrito pela pessoa. Num formulário (secções «### Campo»), só os campos de texto livre."""
+    sections = re.split(r"^### +(.+)$", body, flags=re.M)
+    if len(sections) == 1:
+        return body
+    kept = [sections[0]]
+    for heading, content in zip(sections[1::2], sections[2::2]):
+        if normalize(heading.strip()) in FREE_TEXT_FIELDS:
+            kept.append(content)
+    return "\n".join(kept)
+
+
 def faq_matches(title: str, body: str) -> list[dict]:
     """As perguntas frequentes cujas palavras aparecem no texto, das mais às menos relevantes."""
-    text = normalize(f"{title}\n{body}")
+    text = normalize(f"{title}\n{question_text(body)}")
     scored = []
     for order, entry in enumerate(json.loads(FAQ_FILE.read_text(encoding="utf-8"))["entradas"]):
         hits = sum(1 for word in entry["palavras"] if re.search(rf"(?<![\w-]){re.escape(normalize(word))}(?![\w-])", text))
