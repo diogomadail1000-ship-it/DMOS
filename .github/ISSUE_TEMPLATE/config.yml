@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Dúvidas e ajuda
+    url: https://github.com/diogomadail1000-ship-it/DMOS/discussions/categories/q-a
+    about: Perguntas sobre instalar ou usar o DMOS. Responde a comunidade.
+  - name: Tutorial de instalação em vídeo
+    url: https://youtu.be/glLq_Hi9V1A
+    about: Os passos todos, do download ao primeiro dia.
+  - name: Descarregar o DMOS
+    url: https://sourceforge.net/projects/dmos/files/latest/download
+    about: A ISO mais recente, na SourceForge.

@@ -1,0 +1,94 @@
+name: Reportar um problema
+description: Algo não funciona como devia no DMOS.
+title: "[Problema] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por ajudar a melhorar o DMOS! Quanto mais detalhes der, mais depressa se resolve.
+        Tem uma dúvida e não um problema? Pergunte nas [Discussões](https://github.com/diogomadail1000-ship-it/DMOS/discussions).
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu?
+      description: Descreva o problema. Se puder, junte capturas de ecrã (pode arrastá-las para aqui).
+      placeholder: Ao abrir o DMOS Hub, as notícias não aparecem…
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como repetir o problema
+      description: Os passos, um por linha.
+      placeholder: |
+        1. Arranque a ISO em modo UEFI
+        2. Abra o Bem-vindo ao DMOS
+        3. …
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que esperava que acontecesse?
+    validations:
+      required: false
+  - type: dropdown
+    id: versao
+    attributes:
+      label: Versão do DMOS
+      options:
+        - 1.0 «Maré»
+        - Compilada a partir do código (indique o commit abaixo)
+    validations:
+      required: true
+  - type: dropdown
+    id: onde
+    attributes:
+      label: Onde está a usar o DMOS?
+      options:
+        - Máquina virtual (VirtualBox)
+        - Máquina virtual (VMware)
+        - Máquina virtual (QEMU/KVM, GNOME Boxes, virt-manager)
+        - Máquina virtual (Hyper-V)
+        - Computador real
+        - Outro (indique abaixo)
+    validations:
+      required: true
+  - type: dropdown
+    id: arranque
+    attributes:
+      label: Modo de arranque
+      options:
+        - UEFI
+        - BIOS (Legacy/CSM)
+        - Não sei
+    validations:
+      required: true
+  - type: dropdown
+    id: sessao
+    attributes:
+      label: Sessão
+      options:
+        - Sessão de demonstração (a correr da ISO ou da pen)
+        - Sistema instalado no disco
+    validations:
+      required: true
+  - type: textarea
+    id: sistema
+    attributes:
+      label: Informação do sistema
+      description: |
+        Abra o Konsole, corra `fastfetch` e cole aqui o resultado. Num computador real, diga também a placa gráfica e o Wi-Fi, se souber.
+      render: text
+    validations:
+      required: false
+  - type: checkboxes
+    id: verificacoes
+    attributes:
+      label: Antes de enviar
+      options:
+        - label: Procurei nos problemas já reportados e este ainda não está lá.
+          required: true
+        - label: Confirmei a ISO com o SHA256SUMS (só se o problema for no arranque ou na instalação).
+          required: false
