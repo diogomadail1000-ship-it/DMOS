@@ -1,0 +1,39 @@
+# Assistente da comunidade: responde a perguntas novas nas Discussões (Q&A e General)
+# e dá uma primeira resposta a Issues novos. Ver .github/assistente/responder.py.
+# Precisa do segredo ANTHROPIC_API_KEY (Settings › Secrets and variables › Actions).
+# Sem o segredo, o job termina sem fazer nada.
+name: Assistente da comunidade
+
+on:
+  discussion:
+    types: [created]
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  discussions: write
+  issues: write
+
+concurrency:
+  group: assistente-${{ github.event.discussion.number || github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  responder:
+    # Não responde a bots, para não haver respostas em cadeia.
+    if: github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "anthropic>=2.5,<3"
+      - name: Responder
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ASSISTENTE_MODELO: ${{ vars.ASSISTENTE_MODELO }}
+        run: python .github/assistente/responder.py
