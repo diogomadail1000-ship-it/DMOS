@@ -51,7 +51,7 @@
   // Vídeo: os capítulos põem o leitor do YouTube a tocar a partir desse ponto.
   document.querySelectorAll(".video").forEach(function (box) {
     var frame = box.querySelector("iframe");
-    box.closest("section").querySelectorAll(".chapters button").forEach(function (b) {
+    box.closest(".video-layout").querySelectorAll(".chapters button").forEach(function (b) {
       b.addEventListener("click", function () {
         frame.src = "https://www.youtube.com/embed/" + box.dataset.id +
           "?rel=0&autoplay=1&start=" + parseInt(b.dataset.start, 10);
