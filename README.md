@@ -3,6 +3,8 @@
 Distribuição Linux baseada no Debian 13 (trixie), com KDE Plasma 6 e uma identidade visual
 própria, gerada a partir do código deste repositório.
 
+*In English: see [About DMOS](#about-dmos-english).*
+
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
 
 **[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · **[▶ Programas essenciais](https://youtu.be/mBz9nvQ8iWE)** · **[▶ Personalizar o DMOS](https://youtu.be/X7Uiz9RR-KA)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
@@ -158,6 +160,47 @@ O site do projeto está em `docs/` (`index.html`, `style.css`, `main.js`) e usa 
 `docs/screenshots/`. Não precisa de compilação: abra `docs/index.html` no browser. Para o publicar
 no GitHub Pages, em **Settings > Pages** escolha **Deploy from a branch**, o ramo `main` e a pasta
 `/docs`.
+
+## About DMOS (English)
+
+DMOS is a Portuguese Linux distribution based on Debian 13 "trixie", featuring KDE Plasma 6 on
+Wayland and a complete visual identity of its own: boot menu (GRUB), splash screen (Plymouth),
+login screen (SDDM), a glass-style Plasma theme with light and dark variants, the procedural "Maré"
+wallpaper and a branded Calamares installer. All artwork and configuration are generated from the
+source code in this repository.
+
+Version 1.0 "Maré" also adds:
+
+- **Welcome to DMOS**: a first-run assistant (light or dark look, network, news sources, shortcuts).
+- **DMOS Hub**: a desktop widget with the time, a greeting and news from the sources you choose.
+  No source is enabled by default, so nothing is contacted until you opt in.
+- **Complete European Portuguese** translations, including the lock and logout screens.
+
+| | |
+|---|---|
+| Based on | Debian 13 "trixie" (stable) |
+| Desktop | KDE Plasma 6, Wayland by default |
+| Architecture | x86_64 (amd64) |
+| Boot | Hybrid ISO, BIOS and UEFI, live session |
+| Installer | Calamares |
+| Packages | APT (DEB), Flatpak |
+| Default language | European Portuguese (an English live session is in the boot menu) |
+| License | GPL-3.0-or-later; "Maré" wallpaper under CC BY-SA 4.0 |
+
+**Download:** [DMOS 1.0 ISO](https://sourceforge.net/projects/dmos/files/latest/download) (2.6 GB, on SourceForge), with `SHA256SUMS` and the source code of
+every package in the ISO in the [same folder](https://sourceforge.net/projects/dmos/files/1.0/).
+Requirements: 64-bit PC, 4 GB of RAM, 2 CPU cores, 15 GB of disk to install.
+
+**Testing status:** booting the ISO, the live desktop and a full install were tested on QEMU, in
+both BIOS and UEFI modes. Real hardware, Secure Boot, VMware and VirtualBox have not been tested yet.
+
+**Building:** on Windows with WSL 2, run `.\build.ps1` (see [Compilar a ISO](#compilar-a-iso)). It
+uses live-build inside a dedicated `dmos-builder` WSL instance.
+
+Website: <https://diogomadail1000-ship-it.github.io/DMOS/> · Videos (Portuguese):
+<https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ>
+
+DMOS is an independent project and is not affiliated with Debian or KDE.
 
 ## Licença
 
