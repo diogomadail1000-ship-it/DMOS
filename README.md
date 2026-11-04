@@ -5,7 +5,7 @@ própria, gerada a partir do código deste repositório.
 
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
 
-**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
+**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · **[▶ Programas essenciais](https://youtu.be/mBz9nvQ8iWE)** · **[▶ Personalizar o DMOS](https://youtu.be/X7Uiz9RR-KA)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
 
 ![Ambiente de trabalho escuro](docs/screenshots/4-ambiente-escuro.jpg)
 
