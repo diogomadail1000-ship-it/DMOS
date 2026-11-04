@@ -5,6 +5,8 @@ Dois vídeos em 1920x1080 a 30 fps, feitos a partir das capturas de `docs/screen
 - **Apresentação** (cerca de 65 s): `scene.html`, texto em `youtube.txt`.
 - **Tutorial** «Como experimentar e instalar o DMOS» (cerca de 2 min 50 s): `tutorial.html`, texto em
   `youtube-tutorial.txt`. As cenas, os destaques e as legendas estão na lista `SCENES`.
+- **7 dicas para o dia a dia** (cerca de 1 min 52 s): `dicas.html`, texto em `youtube-dicas.txt`. Os atalhos são
+  os do KDE Plasma 6. As ilustrações animadas estão em `artHtml` e `animateArt`.
 
 - `scene.html`: as cenas, as legendas e a miniatura, desenhadas em HTML. `seek(t)` mostra o instante `t`.
 - `music.py`: gera a música, original e sem direitos de terceiros (cerca de -14 LUFS).
@@ -20,6 +22,10 @@ node video/render.js video/out
 
 ```bash
 node video/render.js video/out tutorial.html dmos-tutorial
+```
+
+```bash
+node video/render.js video/out dicas.html dmos-dicas
 ```
 
 Cada um cria, em `video/out/`, o vídeo (`NOME.mp4`), a miniatura (`NOME-miniatura.png`) e a música
