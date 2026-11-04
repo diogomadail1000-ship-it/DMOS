@@ -21,7 +21,9 @@ O [tutorial em vídeo](https://youtu.be/glLq_Hi9V1A) mostra todos os passos, do 
 
 A ISO não faz parte do repositório, por ser demasiado grande para o GitHub. Depois de a
 [compilar](#compilar-a-iso), fica em `dist/dmos-1.0-mare-amd64.hybrid.iso`, com o checksum em
-`dist/SHA256SUMS`.
+`dist/SHA256SUMS`. Na mesma pasta fica o arquivo com o código-fonte de todos os pacotes da ISO
+(`dmos-1.0-mare-source.*`). Quem publicar a ISO deve publicar também este arquivo, porque a GPL pede que
+o código-fonte acompanhe os binários.
 
 - **Numa máquina virtual** (VirtualBox, VMware, Hyper-V): tipo Linux/Debian 64 bits, pelo menos
   4 GB de RAM e 2 CPUs. Ative a aceleração 3D, se existir.

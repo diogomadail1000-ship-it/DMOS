@@ -1,7 +1,7 @@
 #!/bin/bash
 # Builds the DMOS ISO. Runs as root inside the "dmos-builder" WSL instance.
 #   build.sh chroot   only install the system (useful for theme development)
-#   build.sh iso      full build; the ISO is copied to <project>/dist
+#   build.sh iso      full build; the ISO and the source archive are copied to <project>/dist
 #   build.sh clean    drops the chroot and binary trees but keeps the package cache
 set -euo pipefail
 
@@ -43,7 +43,16 @@ case "$ACTION" in
         lb build
         mkdir -p "$SRC/dist"
         cp -v "$WORK"/dmos-*.iso "$SRC/dist/"
-        (cd "$SRC/dist" && sha256sum dmos-*.iso > SHA256SUMS)
+        # Code-source of every package in the ISO (lb config --source true). It must be published next to
+        # the ISO: the GPL asks that whoever distributes the binaries also offers the matching sources.
+        shopt -s nullglob
+        sources=("$WORK"/dmos-*source*)
+        if [ ${#sources[@]} -gt 0 ]; then
+            cp -v "${sources[@]}" "$SRC/dist/"
+        else
+            echo "Aviso: não encontrei o arquivo de código-fonte em $WORK." >&2
+        fi
+        (cd "$SRC/dist" && sha256sum dmos-* > SHA256SUMS)
         ;;
     clean)
         cd "$WORK"
