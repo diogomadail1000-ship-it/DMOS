@@ -1,0 +1,48 @@
+TÍTULO
+Deixe o DMOS à sua medida: 8 ajustes do KDE Plasma 6 para o dia a dia
+
+DESCRIÇÃO
+Oito ajustes simples para pôr o DMOS a trabalhar como quer, e como voltar ao visual original.
+
+🛠️ Os ajustes
+1. Fixar aplicações na dock
+2. Escolher os favoritos do menu
+3. Mais áreas de trabalho (Ctrl + F1, F2…)
+4. Decidir quando a dock aparece
+5. Acrescentar widgets
+6. Criar os seus atalhos
+7. Ligar a luz noturna
+8. Abrir aplicações ao entrar na sessão
++ Repor o visual com DMOS Maré Escuro ou DMOS Maré Claro
+
+💡 Para encontrar cada opção, use a caixa de procura das Definições do Sistema.
+
+Como é o seu DMOS? Mostre nos comentários! 👇
+
+⌨️ 7 dicas para o dia a dia: https://youtu.be/r8VG6ZlcGRY
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+
+Capítulos
+0:00 Introdução
+0:11 Fixar aplicações na dock
+0:21 Favoritos no menu
+0:31 Áreas de trabalho
+0:42 Mostrar ou esconder a dock
+0:52 Widgets
+1:02 Atalhos seus
+1:12 Luz noturna
+1:23 Abrir aplicações ao entrar
+1:33 Repor o visual do DMOS
+
+As animações são ilustrações. Os nomes dos menus podem variar ligeiramente com a versão do Plasma.
+Música original gerada para este vídeo.
+
+ETIQUETAS
+DMOS, KDE Plasma 6, personalizar Linux, Linux produtividade, dock, widgets, luz noturna, atalhos, Linux português
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-personalizar-miniatura.png (1280x720), gerada por video/render.js

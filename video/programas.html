@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: programas essenciais</title>
+<!--
+  "Programas essenciais para instalar depois do DMOS" (1920x1080). Usa lista.css e lista.js.
+  Gerar: node video/render.js video/out programas.html dmos-programas
+  Os identificadores são os do Flathub. O DMOS traz o Flatpak e o Discover, mas não o repositório Flathub.
+  Sem logótipos de terceiros: cada programa tem só uma letra numa cor.
+-->
+<link rel="stylesheet" href="lista.css">
+<style>
+  .term2 { position: absolute; left: 40px; right: 40px; top: 60px; bottom: 60px; border-radius: 18px; background: #0A0E1C; border: 1px solid rgba(255,255,255,0.14); overflow: hidden; }
+  .term2 .bar { height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #10162A; color: var(--muted); font-size: 17px; }
+  .term2 .bar i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .term2 .out { padding: 22px 24px; font-family: "JetBrains Mono", monospace; font-size: 22px; line-height: 1.6; word-break: break-all; }
+  .term2 .p { color: #4ADE80; }
+  .term2 .ok { color: var(--accent); }
+  .term2 .cur { display: inline-block; width: 12px; height: 24px; background: var(--text); vertical-align: -4px; }
+  .chips { position: absolute; inset: 0; padding: 50px; display: flex; flex-wrap: wrap; align-content: center; }
+  .chips .chip { font-size: 28px; padding: 12px 22px; }
+  #thumbnail .ttext { position: absolute; left: 90px; top: 160px; width: 1000px; }
+  #thumbnail .tbig { font-size: 132px; font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; }
+  #thumbnail .tiles { position: absolute; right: 90px; top: 170px; display: grid; grid-template-columns: repeat(3, 200px); gap: 30px; }
+  #thumbnail .tiles div { height: 200px; border-radius: 48px; display: grid; place-items: center; font-size: 96px; font-weight: 900; color: #0C1122; box-shadow: 0 30px 60px rgba(0,0,0,0.45); }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"></div>
+  <div id="thumbnail">
+    <div class="backdrop"></div><div class="dim"></div>
+    <div class="ttext"><div class="tbig">Programas<br><span class="tide-text">essenciais</span><br>para o DMOS</div></div>
+    <div class="tiles">
+      <div style="background:#7CC8FF">T</div><div style="background:#FFB86B">G</div><div style="background:#C4A5FF">K</div>
+      <div style="background:#FF8A70">O</div><div style="background:#4ADE80">K</div><div style="background:#5EEAD4">S</div>
+    </div>
+  </div>
+<script>
+var CMD_FLATHUB = "flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo";
+function app(letter, color, name, what, id) { return { letter: letter, color: color, name: name, what: what, id: id }; }
+
+window.VIDEO = {
+  mark: "DMOS · Programas",
+  itemWord: "Programa",
+  intro: { title: 'Programas <span class="tide-text">essenciais</span><br>depois de instalar o DMOS', sub: "Do email aos jogos, tudo grátis e a dois cliques" },
+  index: "Neste vídeo",
+  outro: { title: 'E o seu programa <span class="tide-text">indispensável?</span>', sub: "Deixe a sugestão nos comentários. Pode entrar no próximo vídeo." },
+  pre: [
+    { num: "✓", label: "Já vem no DMOS", title: "Antes de instalar, veja o que já tem",
+      desc: "O DMOS já traz o essencial para o dia a dia, em português.", art: "included" },
+    { num: "0", label: "Primeiro passo", title: "Ative o Flathub",
+      desc: "O Flathub é a maior loja de aplicações Flatpak. O DMOS já traz o Flatpak, falta só ligar o repositório. Faz-se uma vez, no terminal:",
+      art: "flathub" }
+  ],
+  items: [
+    { label: "Email", short: "Email: Thunderbird", title: "Thunderbird", desc: "Email, calendário e contactos num só programa. Funciona com Gmail, Outlook e outros.",
+      art: "apps", apps: [app("T", "#7CC8FF", "Thunderbird", "Email e calendário", "org.mozilla.Thunderbird")] },
+    { label: "Imagem", short: "Imagem: GIMP e Krita", title: "GIMP e Krita", desc: "O <b>GIMP</b> edita fotografias. O <b>Krita</b> é para desenho e pintura digital.",
+      art: "apps", apps: [app("G", "#FFB86B", "GIMP", "Edição de imagem", "org.gimp.GIMP"), app("K", "#C4A5FF", "Krita", "Desenho e pintura", "org.kde.krita")] },
+    { label: "Vídeo", short: "Vídeo: Kdenlive e OBS", title: "Kdenlive e OBS Studio", desc: "O <b>Kdenlive</b> monta vídeos. O <b>OBS Studio</b> grava o ecrã e faz diretos.",
+      art: "apps", apps: [app("K", "#46B6E0", "Kdenlive", "Edição de vídeo", "org.kde.kdenlive"), app("O", "#FF8A70", "OBS Studio", "Gravação e diretos", "com.obsproject.Studio")] },
+    { label: "Segurança", short: "Palavras-passe: KeePassXC", title: "KeePassXC", desc: "Guarda as suas palavras-passe num ficheiro cifrado, no seu computador.",
+      art: "apps", apps: [app("K", "#4ADE80", "KeePassXC", "Gestor de palavras-passe", "org.keepassxc.KeePassXC")] },
+    { label: "Mensagens", short: "Mensagens: Signal e Telegram", title: "Signal e Telegram", desc: "As suas conversas também no computador, ligadas à aplicação do telemóvel.",
+      art: "apps", apps: [app("S", "#7CC8FF", "Signal", "Mensagens cifradas", "org.signal.Signal"), app("T", "#5EEAD4", "Telegram", "Mensagens e canais", "org.telegram.desktop")] },
+    { label: "Jogos", short: "Jogos: Steam", title: "Steam", desc: "A loja de jogos da Valve. Muitos jogos de Windows correm no Linux através do Proton.",
+      art: "apps", apps: [app("S", "#C4A5FF", "Steam", "Jogos", "com.valvesoftware.Steam")] },
+    { label: "Utilitário", short: "Permissões: Flatseal", title: "Flatseal", desc: "Mostra e muda as permissões de cada aplicação Flatpak: ficheiros, câmara, rede e outras.",
+      art: "apps", apps: [app("F", "#FFC38A", "Flatseal", "Permissões das aplicações Flatpak", "com.github.tchx84.Flatseal")] }
+  ],
+  bonusIndex: "Como instalar",
+  bonus: [
+    { label: "Como instalar", title: "Pelo Discover", desc: "Abra o <b>Discover</b> na dock, procure o nome do programa e carregue em <b>Instalar</b>. As atualizações também aparecem lá.", art: "discover" },
+    { label: "Como instalar", title: "Ou pelo terminal", desc: "Use o identificador que aparece neste vídeo, por exemplo:",
+      cmd: '<span class="p">$</span> flatpak install flathub org.gimp.GIMP', art: "install" }
+  ],
+  artHtml: function (art, s) {
+    var desk = '<div class="desk"></div>';
+    if (art === "apps") {
+      return desk + '<div class="apps">' + s.apps.map(function (a) {
+        return '<div class="app"><div class="tile" style="background:' + a.color + '">' + a.letter + '</div><div><div class="name">' + a.name + '</div><div class="what">' + a.what + '</div><div class="id">' + a.id + '</div></div></div>';
+      }).join("") + '</div>';
+    }
+    if (art === "included") {
+      return desk + '<div class="chips">' + ["Firefox", "LibreOffice", "Dolphin", "Konsole", "Kate", "Okular", "Gwenview", "Elisa", "VLC", "Spectacle", "Ark", "KCalc", "Discover", "Gestor de Partições"]
+        .map(function (n) { return '<span class="chip">' + n + '</span>'; }).join("") + '</div>';
+    }
+    if (art === "flathub" || art === "install") {
+      return desk + '<div class="term2"><div class="bar"><i style="background:#FF7A6B"></i><i style="background:#F5BE5B"></i><i style="background:#2DD4BF"></i><span style="margin-left:10px">Konsole</span></div><div class="out"></div></div>';
+    }
+    if (art === "discover") {
+      return '<div class="real" style="background-image:url(../docs/screenshots/4-ambiente-escuro.jpg)"></div><div class="spot discoverspot"></div>';
+    }
+    return desk;
+  },
+  animateArt: function (s, el, a, local) {
+    var L = window.L;
+    if (s.art === "apps") {
+      el.querySelectorAll(".app").forEach(function (x, j) {
+        var k = L.out((local - 1.4 - j * 0.6) / 0.6);
+        x.style.opacity = k;
+        x.style.transform = "translateX(" + (1 - k) * 50 + "px)";
+      });
+    } else if (s.art === "included") {
+      el.querySelectorAll(".chip").forEach(function (c, j) { var k = L.out((local - 1.2 - j * 0.15) / 0.4); c.style.opacity = k; c.style.transform = "scale(" + L.lerp(0.8, 1, k) + ")"; });
+    } else if (s.art === "flathub" || s.art === "install") {
+      var cmd = s.art === "flathub" ? CMD_FLATHUB : "flatpak install flathub org.gimp.GIMP";
+      var n = Math.max(0, Math.floor((local - 1.6) * 30));
+      var html = '<span class="p">dmos@dmos</span>:~$ ' + cmd.slice(0, n);
+      if (n >= cmd.length) {
+        var after = local - 1.6 - cmd.length / 30;
+        if (s.art === "flathub") {
+          if (after > 0.6) html += '<br><span class="p">dmos@dmos</span>:~$ <span class="cur"></span>';
+          if (after > 1.0) html += '<br><br><span class="ok">Pronto: abra o Discover e procure qualquer programa do Flathub.</span>';
+        } else if (after > 0.6) {
+          html += '<br><span class="ok">Confirme com «s» e espere que termine.</span>';
+        }
+      } else {
+        html += '<span class="cur"></span>';
+      }
+      el.querySelector(".out").innerHTML = html;
+    } else if (s.art === "discover") {
+      var sp = el.querySelector(".discoverspot");
+      // Ícone do Discover na dock: (1188, 1008) a (1242, 1064) na captura de 1920x1080, que aqui cobre 880x640.
+      var sc = 640 / 1080, ox = (880 - 1920 * sc) / 2;
+      L.box(sp, 1180 * sc + ox, 1000 * sc, 70 * sc, 70 * sc);
+      var k = L.out((local - 1.6) / 0.6);
+      sp.style.opacity = k;
+      sp.style.transform = "scale(" + L.lerp(1.6, 1, k) * (1 + 0.05 * Math.sin(Math.max(0, local - 2.2) * 4)) + ")";
+    }
+  }
+};
+</script>
+<script src="lista.js"></script>
+</body>
+</html>

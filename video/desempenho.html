@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: comparativo de desempenho</title>
+<!--
+  Comparativo de desempenho (1920x1080). Os números vêm SÓ de desempenho-dados.js, gerado a partir
+  de medições reais com medir.sh e medicoes-para-video.py. Sem dados, a página diz que faltam medições
+  e render.js recusa-se a gerar o vídeo (window.TOTAL fica a 0).
+  Gerar: node video/render.js video/out desempenho.html dmos-desempenho
+-->
+<link rel="stylesheet" href="lista.css">
+<style>
+  .chart { position: absolute; left: 160px; right: 160px; top: 330px; }
+  .bar-row { display: grid; grid-template-columns: 340px 1fr; align-items: center; gap: 26px; margin-bottom: 26px; }
+  .bar-name { font-size: 34px; font-weight: 700; text-align: right; color: var(--text); }
+  .bar-track { position: relative; height: 56px; }
+  .bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 6px 6px 0; background: #6B7594; }
+  .bar.me { background: #2DD4BF; }
+  .bar-val { position: absolute; top: 50%; transform: translateY(-50%); font-size: 30px; font-weight: 800; color: var(--text); white-space: nowrap; padding-left: 18px; }
+  .axis { position: absolute; left: 366px; top: -16px; bottom: 0; width: 2px; background: rgba(255,255,255,0.25); }
+  .head { position: absolute; left: 160px; right: 160px; top: 120px; }
+  .head .label { margin-top: 0; }
+  .head .title { font-size: 74px; }
+  .head .desc { font-size: 30px; }
+  .foot { position: absolute; left: 160px; right: 160px; bottom: 70px; font-size: 24px; color: var(--muted); }
+  .missing { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 200px; }
+  .missing h1 { font-size: 80px; margin: 0; letter-spacing: -0.03em; }
+  .missing p { font-size: 34px; color: var(--muted); }
+  .missing code { font-family: "JetBrains Mono", monospace; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"><img src="../art/logo.svg" alt="">DMOS · Comparativo</div>
+  <div id="thumbnail"><div class="backdrop"></div><div class="dim"></div>
+    <div class="center"><div class="big" style="margin-top:0;font-size:150px"><span class="tide-text">DMOS</span> vs<br>outras distros</div><div class="sub" style="font-size:48px">Medido, não adivinhado</div></div></div>
+<script src="desempenho-dados.js"></script>
+<script>
+(function () {
+  var D = window.DADOS || { distros: [] };
+  var stage = document.getElementById("stage");
+  if (D.distros.length < 2) {
+    stage.innerHTML = '<div class="backdrop"></div><div class="dim"></div><div class="missing"><h1>Faltam medições</h1>' +
+      '<p>Este vídeo só usa números reais. Corra <code>video/medir.sh</code> em cada distribuição (pelo menos duas) e depois <code>video/medicoes-para-video.py</code>.</p></div>';
+    window.TOTAL = 0;
+    window.seek = function () {};
+    window.thumbnail = function () { document.body.classList.add("thumb"); };
+    return;
+  }
+
+  var METRICS = [
+    { key: "ram_mb", label: "Memória", title: "Memória usada depois de entrar", desc: "Medida 2 minutos depois de iniciar a sessão, sem nada aberto. Menos é melhor.", fmt: function (v) { return Math.round(v) + " MB"; } },
+    { key: "boot_s", label: "Arranque", title: "Tempo de arranque", desc: "Segundo o <b>systemd-analyze</b>, do arranque até o sistema estar pronto. Menos é melhor.", fmt: function (v) { return v.toFixed(1).replace(".", ",") + " s"; } },
+    { key: "disk_mb", label: "Disco", title: "Espaço ocupado depois de instalar", desc: "Instalação com as opções por omissão. Menos ocupa menos disco, mas também pode significar menos aplicações incluídas.", fmt: function (v) { return (v / 1024).toFixed(1).replace(".", ",") + " GB"; } },
+    { key: "packages", label: "Pacotes", title: "Pacotes instalados", desc: "Quantos pacotes vêm de origem. Não é melhor nem pior: mostra o que cada uma inclui.", fmt: function (v) { return Math.round(v) + ""; } }
+  ];
+
+  var SCENES = [{ type: "intro", dur: 6 }, { type: "method", dur: 9 }];
+  METRICS.forEach(function (m) {
+    var rows = D.distros.filter(function (d) { return d[m.key] !== null && d[m.key] !== undefined; });
+    if (rows.length >= 2) SCENES.push({ type: "metric", m: m, rows: rows.sort(function (a, b) { return a[m.key] - b[m.key]; }), dur: 9 });
+  });
+  SCENES.push({ type: "outro", dur: 8 });
+
+  var FADE = 0.7, start = 0;
+  SCENES.forEach(function (s) {
+    s.start = start; start += s.dur - FADE;
+    var el = document.createElement("div");
+    el.className = "scene";
+    var bg = '<div class="backdrop"></div><div class="dim"></div>';
+    if (s.type === "intro") {
+      el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt=""><div class="big"><span class="tide-text">DMOS</span> vs outras<br>distribuições</div><div class="sub">Memória, arranque e disco, medidos nas mesmas condições</div></div>';
+    } else if (s.type === "method") {
+      el.innerHTML = bg + '<div class="center"><div class="big" style="font-size:72px;margin-top:0">Como medimos</div><div class="grid7" style="grid-template-columns:1fr;width:1200px">' +
+        '<div class="gi"><b>1</b>Mesma máquina virtual para todas: ' + D.conditions + '</div>' +
+        '<div class="gi"><b>2</b>Instalação com as opções por omissão</div>' +
+        '<div class="gi"><b>3</b>Medido 2 minutos depois de entrar, sem nada aberto</div>' +
+        '<div class="gi"><b>4</b>Mediana de ' + Math.min.apply(null, D.distros.map(function (d) { return d.runs; })) + ' ou mais medições por sistema</div></div></div>';
+    } else if (s.type === "metric") {
+      var max = Math.max.apply(null, s.rows.map(function (d) { return d[s.m.key]; }));
+      el.innerHTML = bg + '<div class="head"><div class="label">' + s.m.label + '</div><div class="title">' + s.m.title + '</div><div class="desc">' + s.m.desc + '</div></div>' +
+        '<div class="chart"><div class="axis"></div>' + s.rows.map(function (d) {
+          var me = /dmos/i.test(d.name);
+          return '<div class="bar-row"><div class="bar-name">' + d.name + '</div><div class="bar-track"><div class="bar' + (me ? " me" : "") + '" data-w="' + (d[s.m.key] / max * 85) + '"></div><div class="bar-val">' + s.m.fmt(d[s.m.key]) + '</div></div></div>';
+        }).join("") + '</div><div class="foot">Condições: ' + D.conditions + '</div>';
+    } else {
+      el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="" style="width:140px;height:140px"><div class="big" style="font-size:84px">Que distribuição <span class="tide-text">compararia a seguir?</span></div><div class="sub">Diga nos comentários. O script de medição está no GitHub.</div>' +
+        '<div class="links"><div class="link"><em>Código</em>github.com/diogomadail1000-ship-it/DMOS</div></div></div>';
+    }
+    stage.appendChild(el); s.el = el;
+  });
+  window.TOTAL = start + FADE;
+
+  function clamp(x) { return Math.max(0, Math.min(1, x)); }
+  function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+  function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+  function rise(el, local, t0, dist) { if (!el) return; var k = out((local - t0) / 0.7); el.style.opacity = k; el.style.transform = "translateY(" + (1 - k) * (dist || 30) + "px)"; }
+
+  window.seek = function (t) {
+    SCENES.forEach(function (s, i) {
+      var local = t - s.start, el = s.el;
+      if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+      el.style.display = "block";
+      var fin = i === 0 ? clamp(local / 0.6) : clamp(local / FADE);
+      var fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 1.0) : clamp((s.dur - local) / FADE);
+      el.style.opacity = Math.min(ease(fin), ease(fout));
+      el.style.zIndex = i;
+      el.querySelector(".backdrop").style.transform = "scale(" + (1.05 + 0.1 * local / s.dur) + ")";
+      if (s.type === "metric") {
+        rise(el.querySelector(".label"), local, 0.2, 20); rise(el.querySelector(".title"), local, 0.35, 26); rise(el.querySelector(".desc"), local, 0.6, 22);
+        rise(el.querySelector(".foot"), local, 1.0, 10);
+        el.querySelectorAll(".bar-row").forEach(function (r, j) {
+          rise(r, local, 1.0 + j * 0.15, 16);
+          var bar = r.querySelector(".bar"), w = parseFloat(bar.getAttribute("data-w"));
+          var k = ease((local - 1.4 - j * 0.15) / 1.2);
+          bar.style.width = w * k + "%";
+          var val = r.querySelector(".bar-val");
+          val.style.left = w * k + "%";
+          val.style.opacity = clamp((local - 2.4 - j * 0.15) / 0.4);
+        });
+      } else if (s.type === "method") {
+        rise(el.querySelector(".big"), local, 0.2, 26);
+        el.querySelectorAll(".gi").forEach(function (g, j) { rise(g, local, 0.7 + j * 0.3, 24); });
+      } else {
+        var logo = el.querySelector(".logo"); var kl = out((local - 0.2) / 1.0);
+        logo.style.opacity = kl; logo.style.transform = "scale(" + (0.7 + 0.3 * kl) + ")";
+        rise(el.querySelector(".big"), local, 0.7, 40); rise(el.querySelector(".sub"), local, 1.3, 30);
+        el.querySelectorAll(".link").forEach(function (l, j) { rise(l, local, 2.0 + j * 0.35, 30); });
+      }
+    });
+    var wm = document.getElementById("wm");
+    wm.style.opacity = 0.8 * Math.min(clamp((t - SCENES[1].start - 0.5) / 0.8), clamp((SCENES[SCENES.length - 1].start - t) / 0.8));
+  };
+  window.thumbnail = function () { document.body.classList.add("thumb"); };
+  window.seek(0);
+})();
+</script>
+</body>
+</html>
