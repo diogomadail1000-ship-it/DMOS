@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: short escuro ou claro</title>
+<!--
+  YouTube Short vertical (1080x1920, ~20 s): "Escuro ou claro?". Usa só capturas reais dos dois temas.
+  Gerar: node video/render.js video/out short-tema.html dmos-short-tema
+  O texto fica entre y=230 e y=1500 e longe da margem direita, fora das zonas que o YouTube tapa.
+-->
+<style>
+  :root { --text: #E8ECF5; --muted: #B4BCD2; --accent: #2DD4BF; --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0C1122; color: var(--text); font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .half { position: absolute; left: 0; right: 0; overflow: hidden; }
+  .half img { position: absolute; top: 0; height: 100%; will-change: transform; }
+  .tag { position: absolute; left: 60px; display: inline-flex; align-items: center; gap: 16px; font-size: 44px; font-weight: 800; padding: 16px 30px; border-radius: 999px; }
+  .tag svg { width: 44px; height: 44px; }
+  .tag.dark { background: rgba(12, 17, 34, 0.85); color: #E8ECF5; border: 2px solid rgba(255,255,255,0.18); }
+  .tag.light { background: rgba(255, 255, 255, 0.92); color: #1A2238; border: 2px solid rgba(26,34,56,0.12); }
+  .line { position: absolute; left: 0; right: 0; height: 8px; background: var(--tide); }
+  .full { position: absolute; inset: 0; }
+  .full img { position: absolute; top: 0; height: 100%; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,11,24,0.9) 0%, rgba(8,11,24,0.55) 22%, rgba(8,11,24,0) 36%); }
+  .cap { position: absolute; left: 70px; right: 140px; top: 250px; }
+  .kicker { font-size: 34px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .title { font-size: 100px; font-weight: 900; letter-spacing: -0.04em; line-height: 0.98; text-shadow: 0 6px 30px rgba(0,0,0,0.45); }
+  .hook { position: absolute; left: 70px; right: 70px; text-align: center; font-weight: 900; letter-spacing: -0.045em; line-height: 1; text-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+  .backdrop { position: absolute; inset: -100px; background: url(../docs/screenshots/4-ambiente-escuro.jpg) 62% 70% / auto 120%; filter: blur(30px) saturate(1.3); }
+  .dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(12,17,34,0.3), rgba(12,17,34,0.88)); }
+  .center { position: absolute; left: 70px; right: 140px; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .big { font-size: 150px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.95; }
+  .sub { font-size: 50px; font-weight: 600; color: var(--muted); margin-top: 30px; }
+  .choices { display: grid; gap: 30px; margin-top: 70px; width: 100%; }
+  .choice { display: flex; align-items: center; justify-content: center; gap: 22px; font-size: 64px; font-weight: 900; padding: 34px; border-radius: 40px; }
+  .choice svg { width: 70px; height: 70px; }
+  .choice.dark { background: #11172B; border: 3px solid rgba(255,255,255,0.2); }
+  .choice.light { background: #F3F6FA; color: #1A2238; }
+  .logo { width: 150px; height: 150px; margin-bottom: 40px; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+<script>
+window.SIZE = [1080, 1920];
+window.MUSIC_BAR = 2.4;
+var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';
+var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+var CUT = 0.3;
+var D = "../docs/screenshots/4-ambiente-escuro.jpg", Lt = "../docs/screenshots/7-tema-claro.jpg";
+var SCENES = [
+  { type: "hook", dur: 2.8 },
+  { type: "split", dur: 5.2 },
+  { type: "wipe", dur: 4.6 },
+  { type: "welcome", dur: 3.6 },
+  { type: "cta", dur: 5.2 }
+];
+var stage = document.getElementById("stage");
+var start = 0;
+SCENES.forEach(function (s) {
+  s.start = start; start += s.dur - CUT;
+  var el = document.createElement("div"); el.className = "scene";
+  if (s.type === "hook") {
+    el.innerHTML = '<div class="half" style="top:0;height:960px"><img class="i1" src="' + D + '"></div>' +
+      '<div class="half" style="top:960px;height:960px"><img class="i2" src="' + Lt + '"></div><div class="line" style="top:956px"></div>' +
+      '<div class="hook h1" style="top:520px;font-size:200px">Escuro</div><div class="hook h2" style="top:900px;font-size:110px"><span style="background:#0C1122;padding:0 30px;border-radius:30px">ou</span></div>' +
+      '<div class="hook h3" style="top:1150px;font-size:190px;color:#1A2238;text-shadow:none"><span style="background:#F3F6FA;padding:0 44px 14px;border-radius:44px;box-shadow:0 20px 60px rgba(0,0,0,0.3)">claro?</span></div>';
+  } else if (s.type === "split") {
+    el.innerHTML = '<div class="half" style="top:0;height:960px"><img class="i1" src="' + D + '"></div>' +
+      '<div class="half" style="top:960px;height:960px"><img class="i2" src="' + Lt + '"></div><div class="line" style="top:956px"></div>' +
+      '<div class="tag dark" style="top:250px">' + MOON + 'DMOS Maré Escuro</div><div class="tag light" style="top:1060px">' + SUN + 'DMOS Maré Claro</div>';
+  } else if (s.type === "wipe") {
+    el.innerHTML = '<div class="full"><img class="i1" src="' + D + '"></div><div class="full lightlayer"><img class="i2" src="' + Lt + '"></div><div class="shade"></div>' +
+      '<div class="cap"><div class="kicker">Num clique</div><div class="title">Muda tudo de uma vez</div></div>';
+  } else if (s.type === "welcome") {
+    el.innerHTML = '<div class="full"><img class="i1" src="../docs/screenshots/9-bem-vindo.jpg"></div><div class="shade"></div>' +
+      '<div class="cap"><div class="kicker">Bem-vindo ao DMOS</div><div class="title">Escolhes logo na primeira sessão</div></div>';
+  } else {
+    el.innerHTML = '<div class="backdrop"></div><div class="dim"></div><div class="center"><img class="logo" src="../art/logo.svg" alt="">' +
+      '<div class="big">E tu?</div><div class="sub">Responde nos comentários</div>' +
+      '<div class="choices"><div class="choice dark">' + MOON + 'Escuro</div><div class="choice light">' + SUN + 'Claro</div></div></div>';
+  }
+  stage.appendChild(el); s.el = el;
+});
+window.TOTAL = start + CUT;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function back(x) { x = clamp(x); var c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function pop(el, local, t0, from) {
+  if (!el) return; var k = clamp((local - t0) / 0.45);
+  el.style.opacity = out(k); el.style.transform = "translateY(" + (1 - out(k)) * 40 + "px) scale(" + lerp(from || 0.85, 1, back(k)) + ")";
+}
+// Imagem 1920x1080 com a altura do contentor; cx é o ponto (na captura) que fica ao centro.
+function place(img, boxW, boxH, cx, zoom) {
+  var k = boxH / 1080 * (zoom || 1), w = 1920 * k;
+  var left = Math.min(0, Math.max(boxW - w, boxW / 2 - cx * k));
+  img.style.height = 1080 * k + "px"; img.style.left = left + "px";
+}
+
+window.seek = function (t) {
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start, el = s.el;
+    if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+    el.style.display = "block"; el.style.zIndex = i;
+    var fin = i === 0 ? 1 : clamp(local / CUT), fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 0.8) : 1;
+    el.style.opacity = Math.min(ease(fin), ease(fout));
+    var p = local / s.dur;
+    if (s.type === "hook" || s.type === "split") {
+      place(el.querySelector(".i1"), 1080, 960, lerp(700, 1000, p), 1.05);
+      // No tema claro, o centro da captura é o Konsole (escuro); mostra-se a direita, onde se vê o ambiente claro.
+      place(el.querySelector(".i2"), 1080, 960, lerp(1920, 1700, p), 1.4);
+      if (s.type === "hook") {
+        pop(el.querySelector(".h1"), local, 0.05, 0.6); pop(el.querySelector(".h2"), local, 0.45); pop(el.querySelector(".h3"), local, 0.75, 0.6);
+      } else {
+        pop(el.querySelector(".tag.dark"), local, 0.3); pop(el.querySelector(".tag.light"), local, 0.6);
+      }
+    } else if (s.type === "wipe") {
+      place(el.querySelector(".i1"), 1080, 1920, 1750, 1.0);
+      place(el.querySelector(".i2"), 1080, 1920, 1750, 1.0);
+      // Troca entre escuro e claro duas vezes, de cima para baixo.
+      var c = (local - 0.6) / 1.4, ph = Math.floor(c), f = ease(c - ph);
+      var shown = c < 0 ? 0 : (ph % 2 === 0 ? f : 1 - f);
+      el.querySelector(".lightlayer").style.clipPath = "inset(0 0 " + (100 - 100 * shown) + "% 0)";
+      pop(el.querySelector(".kicker"), local, 0.15); pop(el.querySelector(".title"), local, 0.3);
+    } else if (s.type === "welcome") {
+      place(el.querySelector(".i1"), 1080, 1920, lerp(900, 1000, p), lerp(1.0, 1.06, p));
+      pop(el.querySelector(".kicker"), local, 0.15); pop(el.querySelector(".title"), local, 0.3);
+    } else {
+      var logo = el.querySelector(".logo"), lk = clamp(local / 0.6);
+      logo.style.opacity = out(lk); logo.style.transform = "scale(" + lerp(0.5, 1, back(lk)) + ")";
+      pop(el.querySelector(".big"), local, 0.2, 0.7); pop(el.querySelector(".sub"), local, 0.6);
+      el.querySelectorAll(".choice").forEach(function (c, j) {
+        pop(c, local, 1.0 + j * 0.3);
+        if (local > 2.2) c.style.transform += " scale(" + (1 + 0.03 * Math.sin((local - 2.2) * 5 + j * Math.PI)) + ")";
+      });
+    }
+  });
+};
+window.thumbnail = function () { window.seek(1.6); };
+window.seek(location.hash ? parseFloat(location.hash.slice(1)) || 0 : 0);
+</script>
+</body>
+</html>
