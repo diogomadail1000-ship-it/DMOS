@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: 7 dicas</title>
+<!--
+  "7 dicas para o dia a dia no DMOS" (1920x1080, ~2 min). seek(t) mostra o instante t; thumbnail() a miniatura.
+  Gerar: node video/render.js video/out dicas.html dmos-dicas
+  Os atalhos são os do KDE Plasma 6; o Alt+Tab em grelha vem de live/.../etc/xdg/kwinrc (TabBox).
+  As ilustrações são desenhos animados, não capturas; as dicas bónus usam capturas reais.
+-->
+<style>
+  :root { --text: #E8ECF5; --muted: #A7B0C8; --accent: #2DD4BF; --panel: rgba(17, 23, 43, 0.7); --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0C1122; color: var(--text); font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; }
+  .backdrop { position: absolute; inset: -80px; background: url(../docs/screenshots/4-ambiente-escuro.jpg) center 70% / cover; filter: blur(28px) saturate(1.25); }
+  .dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(12,17,34,0.5), rgba(12,17,34,0.9)); }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Dica: texto à esquerda, ilustração à direita */
+  .left { position: absolute; left: 120px; top: 0; bottom: 0; width: 720px; display: flex; flex-direction: column; justify-content: center; }
+  .num { font-size: 150px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.9; }
+  .label { font-size: 26px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-top: 26px; }
+  .title { font-size: 66px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-top: 12px; }
+  .desc { font-size: 31px; color: var(--muted); line-height: 1.4; margin-top: 20px; }
+  .desc b { color: var(--text); }
+  .keys { display: flex; align-items: center; gap: 16px; margin-top: 40px; }
+  .plus { font-size: 40px; font-weight: 700; color: var(--muted); }
+  .key {
+    min-width: 96px;
+    height: 96px;
+    padding: 0 28px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--text);
+    background: linear-gradient(180deg, #232C4C, #1A2240);
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 0 #0B1022, 0 14px 30px rgba(0, 0, 0, 0.45);
+  }
+  .key.down { transform: translateY(6px); box-shadow: 0 2px 0 #0B1022, 0 0 34px rgba(45, 212, 191, 0.55); border-color: var(--accent); color: var(--accent); }
+
+  .stagebox {
+    position: absolute;
+    left: 930px;
+    top: 220px;
+    width: 880px;
+    height: 640px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
+    background: #0C1122;
+  }
+  .desk { position: absolute; inset: 0; background: url(../docs/screenshots/4-ambiente-escuro.jpg) center / cover; }
+  .desk::after { content: ""; position: absolute; inset: 0; background: rgba(8, 11, 24, 0.25); }
+  .win {
+    position: absolute;
+    border-radius: 14px;
+    background: rgba(17, 23, 43, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .win .bar { height: 34px; display: flex; align-items: center; gap: 8px; padding: 0 14px; background: rgba(255, 255, 255, 0.05); font-size: 16px; color: var(--muted); }
+  .win .bar i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .win .bar span { margin-left: 10px; }
+  .win .body { position: absolute; left: 0; right: 0; top: 34px; bottom: 0; }
+  .lines { padding: 20px; display: grid; gap: 12px; }
+  .lines div { height: 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.1); }
+  .tag { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font-size: 20px; font-weight: 700; padding: 8px 18px; border-radius: 999px; background: rgba(12, 17, 34, 0.8); border: 1px solid rgba(255, 255, 255, 0.14); white-space: nowrap; }
+
+  /* Procura */
+  .search { position: absolute; left: 110px; right: 110px; top: 120px; border-radius: 18px; background: rgba(17, 23, 43, 0.95); border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 30px 80px rgba(0,0,0,0.55); overflow: hidden; }
+  .search .field { height: 76px; display: flex; align-items: center; gap: 16px; padding: 0 24px; font-size: 30px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .search .field svg { width: 30px; height: 30px; fill: none; stroke: var(--muted); stroke-width: 2.4; }
+  .caret { display: inline-block; width: 3px; height: 34px; background: var(--accent); vertical-align: -6px; margin-left: 2px; }
+  .res { display: flex; align-items: center; gap: 18px; padding: 16px 24px; font-size: 26px; }
+  .res .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; font-size: 22px; color: #0C1122; }
+  .res small { display: block; font-size: 18px; color: var(--muted); }
+  .res.sel { background: rgba(45, 212, 191, 0.14); }
+
+  /* Terminal */
+  .term { font-family: "JetBrains Mono", monospace; font-size: 24px; padding: 22px; line-height: 1.6; }
+  .term .p { color: #4ADE80; }
+  .cur { display: inline-block; width: 13px; height: 26px; background: var(--text); vertical-align: -5px; }
+
+  /* Captura */
+  .sel { position: absolute; border: 3px dashed var(--accent); background: rgba(45, 212, 191, 0.08); }
+  .shade { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); }
+  .white { position: absolute; inset: 0; background: #fff; }
+  .toast { position: absolute; right: 22px; bottom: 22px; width: 330px; padding: 16px; border-radius: 16px; background: rgba(17, 23, 43, 0.95); border: 1px solid rgba(255,255,255,0.16); display: flex; gap: 14px; align-items: center; font-size: 20px; }
+  .toast .thumb { width: 110px; height: 62px; border-radius: 8px; background: url(../docs/screenshots/5-aplicacoes.jpg) center / cover; flex: none; }
+  .toast small { display: block; color: var(--muted); font-size: 16px; margin-top: 4px; }
+
+  /* Bloquear */
+  .lock { position: absolute; inset: 0; background: url(../docs/screenshots/4-ambiente-escuro.jpg) center / cover; filter: blur(16px) brightness(0.6); }
+  .lockui { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .lockui .clock { font-size: 120px; font-weight: 300; letter-spacing: -0.03em; }
+  .lockui .pw { margin-top: 40px; width: 360px; height: 54px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; padding: 0 22px; color: var(--muted); font-size: 20px; }
+  .lockui svg { width: 44px; height: 44px; fill: none; stroke: var(--text); stroke-width: 2; margin-top: 24px; }
+
+  /* Bónus com capturas reais */
+  .real { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .spot { position: absolute; border: 4px solid var(--accent); border-radius: 14px; box-shadow: 0 0 0 9999px rgba(6, 9, 20, 0.5), 0 0 30px rgba(45, 212, 191, 0.6); }
+
+  /* Abertura, índice e fecho */
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .logo { width: 170px; height: 170px; filter: drop-shadow(0 20px 50px rgba(45, 212, 191, 0.35)); }
+  .big { font-size: 120px; font-weight: 900; letter-spacing: -0.045em; line-height: 1; margin-top: 34px; }
+  .sub { font-size: 38px; color: var(--muted); margin-top: 26px; }
+  .grid7 { display: grid; grid-template-columns: repeat(2, 560px); gap: 18px 30px; margin-top: 50px; text-align: left; }
+  .gi { display: flex; align-items: center; gap: 18px; font-size: 30px; font-weight: 600; padding: 16px 22px; border-radius: 18px; background: var(--panel); border: 1px solid rgba(255,255,255,0.12); }
+  .gi b { font-size: 26px; width: 48px; height: 48px; border-radius: 13px; display: grid; place-items: center; background: var(--tide); color: #0C1122; flex: none; }
+  .links { margin-top: 50px; display: grid; gap: 18px; }
+  .link { font-family: "JetBrains Mono", monospace; font-size: 32px; padding: 16px 32px; border-radius: 18px; background: rgba(17,23,43,0.65); border: 1px solid rgba(255,255,255,0.12); }
+  .link em { font-style: normal; color: var(--accent); font-family: "Inter", sans-serif; font-weight: 700; margin-right: 18px; }
+  .watermark { position: absolute; right: 50px; bottom: 44px; display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 26px; opacity: 0; z-index: 100; }
+  .watermark img { width: 38px; height: 38px; }
+
+  #thumbnail { display: none; position: absolute; inset: 0; }
+  body.thumb #stage, body.thumb .watermark { display: none; }
+  body.thumb #thumbnail { display: block; }
+  #thumbnail .seven { position: absolute; left: 40px; top: 20px; font-size: 1000px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
+  #thumbnail .ttext { position: absolute; left: 720px; top: 220px; width: 1120px; }
+  #thumbnail .tbig { font-size: 150px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.92; }
+  #thumbnail .tkeys { display: flex; gap: 18px; align-items: center; margin-top: 60px; }
+  #thumbnail .tkeys .key { height: 120px; min-width: 120px; font-size: 44px; border-radius: 24px; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"><img src="../art/logo.svg" alt="">DMOS · Dicas</div>
+
+  <div id="thumbnail">
+    <div class="backdrop"></div><div class="dim"></div>
+    <div class="seven tide-text">7</div>
+    <div class="ttext">
+      <div class="tbig">dicas para<br>o dia a dia<br>no <span class="tide-text">DMOS</span></div>
+      <div class="tkeys"><div class="key">Alt</div><span class="plus">+</span><div class="key">Espaço</div></div>
+    </div>
+  </div>
+
+<script>
+var FADE = 0.7;
+var ICON_SEARCH = '<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>';
+var ICON_LOCK = '<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>';
+
+function win(x, y, w, h, title, extra) {
+  return '<div class="win" style="left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px" ' + (extra || "") + '>' +
+    '<div class="bar"><i style="background:#FF7A6B"></i><i style="background:#F5BE5B"></i><i style="background:#2DD4BF"></i><span>' + title + '</span></div>' +
+    '<div class="body"><div class="lines"><div style="width:80%"></div><div style="width:62%"></div><div style="width:70%"></div><div style="width:45%"></div></div></div></div>';
+}
+
+var TIPS = [
+  { label: "Procurar", title: "Encontre tudo num instante", keys: ["Alt", "Espaço"],
+    desc: "Abre a procura do Plasma: aplicações, ficheiros e definições. Também faz contas: escreva <b>=12*7</b>.", art: "search" },
+  { label: "Visão geral", title: "Veja todas as janelas", keys: ["Super", "W"],
+    desc: "Mostra as janelas abertas e as áreas de trabalho, lado a lado. Clique numa para lá ir.", art: "overview" },
+  { label: "Trocar de janela", title: "Alt+Tab em grelha", keys: ["Alt", "Tab"],
+    desc: "No DMOS, o Alt+Tab mostra miniaturas em grelha. Mantenha o <b>Alt</b> e carregue em <b>Tab</b> para avançar.", art: "alttab" },
+  { label: "Organizar", title: "Encaixe janelas lado a lado", keys: ["Super", "←"],
+    desc: "Com <b>Super + ←</b> ou <b>→</b>, a janela ocupa metade do ecrã. Também pode arrastá-la até à margem.", art: "snap" },
+  { label: "Terminal", title: "Abra o terminal", keys: ["Ctrl", "Alt", "T"],
+    desc: "Abre o Konsole de imediato, já com o tema do DMOS.", art: "term" },
+  { label: "Capturas de ecrã", title: "Tire uma captura", keys: ["Impr Ecrã"],
+    desc: "Abre o Spectacle: ecrã inteiro, uma janela ou só uma área que escolher.", art: "shot" },
+  { label: "Privacidade", title: "Bloqueie o ecrã ao sair", keys: ["Super", "L"],
+    desc: "Bloqueia a sessão num instante. Para voltar, basta a sua palavra-passe.", art: "lock" }
+];
+
+var SCENES = [{ type: "intro", dur: 5.5 }, { type: "index", dur: 7 }];
+TIPS.forEach(function (tip, i) { tip.type = "tip"; tip.n = i + 1; tip.dur = 11.5; SCENES.push(tip); });
+SCENES.push({ type: "bonus", dur: 9.5, n: "+", label: "Bónus", title: "Claro ou escuro", desc: "Mude em <b>Definições do Sistema › Tema Global</b>, ou no assistente Bem-vindo ao DMOS.", art: "theme" });
+SCENES.push({ type: "bonus", dur: 9.5, n: "+", label: "Bónus", title: "Atualize as notícias", desc: "No painel DMOS Hub, o botão ao lado de «Notícias» volta a carregar as fontes que escolheu.", art: "hub" });
+SCENES.push({ type: "outro", dur: 8 });
+
+function keysHtml(keys) {
+  return keys.map(function (k) { return '<div class="key">' + k + '</div>'; }).join('<span class="plus">+</span>');
+}
+
+function artHtml(art) {
+  var desk = '<div class="desk"></div>';
+  switch (art) {
+    case "search":
+      return desk + '<div class="search"><div class="field">' + ICON_SEARCH + '<span class="q"></span><span class="caret"></span></div><div class="results"></div></div>';
+    case "overview":
+      return desk + '<div class="wins">' + win(90, 90, 420, 300, "Firefox") + win(330, 190, 440, 320, "Dolphin") + win(160, 300, 380, 260, "Kate") + win(520, 70, 300, 220, "Elisa") + '</div><div class="tag">Visão geral</div>';
+    case "alttab":
+      var cells = ["Firefox", "Dolphin", "Konsole", "Kate", "Elisa", "LibreOffice"];
+      return desk + '<div class="tabbox" style="position:absolute;left:90px;top:150px;width:700px;height:340px;border-radius:22px;background:rgba(17,23,43,0.92);border:1px solid rgba(255,255,255,0.16);padding:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px">' +
+        cells.map(function (c) { return '<div class="cell" style="border-radius:14px;border:3px solid transparent;background:rgba(255,255,255,0.06);display:flex;align-items:flex-end;padding:10px;font-size:18px;color:#A7B0C8">' + c + '</div>'; }).join("") + '</div>';
+    case "snap":
+      return desk + win(0, 0, 400, 300, "Firefox", 'id="w1"') + win(0, 0, 400, 300, "Dolphin", 'id="w2"');
+    case "term":
+      return desk + '<div class="win" id="tw" style="left:80px;top:90px;width:720px;height:440px"><div class="bar"><i style="background:#FF7A6B"></i><i style="background:#F5BE5B"></i><i style="background:#2DD4BF"></i><span>~ : bash — Konsole</span></div><div class="body term"></div></div>';
+    case "shot":
+      return '<div class="real" style="background-image:url(../docs/screenshots/5-aplicacoes.jpg)"></div><div class="shade"></div><div class="sel"></div><div class="white"></div>' +
+        '<div class="toast"><div class="thumb"></div><div>Captura de ecrã<small>Guardada em Imagens</small></div></div>';
+    case "lock":
+      return desk + '<div class="lockwrap" style="position:absolute;inset:0"><div class="lock"></div><div class="lockui"><div class="clock">16:29</div>' + ICON_LOCK + '<div class="pw">Palavra-passe</div></div></div>';
+    case "theme":
+      return '<div class="real" style="background-image:url(../docs/screenshots/4-ambiente-escuro.jpg)"></div><div class="real light" style="background-image:url(../docs/screenshots/7-tema-claro.jpg)"></div>';
+    case "hub":
+      return '<div class="real zoomhub" style="background-image:url(../docs/screenshots/11-hub.jpg);background-size:2600px auto;background-position:100% 15%"></div><div class="spot hubspot"></div>';
+  }
+  return desk;
+}
+
+var stage = document.getElementById("stage");
+var start = 0;
+SCENES.forEach(function (s) {
+  s.start = start;
+  start += s.dur - FADE;
+  var el = document.createElement("div");
+  el.className = "scene";
+  var bg = '<div class="backdrop"></div><div class="dim"></div>';
+  if (s.type === "tip" || s.type === "bonus") {
+    el.innerHTML = bg + '<div class="left"><div class="num tide-text">' + (s.type === "tip" ? (s.n < 10 ? "0" + s.n : s.n) : "+") + '</div>' +
+      '<div class="label">' + (s.type === "tip" ? "Dica " + s.n + " de 7 · " : "") + s.label + '</div><div class="title">' + s.title + '</div>' +
+      '<div class="desc">' + s.desc + '</div>' + (s.keys ? '<div class="keys">' + keysHtml(s.keys) + '</div>' : "") + '</div>' +
+      '<div class="stagebox">' + artHtml(s.art) + '</div>';
+  } else if (s.type === "intro") {
+    el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt=""><div class="big"><span class="tide-text">7 dicas</span> para o<br>dia a dia no DMOS</div><div class="sub">Atalhos e truques que poupam tempo</div></div>';
+  } else if (s.type === "index") {
+    el.innerHTML = bg + '<div class="center"><div class="big" style="font-size:72px;margin-top:0">Neste vídeo</div><div class="grid7">' +
+      TIPS.map(function (t, i) { return '<div class="gi"><b>' + (i + 1) + '</b>' + t.title + '</div>'; }).join("") +
+      '<div class="gi"><b>+</b>Duas dicas bónus</div></div></div>';
+  } else {
+    el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="" style="width:140px;height:140px"><div class="big" style="font-size:84px">Qual é a sua <span class="tide-text">dica favorita?</span></div>' +
+      '<div class="sub">Conte nos comentários, e veja o tutorial de instalação no canal.</div>' +
+      '<div class="links"><div class="link"><em>Site</em>diogomadail1000-ship-it.github.io/DMOS</div><div class="link"><em>Código</em>github.com/diogomadail1000-ship-it/DMOS</div></div></div>';
+  }
+  stage.appendChild(el);
+  s.el = el;
+});
+var TOTAL = start + FADE;
+window.TOTAL = TOTAL;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function rise(el, local, t0, dist) {
+  if (!el) return;
+  var k = out((local - t0) / 0.7);
+  el.style.opacity = k;
+  el.style.transform = "translateY(" + ((1 - k) * (dist || 30)) + "px)";
+}
+function setWin(el, x, y, w, h) { el.style.left = x + "px"; el.style.top = y + "px"; el.style.width = w + "px"; el.style.height = h + "px"; }
+
+// Instante (em segundos dentro da cena) em que o atalho fica todo carregado.
+var ACT = 3.0;
+
+function animateArt(s, el, local) {
+  var a = local - ACT; // tempo depois do atalho
+  switch (s.art) {
+    case "search": {
+      var box = el.querySelector(".search");
+      var k = out(a / 0.4);
+      box.style.opacity = k;
+      box.style.transform = "translateY(" + (1 - k) * -20 + "px) scale(" + lerp(0.96, 1, k) + ")";
+      var q1 = "firef", q2 = "=12*7", q = "", rows = "";
+      var t = a - 0.5;
+      if (t < 3.2) {
+        q = q1.slice(0, Math.max(0, Math.floor(t * 9)));
+        if (q.length >= 3) rows = '<div class="res sel"><span class="ico" style="background:#FF8A70">F</span><span>Firefox ESR<small>Aplicação</small></span></div>';
+      } else {
+        q = q2.slice(0, Math.max(0, Math.floor((t - 3.2) * 9)));
+        if (q.length >= 5) rows = '<div class="res sel"><span class="ico" style="background:#2DD4BF">=</span><span>84<small>Calculadora · carregue em Enter para copiar</small></span></div>';
+      }
+      el.querySelector(".q").textContent = q;
+      el.querySelector(".results").innerHTML = rows;
+      el.querySelector(".caret").style.opacity = Math.floor(local * 2) % 2 ? 1 : 0.2;
+      break;
+    }
+    case "overview": {
+      var k2 = ease(a / 0.8);
+      var wins = el.querySelectorAll(".win");
+      var from = [[90, 90, 420, 300], [330, 190, 440, 320], [160, 300, 380, 260], [520, 70, 300, 220]];
+      var to = [[70, 90, 360, 230], [450, 90, 360, 230], [70, 350, 360, 230], [450, 350, 360, 230]];
+      wins.forEach(function (w, i) { var f = from[i], g = to[i]; setWin(w, lerp(f[0], g[0], k2), lerp(f[1], g[1], k2), lerp(f[2], g[2], k2), lerp(f[3], g[3], k2)); });
+      el.querySelector(".desk").style.filter = "blur(" + 10 * k2 + "px) brightness(" + lerp(1, 0.6, k2) + ")";
+      el.querySelector(".tag").style.opacity = k2;
+      break;
+    }
+    case "alttab": {
+      var tb = el.querySelector(".tabbox");
+      var k3 = out(a / 0.35);
+      tb.style.opacity = k3;
+      tb.style.transform = "scale(" + lerp(0.94, 1, k3) + ")";
+      var idx = 1 + Math.max(0, Math.floor((a - 0.8) / 1.0));
+      idx = Math.min(idx, 4);
+      el.querySelectorAll(".cell").forEach(function (c, i) {
+        c.style.borderColor = i === idx ? "#2DD4BF" : "transparent";
+        c.style.background = i === idx ? "rgba(45,212,191,0.18)" : "rgba(255,255,255,0.06)";
+        c.style.color = i === idx ? "#E8ECF5" : "#A7B0C8";
+      });
+      break;
+    }
+    case "snap": {
+      var w1 = el.querySelector("#w1"), w2 = el.querySelector("#w2");
+      var k4 = ease(a / 0.7), k5 = ease((a - 2.6) / 0.7);
+      setWin(w1, lerp(200, 0, k4), lerp(150, 0, k4), lerp(440, 440, k4), lerp(320, 640, k4));
+      setWin(w2, lerp(260, 440, k5), lerp(230, 0, k5), lerp(420, 440, k5), lerp(300, 640, k5));
+      w1.style.borderRadius = w2.style.borderRadius = "0";
+      break;
+    }
+    case "term": {
+      var tw = el.querySelector("#tw");
+      var k6 = out(a / 0.4);
+      tw.style.opacity = k6;
+      tw.style.transform = "scale(" + lerp(0.9, 1, k6) + ")";
+      var cmd = "fastfetch";
+      var typed = cmd.slice(0, Math.max(0, Math.floor((a - 1.0) * 8)));
+      var html = '<span class="p">dmos@dmos</span>:~$ ' + typed + '<span class="cur" style="opacity:' + (Math.floor(local * 2) % 2) + '"></span>';
+      el.querySelector(".term").innerHTML = html;
+      break;
+    }
+    case "shot": {
+      var sel = el.querySelector(".sel"), sh = el.querySelector(".shade");
+      var k7 = ease((a - 0.3) / 1.0);
+      sh.style.opacity = a > 0 ? 1 : 0;
+      sel.style.opacity = a > 0.2 ? 1 : 0;
+      setWin(sel, 170, 140, lerp(10, 520, k7), lerp(10, 330, k7));
+      var flashT = a - 1.9;
+      el.querySelector(".white").style.opacity = flashT > 0 ? 0.9 * (1 - clamp(flashT / 0.4)) : 0;
+      if (flashT > 0.2) { sh.style.opacity = 0; sel.style.opacity = 0; }
+      var toast = el.querySelector(".toast");
+      var k8 = out((flashT - 0.4) / 0.5);
+      toast.style.opacity = k8;
+      toast.style.transform = "translateY(" + (1 - k8) * 30 + "px)";
+      break;
+    }
+    case "lock": {
+      var lw = el.querySelector(".lockwrap");
+      lw.style.opacity = ease(a / 0.6);
+      break;
+    }
+    case "theme": {
+      var light = el.querySelector(".light");
+      var p = (local - 1.6) / 1.2;
+      light.style.clipPath = "inset(0 " + (100 - 100 * ease(p)) + "% 0 0)";
+      break;
+    }
+    case "hub": {
+      var spot = el.querySelector(".hubspot");
+      var k9 = out((local - 1.6) / 0.6);
+      spot.style.opacity = k9;
+      // Ícone de atualizar, na captura a 1920x1080 em (1844, 358), aqui ampliada para 2600 px de largura.
+      var sc = 2600 / 1920, ox = 880 - 2600, oy = (640 - 1080 * sc) * 0.15;
+      setWin(spot, 1830 * sc + ox, 343 * sc + oy, 30 * sc, 30 * sc);
+      spot.style.transform = "scale(" + (lerp(1.4, 1, k9) * (1 + 0.04 * Math.sin(Math.max(0, local - 2.2) * 4))) + ")";
+      break;
+    }
+  }
+}
+
+window.seek = function (t) {
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start, el = s.el;
+    if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+    el.style.display = "block";
+    var fin = i === 0 ? clamp(local / 0.6) : clamp(local / FADE);
+    var fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 1.0) : clamp((s.dur - local) / FADE);
+    el.style.opacity = Math.min(ease(fin), ease(fout));
+    el.style.zIndex = i;
+    var p = local / s.dur;
+    el.querySelector(".backdrop").style.transform = "scale(" + lerp(1.05, 1.15, p) + ") translateX(" + lerp(-20, 20, p) + "px)";
+    if (s.type === "tip" || s.type === "bonus") {
+      var num = el.querySelector(".num");
+      var kn = out((local - 0.15) / 0.6);
+      num.style.opacity = kn;
+      num.style.transform = "scale(" + lerp(0.7, 1, kn) + ")";
+      num.style.transformOrigin = "left center";
+      rise(el.querySelector(".label"), local, 0.35, 20);
+      rise(el.querySelector(".title"), local, 0.5, 26);
+      rise(el.querySelector(".desc"), local, 0.75, 22);
+      var keys = el.querySelectorAll(".key");
+      if (keys.length) {
+        rise(el.querySelector(".keys"), local, 1.0, 20);
+        keys.forEach(function (k, j) {
+          var down = local > 1.8 + j * 0.35 && local < ACT + 0.9;
+          k.classList.toggle("down", down);
+        });
+      }
+      var box = el.querySelector(".stagebox");
+      var kb = out((local - 0.4) / 0.8);
+      box.style.opacity = kb;
+      box.style.transform = "translateX(" + (1 - kb) * 60 + "px)";
+      animateArt(s, el, local);
+    } else if (s.type === "index") {
+      rise(el.querySelector(".big"), local, 0.2, 26);
+      el.querySelectorAll(".gi").forEach(function (g, j) { rise(g, local, 0.6 + j * 0.18, 24); });
+    } else {
+      var logo = el.querySelector(".logo");
+      var kl = out((local - 0.2) / 1.0);
+      logo.style.opacity = kl;
+      logo.style.transform = "scale(" + lerp(0.7, 1, kl) + ")";
+      rise(el.querySelector(".big"), local, 0.7, 40);
+      rise(el.querySelector(".sub"), local, 1.3, 30);
+      el.querySelectorAll(".link").forEach(function (l, j) { rise(l, local, 2.0 + j * 0.35, 30); });
+    }
+  });
+  var wm = document.getElementById("wm");
+  var first = SCENES[2].start, last = SCENES[SCENES.length - 1].start;
+  wm.style.opacity = 0.8 * Math.min(clamp((t - first - 0.5) / 0.8), clamp((last - t) / 0.8));
+};
+window.thumbnail = function () { document.body.classList.add("thumb"); };
+window.seek(location.hash ? parseFloat(location.hash.slice(1)) || 0 : 0);
+</script>
+</body>
+</html>

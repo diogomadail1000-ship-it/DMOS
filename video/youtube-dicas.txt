@@ -1,0 +1,44 @@
+TÍTULO
+7 dicas para o dia a dia no DMOS (atalhos do KDE Plasma 6)
+
+DESCRIÇÃO
+Sete atalhos e truques que poupam tempo no DMOS 1.0 «Maré», e duas dicas bónus.
+
+⌨️ Os atalhos
+• Alt + Espaço: procurar aplicações, ficheiros e definições (e fazer contas, por exemplo =12*7)
+• Super + W: ver todas as janelas e áreas de trabalho
+• Alt + Tab: trocar de janela, com miniaturas em grelha
+• Super + ← / →: encaixar janelas lado a lado
+• Ctrl + Alt + T: abrir o terminal
+• Impr Ecrã: tirar uma captura de ecrã
+• Super + L: bloquear o ecrã
+
+Qual é a sua dica favorita? Conte nos comentários! 👇
+
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🎬 Apresentação: https://youtu.be/6xOphpjiomE
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+
+Capítulos
+0:00 Introdução
+0:11 Dica 1: procurar tudo
+0:21 Dica 2: visão geral
+0:32 Dica 3: Alt+Tab em grelha
+0:43 Dica 4: encaixar janelas
+0:54 Dica 5: abrir o terminal
+1:05 Dica 6: capturas de ecrã
+1:15 Dica 7: bloquear o ecrã
+1:26 Bónus: claro ou escuro e notícias
+
+As animações das dicas 1 a 7 são ilustrações. As dicas bónus usam capturas do sistema.
+Música original gerada para este vídeo (video/music.py no repositório).
+O DMOS não é um projeto oficial do Debian nem do KDE.
+
+ETIQUETAS
+DMOS, Linux, KDE Plasma 6, atalhos de teclado, dicas Linux, Debian 13, produtividade, Linux português, KRunner, Spectacle
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-dicas-miniatura.png (1280x720), gerada por video/render.js
