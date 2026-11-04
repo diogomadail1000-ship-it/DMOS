@@ -1,0 +1,212 @@
+{
+  "_comentario": "Perguntas frequentes do modo gratuito do assistente. As palavras são procuradas no título e na mensagem, sem distinguir maiúsculas nem acentos, como palavras inteiras. Para acrescentar uma pergunta, copie um bloco e mude-o.",
+  "entradas": [
+    {
+      "id": "flathub",
+      "titulo": "Instalar programas (Flathub e Discover)",
+      "palavras": [
+        "flathub",
+        "flatpak",
+        "discover",
+        "instalar programas",
+        "instalar aplicacoes",
+        "instalar apps",
+        "gimp",
+        "steam",
+        "obs",
+        "kdenlive",
+        "thunderbird",
+        "loja de aplicacoes"
+      ],
+      "resposta": "O DMOS traz o Flatpak e o Discover, mas o repositório **Flathub** tem de ser ativado uma vez. Abra o Konsole e corra:\n\n```bash\nflatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo\n```\n\nDepois abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. Também pode instalar pelo terminal, por exemplo `flatpak install flathub org.gimp.GIMP`.\n\n🎬 Vídeo com os programas que recomendamos: https://youtu.be/mBz9nvQ8iWE"
+    },
+    {
+      "id": "ecra-preto",
+      "titulo": "Ecrã preto ou o sistema não arranca",
+      "palavras": [
+        "ecra preto",
+        "tela preta",
+        "black screen",
+        "nao arranca",
+        "nao inicia",
+        "nao liga",
+        "fica preto",
+        "bloqueia no arranque",
+        "trava no arranque",
+        "compatibilidade grafica",
+        "nomodeset"
+      ],
+      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando-a com o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.0/SHA256SUMS/download).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
+    },
+    {
+      "id": "maquina-virtual",
+      "titulo": "Máquina virtual (VirtualBox, VMware, Hyper-V)",
+      "palavras": [
+        "virtualbox",
+        "vmware",
+        "hyper-v",
+        "hyperv",
+        "maquina virtual",
+        "vm",
+        "qemu",
+        "gnome boxes",
+        "virt-manager"
+      ],
+      "resposta": "Definições recomendadas para a máquina virtual:\n\n- Tipo **Linux**, versão **Debian (64 bits)**\n- Memória **4096 MB** e **2** processadores\n- Disco novo com **20 GB** ou mais\n- **Aceleração 3D** ativa, se existir, e a ISO ligada ao leitor ótico\n\nAté agora, o DMOS só foi testado em QEMU. No VirtualBox e no VMware ainda não foi testado, por isso conte-nos como correu: ajuda muito!\n\n🎬 Tutorial, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
+    },
+    {
+      "id": "pen-usb",
+      "titulo": "Gravar a ISO numa pen USB",
+      "palavras": [
+        "pen",
+        "pen usb",
+        "pendrive",
+        "usb",
+        "rufus",
+        "etcher",
+        "balena",
+        "ventoy",
+        "gravar a iso"
+      ],
+      "resposta": "Grave a ISO com o [Rufus](https://rufus.ie) e, quando ele perguntar, escolha o **modo DD**. Também pode usar o [balenaEtcher](https://etcher.balena.io). ⚠️ A gravação apaga tudo o que estiver na pen.\n\nDepois reinicie o computador com a pen ligada e abra o menu de arranque (normalmente **F12**, **F11** ou **Esc**, conforme o computador) para escolher a pen.\n\n🎬 Tutorial, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
+    },
+    {
+      "id": "instalar",
+      "titulo": "Instalar o DMOS no disco",
+      "palavras": [
+        "instalar no disco",
+        "instalacao",
+        "instalador",
+        "calamares",
+        "particoes",
+        "particao",
+        "dual boot",
+        "ao lado do windows",
+        "apagar disco",
+        "como instalar"
+      ],
+      "resposta": "Na sessão de demonstração, abra o ícone **Instalar o DMOS**, no canto do ambiente de trabalho, e siga os passos: localização, teclado, partições, utilizador e resumo. A instalação ocupa cerca de 7 GB e pede um disco com pelo menos 15 GB.\n\n⚠️ A opção **Apagar disco** apaga tudo o que estiver nesse disco. Faça uma cópia de segurança antes de instalar num computador real. A instalação ao lado de outro sistema (dual boot) e o disco encriptado ainda não foram testados.\n\n🎬 Tutorial, passo 5: https://youtu.be/glLq_Hi9V1A?t=96"
+    },
+    {
+      "id": "descarregar",
+      "titulo": "Descarregar e verificar a ISO",
+      "palavras": [
+        "descarregar",
+        "download",
+        "baixar",
+        "iso",
+        "sha256",
+        "sha256sums",
+        "checksum",
+        "sourceforge",
+        "onde esta a iso"
+      ],
+      "resposta": "⬇️ A ISO do DMOS 1.0 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.0/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.0-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
+    },
+    {
+      "id": "tema",
+      "titulo": "Tema claro ou escuro",
+      "palavras": [
+        "tema",
+        "tema claro",
+        "tema escuro",
+        "modo escuro",
+        "modo claro",
+        "dark mode",
+        "light mode",
+        "dark",
+        "light",
+        "aspeto",
+        "cores"
+      ],
+      "resposta": "O DMOS traz dois temas completos: **DMOS Maré Escuro** e **DMOS Maré Claro**. Para mudar, abra as **Definições do Sistema** e procure **Tema global**, ou use o assistente **Bem-vindo ao DMOS**, no menu de aplicações.\n\n🎬 Vídeo com mais ajustes: https://youtu.be/X7Uiz9RR-KA"
+    },
+    {
+      "id": "hub",
+      "titulo": "Notícias no DMOS Hub",
+      "palavras": [
+        "hub",
+        "dmos hub",
+        "noticias",
+        "fontes de noticias",
+        "rss"
+      ],
+      "resposta": "O **DMOS Hub** é o painel à direita do ambiente de trabalho. Por omissão, nenhuma fonte de notícias vem ligada, e só as que ligar são contactadas. Para escolher as fontes, carregue em **Escolher fontes** no painel, ou abra o assistente **Bem-vindo ao DMOS**. O botão ao lado de «Notícias» volta a carregar as notícias."
+    },
+    {
+      "id": "atalhos",
+      "titulo": "Atalhos de teclado",
+      "palavras": [
+        "atalho",
+        "atalhos",
+        "teclado",
+        "shortcut",
+        "shortcuts",
+        "tecla super"
+      ],
+      "resposta": "Alguns atalhos úteis:\n\n- **Alt + Espaço**: procurar aplicações, ficheiros e definições\n- **Super + W**: ver todas as janelas\n- **Alt + Tab**: trocar de janela, com miniaturas em grelha\n- **Super + ← / →**: encaixar janelas lado a lado\n- **Ctrl + Alt + T**: abrir o terminal\n- **Super + L**: bloquear o ecrã\n\nPara criar os seus, abra as **Definições do Sistema** e procure **Atalhos**.\n\n🎬 Vídeo com as 7 dicas: https://youtu.be/r8VG6ZlcGRY"
+    },
+    {
+      "id": "hardware",
+      "titulo": "Hardware real, Secure Boot, placa gráfica e Wi-Fi",
+      "palavras": [
+        "secure boot",
+        "nvidia",
+        "amd",
+        "intel",
+        "placa grafica",
+        "wifi",
+        "wi-fi",
+        "wireless",
+        "bluetooth",
+        "portatil",
+        "laptop",
+        "hardware",
+        "drivers",
+        "driver"
+      ],
+      "resposta": "Até agora, o DMOS só foi testado em máquinas virtuais. Em hardware real, com placas gráficas NVIDIA, AMD ou Intel, Wi-Fi e Secure Boot, ainda não foi testado. A ISO traz firmware para Wi-Fi Intel, Realtek, Atheros, Broadcom e MediaTek.\n\nSe o experimentar num computador real, conte-nos o modelo, a placa gráfica, o Wi-Fi e o que funcionou ou falhou. Ajuda muito! Se puder, abra o Konsole, corra `fastfetch` e cole o resultado."
+    },
+    {
+      "id": "atualizar",
+      "titulo": "Atualizar o sistema",
+      "palavras": [
+        "atualizar",
+        "atualizacao",
+        "atualizacoes",
+        "update",
+        "upgrade",
+        "apt"
+      ],
+      "resposta": "O **Discover** mostra as atualizações disponíveis. O DMOS usa os repositórios do Debian 13, por isso também pode atualizar no terminal:\n\n```bash\nsudo apt update && sudo apt full-upgrade\n```\n\nA atualização com o `apt` ainda não foi testada no DMOS. Se encontrar algum problema, reporte-o num Issue."
+    },
+    {
+      "id": "idioma",
+      "titulo": "Idioma e teclado",
+      "palavras": [
+        "ingles",
+        "english",
+        "idioma",
+        "lingua",
+        "language",
+        "teclado brasileiro",
+        "layout do teclado",
+        "abnt"
+      ],
+      "resposta": "O DMOS vem em português de Portugal. Para experimentar em inglês, escolha **Try DMOS (English)** no menu de arranque. Num sistema instalado, abra as **Definições do Sistema** e procure **Idioma** (ou **Teclado**, para mudar a disposição do teclado)."
+    },
+    {
+      "id": "compilar",
+      "titulo": "Compilar a ISO",
+      "palavras": [
+        "compilar",
+        "build",
+        "build.ps1",
+        "wsl",
+        "live-build",
+        "lb build"
+      ],
+      "resposta": "No Windows com o WSL 2, abra o PowerShell na pasta do projeto e corra `.\\build.ps1`. Precisa de cerca de 20 GB livres e demora perto de 20 minutos. A ISO fica em `dist\\`. Os passos todos estão no [README](https://github.com/diogomadail1000-ship-it/DMOS#compilar-a-iso)."
+    }
+  ]
+}

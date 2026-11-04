@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 """Assistente da comunidade do DMOS: responde a perguntas novas nas Discussões e dá uma
-primeira resposta a Issues novos, com o Claude e a documentação do repositório.
+primeira resposta a Issues novos.
+
+Tem dois modos:
+- Gratuito (sem ANTHROPIC_API_KEY): procura palavras-chave e responde com as perguntas
+  frequentes de faq.json. Não usa inteligência artificial e não custa nada.
+- Com o Claude (com ANTHROPIC_API_KEY): responde com o Claude e a documentação do repositório.
 
 Corre na GitHub Action .github/workflows/assistente.yml. Lê o evento do GitHub
 (GITHUB_EVENT_NAME e GITHUB_EVENT_PATH), chama o Claude e publica um comentário.
-Precisa de ANTHROPIC_API_KEY (segredo do repositório) e de GITHUB_TOKEN.
-Com DRY_RUN=1 só escreve a resposta no ecrã, sem publicar.
+Precisa de GITHUB_TOKEN. Com DRY_RUN=1 só escreve a resposta no ecrã, sem publicar.
 """
 import json
 import os
+import re
 import sys
+import unicodedata
 import urllib.request
 from pathlib import Path
-
-import anthropic
 
 ROOT = Path(__file__).resolve().parents[2]
 # O modelo pode mudar-se com a variável do repositório ASSISTENTE_MODELO (por exemplo claude-haiku-5-5, mais barato).
@@ -35,6 +39,15 @@ KNOWLEDGE_FILES = [
 
 # Categorias das Discussões a que o assistente responde (pelo "slug" da categoria).
 DISCUSSION_CATEGORIES = {"q-a", "general"}
+
+FAQ_FILE = Path(__file__).with_name("faq.json")
+FAQ_MAX = 2  # no máximo, quantas perguntas frequentes entram numa resposta
+
+FAQ_FOOTER = (
+    "\n\n---\n"
+    "<sub>🤖 Resposta automática com as perguntas frequentes do DMOS. Um humano vai ver a sua mensagem "
+    "e responder assim que possível.</sub>"
+)
 
 FOOTER = (
     "\n\n---\n"
@@ -89,7 +102,45 @@ def github(method: str, url: str, payload: dict | None = None) -> dict:
         return json.loads(resp.read() or b"{}")
 
 
+def normalize(text: str) -> str:
+    """Minúsculas e sem acentos, para comparar palavras-chave."""
+    text = unicodedata.normalize("NFKD", text.lower())
+    return "".join(c for c in text if not unicodedata.combining(c))
+
+
+def faq_matches(title: str, body: str) -> list[dict]:
+    """As perguntas frequentes cujas palavras aparecem no texto, das mais às menos relevantes."""
+    text = normalize(f"{title}\n{body}")
+    scored = []
+    for order, entry in enumerate(json.loads(FAQ_FILE.read_text(encoding="utf-8"))["entradas"]):
+        hits = sum(1 for word in entry["palavras"] if re.search(rf"(?<![\w-]){re.escape(normalize(word))}(?![\w-])", text))
+        if hits:
+            scored.append((-hits, order, entry))
+    return [entry for _, _, entry in sorted(scored)[:FAQ_MAX]]
+
+
+def faq_answer(kind: str, title: str, body: str) -> str:
+    links = (
+        "Links úteis:\n"
+        "- ⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download\n"
+        "- 🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A\n"
+        "- ▶️ Todos os vídeos: https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ"
+    )
+    if kind == "issue" and normalize(title).startswith("[sugestao]"):
+        return "Obrigado pela sugestão! 💡 Fica registada e vai ser vista com atenção.\n\n" + links + FAQ_FOOTER
+    found = faq_matches(title, body)
+    if not found:
+        intro = "Obrigado pela mensagem! 🌊 Ainda não temos uma resposta pronta para isto, mas um humano vai responder."
+        return f"{intro}\n\nEnquanto espera, talvez isto ajude:\n\n{links}{FAQ_FOOTER}"
+    parts = ["Obrigado pela mensagem! 🌊 Isto pode ajudar:"]
+    parts += [f"### {entry['titulo']}\n\n{entry['resposta']}" for entry in found]
+    parts.append("Se não resolveu, responda aqui com mais pormenores e um humano vai ajudar.")
+    return "\n\n".join(parts) + FAQ_FOOTER
+
+
 def ask_claude(kind: str, title: str, body: str) -> str | None:
+    import anthropic  # só é preciso no modo com o Claude
+
     client = anthropic.Anthropic()
     truncated = len(body) > MAX_INPUT_CHARS
     body = body[:MAX_INPUT_CHARS]
@@ -137,9 +188,8 @@ def ask_claude(kind: str, title: str, body: str) -> str | None:
 
 
 def main() -> int:
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("Sem ANTHROPIC_API_KEY: o assistente está desligado.")
-        return 0
+    use_claude = bool(os.environ.get("ANTHROPIC_API_KEY"))
+    print("Modo:", "Claude" if use_claude else "perguntas frequentes (gratuito)")
     event_name = os.environ["GITHUB_EVENT_NAME"]
     event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
     repo = os.environ["GITHUB_REPOSITORY"]
@@ -152,27 +202,35 @@ def main() -> int:
         if slug not in DISCUSSION_CATEGORIES:
             print(f"Categoria «{slug}» fora das que o assistente responde.")
             return 0
-        answer = ask_claude("pergunta nas Discussões", d["title"], d.get("body") or "")
+        if use_claude:
+            answer = ask_claude("pergunta nas Discussões", d["title"], d.get("body") or "")
+            answer = answer + FOOTER if answer else None
+        else:
+            answer = faq_answer("discussion", d["title"], d.get("body") or "")
         if not answer:
             return 0
         if dry:
-            print(answer + FOOTER)
+            print(answer)
             return 0
         query = "mutation($id: ID!, $body: String!) { addDiscussionComment(input: {discussionId: $id, body: $body}) { comment { url } } }"
-        result = github("POST", f"{api}/graphql", {"query": query, "variables": {"id": d["node_id"], "body": answer + FOOTER}})
+        result = github("POST", f"{api}/graphql", {"query": query, "variables": {"id": d["node_id"], "body": answer}})
         if result.get("errors"):
             print(f"O GitHub recusou o comentário: {result['errors']}", file=sys.stderr)
             return 1
         print("Respondido:", result["data"]["addDiscussionComment"]["comment"]["url"])
     elif event_name == "issues":
         i = event["issue"]
-        answer = ask_claude("problema ou sugestão nos Issues", i["title"], i.get("body") or "")
+        if use_claude:
+            answer = ask_claude("problema ou sugestão nos Issues", i["title"], i.get("body") or "")
+            answer = answer + FOOTER if answer else None
+        else:
+            answer = faq_answer("issue", i["title"], i.get("body") or "")
         if not answer:
             return 0
         if dry:
-            print(answer + FOOTER)
+            print(answer)
             return 0
-        result = github("POST", f"{api}/repos/{repo}/issues/{i['number']}/comments", {"body": answer + FOOTER})
+        result = github("POST", f"{api}/repos/{repo}/issues/{i['number']}/comments", {"body": answer})
         print("Respondido:", result.get("html_url"))
     else:
         print(f"Evento «{event_name}» ignorado.")
