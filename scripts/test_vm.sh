@@ -11,6 +11,7 @@
 # With BOOT_DISK=1, "start" boots the given disk without the ISO; ATTACH_ISO=1 keeps
 # the ISO in the virtual drive while booting from the disk.
 # VGA_DEVICE overrides the virtual graphics card (default: virtio-vga at 1920x1080).
+# ISO picks another image than the first dmos-*.iso in dist/.
 set -euo pipefail
 
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
@@ -44,7 +45,7 @@ abs_pos() { echo $(( $1 * 32767 / 1919 )); }
 case "$1" in
     start)
         MODE="$2"
-        ISO="$(ls -1 "$SRC"/dist/dmos-*.iso | head -1)"
+        ISO="${ISO:-$(ls -1 "$SRC"/dist/dmos-*.iso | head -1)}"
         ARGS=(-machine q35 -smp 8 -m 6144 -accel tcg,thread=multi -cpu max
               -device "${VGA_DEVICE:-virtio-vga,xres=1920,yres=1080}" -display none
               -device qemu-xhci -device usb-tablet -device usb-kbd

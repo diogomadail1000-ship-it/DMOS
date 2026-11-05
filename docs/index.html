@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DMOS 1.0 "Maré"</title>
+  <title>DMOS 1.1 "Maré"</title>
   <meta name="description" content="DMOS é uma distribuição Linux baseada no Debian 13, com KDE Plasma 6 e uma identidade visual própria.">
   <meta name="theme-color" content="#0C1122">
-  <meta property="og:title" content="DMOS 1.0 &quot;Maré&quot;">
+  <meta property="og:title" content="DMOS 1.1 &quot;Maré&quot;">
   <meta property="og:description" content="Distribuição Linux baseada no Debian 13, com KDE Plasma 6 e uma identidade visual própria.">
   <meta property="og:image" content="screenshots/4-ambiente-escuro.jpg">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
@@ -31,6 +31,7 @@
       </a>
       <nav class="nav" aria-label="Secções">
         <a href="#video">Vídeo</a>
+        <a href="#novidades">Novidades</a>
         <a href="#experiencia">Experiência</a>
         <a href="#identidade">Identidade</a>
         <a href="#galeria">Galeria</a>
@@ -61,7 +62,7 @@
         <path class="wave wave-c" fill="url(#w1)" d="M0 500 C 280 450, 560 470, 800 505 S 1240 480, 1440 450 V600 H0 Z"/>
       </svg>
       <div class="hero-inner">
-        <p class="eyebrow">Versão 1.0 · "Maré" · Debian 13 trixie</p>
+        <p class="eyebrow">Versão 1.1 · "Maré" · Debian 13 trixie</p>
         <h1>Um Linux com <span class="tide-text">maré</span> própria.</h1>
         <p class="lede">
           O DMOS é uma distribuição baseada no Debian 13, com KDE Plasma 6 e uma identidade visual
@@ -75,7 +76,7 @@
           </a>
           <a class="btn btn-ghost" href="#experimentar">Como experimentar</a>
         </div>
-        <p class="dl-note">ISO de 2,6 GB · BIOS e UEFI · alojada na SourceForge</p>
+        <p class="dl-note">ISO de 2,8 GB · BIOS e UEFI · alojada na SourceForge</p>
         <ul class="hero-facts">
           <li><strong>Debian 13</strong><span>base estável</span></li>
           <li><strong>Plasma 6</strong><span>Wayland por omissão</span></li>
@@ -115,9 +116,54 @@
       </div>
     </section>
 
+    <section id="novidades" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Novo na 1.1</p>
+        <h2>Mais aplicações, menos passos.</h2>
+        <p>O Flathub vem ligado de origem, o assistente ganhou uma página com aplicações populares e o instalador ficou mais legível. Tudo testado no VMware. <a href="https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md">Ler as notas de versão</a>.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-text">
+          <span class="tag">Aplicações populares</span>
+          <h3>Oito aplicações a um clique.</h3>
+          <p>Um novo passo no assistente Bem-vindo ao DMOS sugere aplicações do Flathub. Cada uma abre no Discover, onde vê os detalhes e a licença antes de instalar.</p>
+          <ul class="sources" aria-label="Aplicações sugeridas no assistente">
+            <li>Spotify</li><li>Visual Studio Code</li><li>Steam</li><li>Discord</li>
+            <li>GIMP</li><li>OBS Studio</li><li>Telegram</li><li>Google Chrome</li>
+          </ul>
+        </div>
+        <div class="feature-pair">
+          <button class="shot feature-shot" type="button" data-src="screenshots/12-aplicacoes-populares.jpg" data-caption="Aplicações populares, tema escuro"><img src="screenshots/12-aplicacoes-populares.jpg" width="1920" height="1080" loading="lazy" alt="Página Aplicações populares do assistente, no tema escuro"></button>
+          <button class="shot feature-shot" type="button" data-src="screenshots/15-aplicacoes-claro.jpg" data-caption="Aplicações populares, tema claro"><img src="screenshots/15-aplicacoes-claro.jpg" width="1920" height="1080" loading="lazy" alt="Página Aplicações populares do assistente, no tema claro"></button>
+        </div>
+      </div>
+
+      <div class="feature feature-flip">
+        <div class="feature-text">
+          <span class="tag">Flathub</span>
+          <h3>O Flathub já vem ligado.</h3>
+          <p>Não precisa de comandos no terminal: o Discover mostra milhares de aplicações do Flathub logo no primeiro arranque. A ISO traz o catálogo do Flathub, por isso as aplicações aparecem antes da primeira atualização, que o Discover faz sozinho.</p>
+        </div>
+        <button class="shot feature-shot" type="button" data-src="screenshots/13-flathub-discover.jpg" data-caption="Spotify no Discover, a partir do Flathub"><img src="screenshots/13-flathub-discover.jpg" width="1920" height="1080" loading="lazy" alt="Página do Spotify no Discover, com o botão Install from Flathub"></button>
+      </div>
+
+      <div class="mini-cards">
+        <article class="mini">
+          <h3>Instalador mais legível</h3>
+          <p>Na página de partições, a legenda ficava escura sobre fundo escuro. Agora lê-se sobre uma faixa clara.</p>
+          <button class="shot" type="button" data-src="screenshots/14-instalador-particoes.jpg" data-caption="Página de partições do instalador"><img src="screenshots/14-instalador-legenda.jpg" width="1076" height="605" loading="lazy" alt="Página de partições do instalador, com a legenda legível"></button>
+        </article>
+        <article class="mini">
+          <h3>Testado no VMware</h3>
+          <p>A 1.1 foi testada no VMware Workstation, com aceleração 3D: a sessão de demonstração arranca em menos de um minuto, com a resolução ajustada à janela e som. A instalação completa e o sistema instalado também foram verificados.</p>
+        </article>
+      </div>
+    </section>
+
     <section id="experiencia" class="section">
       <div class="section-head">
-        <p class="eyebrow">Novo · Experiência DMOS</p>
+        <p class="eyebrow">Experiência DMOS</p>
         <h2>Recebe-o à porta e fica ao seu lado.</h2>
         <p>Um assistente para a primeira sessão e um painel no ambiente de trabalho com a hora e as notícias que escolher. Tudo em português de Portugal.</p>
       </div>
@@ -125,12 +171,13 @@
       <div class="feature">
         <div class="feature-text">
           <span class="tag">Bem-vindo ao DMOS</span>
-          <h3>Quatro passos e fica a seu gosto.</h3>
+          <h3>Cinco passos e fica a seu gosto.</h3>
           <p>Na primeira sessão abre-se um assistente em vidro. Pode voltar a ele quando quiser, a partir do menu de aplicações.</p>
           <ol class="steps">
             <li><strong>Visual</strong> claro ou escuro, aplicado de imediato a todo o sistema.</li>
             <li><strong>Ligação à internet</strong>, para as notícias, as atualizações e as aplicações.</li>
             <li><strong>Notícias</strong>: escolha as fontes que aparecem no painel.</li>
+            <li><strong>Aplicações populares</strong> do Flathub, a um clique.</li>
             <li><strong>Atalhos</strong> para começar. Na sessão live oferece também a instalação.</li>
           </ol>
         </div>
@@ -281,6 +328,10 @@
         <button class="shot" type="button" data-src="screenshots/10-noticias.jpg" data-caption="Escolha das fontes de notícias"><img src="screenshots/10-noticias.jpg" width="1920" height="1080" loading="lazy" alt="Escolha das fontes de notícias"><span>As suas notícias</span></button>
         <button class="shot" type="button" data-src="screenshots/11-hub.jpg" data-caption="DMOS Hub com notícias"><img src="screenshots/11-hub.jpg" width="1920" height="1080" loading="lazy" alt="Painel DMOS Hub"><span>DMOS Hub</span></button>
         <button class="shot" type="button" data-src="screenshots/8-instalador.jpg" data-caption="Instalador (Calamares)"><img src="screenshots/8-instalador.jpg" width="1920" height="1080" loading="lazy" alt="Instalador do DMOS"><span>Instalador</span></button>
+        <button class="shot" type="button" data-src="screenshots/12-aplicacoes-populares.jpg" data-caption="Aplicações populares, tema escuro"><img src="screenshots/12-aplicacoes-populares.jpg" width="1920" height="1080" loading="lazy" alt="Aplicações populares no assistente"><span>Aplicações populares</span></button>
+        <button class="shot" type="button" data-src="screenshots/15-aplicacoes-claro.jpg" data-caption="Aplicações populares, tema claro"><img src="screenshots/15-aplicacoes-claro.jpg" width="1920" height="1080" loading="lazy" alt="Aplicações populares no tema claro"><span>Aplicações, tema claro</span></button>
+        <button class="shot" type="button" data-src="screenshots/13-flathub-discover.jpg" data-caption="Spotify no Discover, a partir do Flathub"><img src="screenshots/13-flathub-discover.jpg" width="1920" height="1080" loading="lazy" alt="Spotify no Discover"><span>Flathub no Discover</span></button>
+        <button class="shot" type="button" data-src="screenshots/14-instalador-particoes.jpg" data-caption="Página de partições do instalador"><img src="screenshots/14-instalador-legenda.jpg" width="1076" height="605" loading="lazy" alt="Partições no instalador"><span>Partições</span></button>
       </div>
     </section>
 
@@ -288,7 +339,7 @@
       <div class="section-head">
         <p class="eyebrow">O que vem incluído</p>
         <h2>Pronto a usar desde o primeiro arranque.</h2>
-        <p>Um conjunto de aplicações para o dia a dia, em português, com suporte para Flatpak para instalar o resto.</p>
+        <p>Um conjunto de aplicações para o dia a dia, em português, com o Flathub ligado para instalar o resto.</p>
       </div>
       <div class="apps">
         <div class="app-group">
@@ -305,7 +356,7 @@
         </div>
         <div class="app-group">
           <h3>Sistema</h3>
-          <ul><li>Bem-vindo ao DMOS</li><li>DMOS Hub</li><li>Konsole</li><li>Discover + Flatpak</li><li>Gestor de Partições</li><li>Centro de Informação</li><li>KCalc</li></ul>
+          <ul><li>Bem-vindo ao DMOS</li><li>DMOS Hub</li><li>Konsole</li><li>Discover + Flathub</li><li>Gestor de Partições</li><li>Centro de Informação</li><li>KCalc</li></ul>
         </div>
         <div class="app-group">
           <h3>Hardware</h3>
@@ -320,7 +371,7 @@
         <div class="video-text">
           <p class="eyebrow">Vídeo · Depois de instalar</p>
           <h3 class="video-h">Programas essenciais para completar o DMOS.</h3>
-          <p>Como ativar o Flathub e sete programas que recomendamos, do email aos jogos.</p>
+          <p>Sete programas que recomendamos, do email aos jogos. O vídeo mostra como ativar o Flathub, um passo que no DMOS 1.1 já não é preciso.</p>
           <ol class="chapters" aria-label="Capítulos: Programas essenciais depois de instalar o DMOS">
             <li><button type="button" data-start="20"><span>0:20</span>Ativar o Flathub</button></li>
             <li><button type="button" data-start="29"><span>0:29</span>Email: Thunderbird</button></li>
@@ -413,7 +464,7 @@
         <article class="try-card">
           <span class="step">1</span>
           <h3>Descarregar a ISO</h3>
-          <p>Descarregue a <a href="https://sourceforge.net/projects/dmos/files/latest/download">ISO do DMOS 1.0</a> (2,6 GB) na SourceForge. Para confirmar que chegou inteira, compare-a com o <a href="https://sourceforge.net/projects/dmos/files/1.0/SHA256SUMS/download"><code>SHA256SUMS</code></a>. Também a pode <a href="#compilar">compilar</a> a partir do código.</p>
+          <p>Descarregue a <a href="https://sourceforge.net/projects/dmos/files/latest/download">ISO do DMOS 1.1</a> (2,8 GB) na SourceForge. Para confirmar que chegou inteira, compare-a com o <a href="https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download"><code>SHA256SUMS</code></a>. Também a pode <a href="#compilar">compilar</a> a partir do código.</p>
         </article>
         <article class="try-card">
           <span class="step">2</span>
@@ -438,24 +489,26 @@
       <div class="section-head">
         <p class="eyebrow">Estado</p>
         <h2>O que foi testado, com franqueza.</h2>
-        <p>Todos os testes foram feitos em QEMU, sem aceleração por hardware.</p>
+        <p>A partir da 1.1, os testes são feitos no VMware Workstation, com aceleração por hardware e 3D. A 1.0 foi testada no QEMU.</p>
       </div>
       <div class="status-grid">
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Teste</th><th>BIOS</th><th>UEFI</th></tr></thead>
+            <thead><tr><th>Teste</th><th>1.1 · VMware (UEFI)</th><th>1.0 · QEMU (BIOS e UEFI)</th></tr></thead>
             <tbody>
-              <tr><td>Menu de arranque com o tema</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
               <tr><td>ISO até ao ambiente de trabalho (Wayland)</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
               <tr><td>Instalação completa e arranque do sistema instalado</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
+              <tr><td>Menu de arranque com o tema</td><td class="na">Não verificado</td><td class="ok">Sim</td></tr>
+              <tr><td>Assistente e aplicações do Flathub no Discover</td><td class="ok">Sim</td><td class="na">Não existia</td></tr>
+              <tr><td>Resolução automática e som (ferramentas do VMware)</td><td class="ok">Sim</td><td class="na">Não se aplica</td></tr>
             </tbody>
           </table>
-          <p class="small">Também verificados: tema claro, entrada "Try DMOS (English)", Firefox e Dolphin.</p>
+          <p class="small">A instalação no VMware foi feita com a primeira compilação da 1.1; a compilação publicada só acrescenta o catálogo do Flathub, testado na sessão de demonstração. Na 1.0 também foram verificados o tema claro, a entrada "Try DMOS (English)", o Firefox e o Dolphin.</p>
         </div>
         <div class="pending">
           <h3>Ainda por testar</h3>
           <ul>
-            <li><strong>VMware e VirtualBox</strong>: as ferramentas do VMware vêm incluídas, mas nunca correram num VMware.</li>
+            <li><strong>VirtualBox</strong>.</li>
             <li><strong>Hardware real</strong>, incluindo gráficas NVIDIA, AMD e Intel e Wi-Fi.</li>
             <li><strong>Secure Boot</strong>: os componentes assinados estão na ISO, mas o arranque com ele ativo não foi experimentado.</li>
             <li>Modo de compatibilidade gráfica, disco encriptado, dual boot e atualização com <code>apt</code>.</li>
@@ -492,7 +545,7 @@
     <section class="section cta">
       <img src="assets/logo.svg" alt="" width="72" height="72">
       <h2>Livre para usar, estudar e alterar.</h2>
-      <p>O código e os temas estão sob a GPL-3.0-or-later. O código-fonte de todos os pacotes da ISO está <a href="https://sourceforge.net/projects/dmos/files/1.0/">na SourceForge</a>, ao lado da ISO. O wallpaper "Maré" está sob a CC BY-SA 4.0. O Debian, o KDE Plasma e as restantes aplicações mantêm as licenças próprias.</p>
+      <p>O código e os temas estão sob a GPL-3.0-or-later. O código-fonte de todos os pacotes da ISO está <a href="https://sourceforge.net/projects/dmos/files/1.1/">na SourceForge</a>, ao lado da ISO. O wallpaper "Maré" está sob a CC BY-SA 4.0. O Debian, o KDE Plasma e as restantes aplicações mantêm as licenças próprias.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="https://sourceforge.net/projects/dmos/files/latest/download">Descarregar o DMOS</a>
         <a class="btn btn-ghost" href="https://github.com/diogomadail1000-ship-it/DMOS">Ver no GitHub</a>
@@ -503,7 +556,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <span class="brand"><img src="assets/logo.svg" alt="" width="20" height="20"> DMOS 1.0 "Maré"</span>
+      <span class="brand"><img src="assets/logo.svg" alt="" width="20" height="20"> DMOS 1.1 "Maré"</span>
       <span><a href="https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ">Vídeos: playlist «Comece aqui»</a></span>
       <span>Baseado no <a href="https://www.debian.org">Debian</a> e no <a href="https://kde.org/plasma-desktop/">KDE Plasma</a>. Não é um projeto oficial de nenhum deles.</span>
     </div>

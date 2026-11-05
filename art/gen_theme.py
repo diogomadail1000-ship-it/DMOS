@@ -247,7 +247,7 @@ def plasma_style(root):
         "Id": "dmos",
         "License": "GPL-3.0-or-later",
         "Name": "DMOS Maré",
-        "Version": "1.0"
+        "Version": "1.1"
     },
     "X-Plasma-API": "5.0"
 }
@@ -366,7 +366,7 @@ Name={p['name']}
 Comment=Decoração de janelas DMOS
 X-KDE-PluginInfo-Author=DMOS
 X-KDE-PluginInfo-Name={folder}
-X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Version=1.1
 X-KDE-PluginInfo-License=GPL
 X-KDE-ServiceTypes=KWin/Decoration
 """)

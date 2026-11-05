@@ -1,0 +1,5 @@
+/* Calamares paints the partition legend text in plain black over the window colour,
+   which is dark in DMOS. A light strip behind the legend keeps it readable. */
+PartitionLabelsView {
+    background-color: #E8ECF5;
+}

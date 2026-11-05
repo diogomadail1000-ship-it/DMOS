@@ -24,7 +24,7 @@ lb config noauto \
     --chroot-squashfs-compression-type zstd \
     --iso-application "DMOS" \
     --iso-publisher "DMOS" \
-    --iso-volume "DMOS 1.0" \
-    --image-name "dmos-1.0-mare" \
+    --iso-volume "DMOS 1.1" \
+    --image-name "dmos-1.1-mare" \
     --bootappend-live "boot=live components quiet splash loglevel=3 locales=pt_PT.UTF-8 keyboard-layouts=pt timezone=Europe/Lisbon username=dmos hostname=dmos user-fullname=DMOS" \
     "${@}"

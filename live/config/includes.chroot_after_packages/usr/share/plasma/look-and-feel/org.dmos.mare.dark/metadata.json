@@ -6,7 +6,7 @@
         "Id": "org.dmos.mare.dark",
         "License": "GPL-3.0-or-later",
         "Name": "DMOS Maré Escuro",
-        "Version": "1.0"
+        "Version": "1.1"
     },
     "X-KDE-ParentApp": "org.kde.plasmashell"
 }

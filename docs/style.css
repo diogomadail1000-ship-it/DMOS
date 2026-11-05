@@ -504,6 +504,7 @@ th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--bo
 th { color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; }
 td.ok { color: var(--ok); font-weight: 600; white-space: nowrap; }
 td.ok::before { content: "✓ "; }
+td.na { color: var(--muted); white-space: nowrap; }
 .pending h3 { font-size: 17px; margin-bottom: 10px; color: var(--warn); }
 .pending ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
 .pending li { margin-bottom: 8px; }
@@ -705,6 +706,7 @@ td.ok::before { content: "✓ "; }
 }
 .mini h3 { font-size: 18px; margin-bottom: 14px; }
 .mini p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.mini .shot { display: block; width: 100%; margin-top: 16px; }
 .keys { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .keys li { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 15px; }
 .keys li > span { flex: none; min-width: 118px; color: var(--muted); font-size: 13px; }

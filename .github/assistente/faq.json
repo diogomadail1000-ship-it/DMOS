@@ -18,7 +18,7 @@
         "thunderbird",
         "loja de aplicacoes"
       ],
-      "resposta": "O DMOS traz o Flatpak e o Discover, mas o repositório **Flathub** tem de ser ativado uma vez. Abra o Konsole e corra:\n\n```bash\nflatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo\n```\n\nDepois abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. Também pode instalar pelo terminal, por exemplo `flatpak install flathub org.gimp.GIMP`.\n\n🎬 Vídeo com os programas que recomendamos: https://youtu.be/mBz9nvQ8iWE"
+      "resposta": "No DMOS 1.1, o **Flathub** já vem ativado: abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. O assistente **Bem-vindo ao DMOS** também sugere oito aplicações populares.\n\nNo DMOS 1.0, ative o Flathub uma vez. Abra o Konsole e corra:\n\n```bash\nflatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo\n```\n\nDepois abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. Também pode instalar pelo terminal, por exemplo `flatpak install flathub org.gimp.GIMP`.\n\n🎬 Vídeo com os programas que recomendamos: https://youtu.be/mBz9nvQ8iWE"
     },
     {
       "id": "ecra-preto",
@@ -36,7 +36,7 @@
         "compatibilidade grafica",
         "nomodeset"
       ],
-      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando-a com o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.0/SHA256SUMS/download).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
+      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando-a com o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
     },
     {
       "id": "maquina-virtual",
@@ -52,7 +52,7 @@
         "gnome boxes",
         "virt-manager"
       ],
-      "resposta": "Definições recomendadas para a máquina virtual:\n\n- Tipo **Linux**, versão **Debian (64 bits)**\n- Memória **4096 MB** e **2** processadores\n- Disco novo com **20 GB** ou mais\n- **Aceleração 3D** ativa, se existir, e a ISO ligada ao leitor ótico\n\nAté agora, o DMOS só foi testado em QEMU. No VirtualBox e no VMware ainda não foi testado, por isso conte-nos como correu: ajuda muito!\n\n🎬 Tutorial, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
+      "resposta": "Definições recomendadas para a máquina virtual:\n\n- Tipo **Linux**, versão **Debian (64 bits)**\n- Memória **4096 MB** e **2** processadores\n- Disco novo com **20 GB** ou mais\n- **Aceleração 3D** ativa, se existir, e a ISO ligada ao leitor ótico\n\nO DMOS 1.1 foi testado no **VMware Workstation**, onde arranca em menos de um minuto, com ajuste automático da resolução e som. No VirtualBox ainda não foi testado, por isso conte-nos como correu: ajuda muito!\n\n🎬 Tutorial, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
     },
     {
       "id": "pen-usb",
@@ -101,7 +101,7 @@
         "sourceforge",
         "onde esta a iso"
       ],
-      "resposta": "⬇️ A ISO do DMOS 1.0 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.0/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.0-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
+      "resposta": "⬇️ A ISO do DMOS 1.1 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.1-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
     },
     {
       "id": "tema",

@@ -2,6 +2,7 @@
 # Builds the DMOS ISO. Runs as root inside the "dmos-builder" WSL instance.
 #   build.sh chroot   only install the system (useful for theme development)
 #   build.sh iso      full build; the ISO and the source archive are copied to <project>/dist
+#                     (then scripts/release.sh <version> gathers them for SourceForge)
 #   build.sh clean    drops the chroot and binary trees but keeps the package cache
 set -euo pipefail
 

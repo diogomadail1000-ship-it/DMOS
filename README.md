@@ -1,4 +1,4 @@
-# DMOS 1.0 "Maré"
+# DMOS 1.1 "Maré"
 
 Distribuição Linux baseada no Debian 13 (trixie), com KDE Plasma 6 e uma identidade visual
 própria, gerada a partir do código deste repositório.
@@ -21,20 +21,22 @@ própria, gerada a partir do código deste repositório.
 
 O [tutorial em vídeo](https://youtu.be/glLq_Hi9V1A) mostra todos os passos, do download ao primeiro dia.
 
-**[Descarregar a ISO do DMOS 1.0](https://sourceforge.net/projects/dmos/files/latest/download)** (2,6 GB, na SourceForge). Para confirmar que a ISO
-chegou inteira, compare-a com o [`SHA256SUMS`](https://sourceforge.net/projects/dmos/files/1.0/SHA256SUMS/download):
+**[Descarregar a ISO do DMOS 1.1](https://sourceforge.net/projects/dmos/files/latest/download)** (2,8 GB, na SourceForge). Para confirmar que a ISO
+chegou inteira, compare-a com o [`SHA256SUMS`](https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download):
 
 ```bash
 sha256sum -c SHA256SUMS --ignore-missing
 ```
 
-No Windows, use `Get-FileHash dmos-1.0-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO.
-O código-fonte de todos os pacotes da ISO está na [mesma pasta da SourceForge](https://sourceforge.net/projects/dmos/files/1.0/).
+No Windows, use `Get-FileHash dmos-1.1-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO.
+O código-fonte de todos os pacotes da ISO está na [mesma pasta da SourceForge](https://sourceforge.net/projects/dmos/files/1.1/).
+A versão 1.0 continua [disponível na SourceForge](https://sourceforge.net/projects/dmos/files/1.0/). O que mudou está nas
+[notas de versão](CHANGELOG.md).
 
 A ISO não faz parte do repositório, por ser demasiado grande para o GitHub. Depois de a
-[compilar](#compilar-a-iso), fica em `dist/dmos-1.0-mare-amd64.hybrid.iso`, com o checksum em
+[compilar](#compilar-a-iso), fica em `dist/dmos-1.1-mare-amd64.hybrid.iso`, com o checksum em
 `dist/SHA256SUMS`. Na mesma pasta fica o arquivo com o código-fonte de todos os pacotes da ISO
-(`dmos-1.0-mare-source.*`). Quem publicar a ISO deve publicar também este arquivo, porque a GPL pede que
+(`dmos-1.1-mare-source.*`). Quem publicar a ISO deve publicar também este arquivo, porque a GPL pede que
 o código-fonte acompanhe os binários.
 
 - **Numa máquina virtual** (VirtualBox, VMware, Hyper-V): tipo Linux/Debian 64 bits, pelo menos
@@ -49,11 +51,25 @@ disco com pelo menos 15 GB.
 Para mudar entre claro e escuro: **Definições do Sistema > Tema Global**, ou pelo assistente
 **Bem-vindo ao DMOS**, no menu de aplicações.
 
+## Novidades da 1.1
+
+O Flathub vem ativado de origem, e o assistente ganhou uma página com aplicações populares a um
+clique. No instalador, a legenda das partições passou a ler-se. Os pormenores estão nas
+[notas de versão](CHANGELOG.md).
+
+| | |
+|---|---|
+| ![Aplicações populares no assistente, tema escuro](docs/screenshots/12-aplicacoes-populares.jpg) | ![Aplicações populares no assistente, tema claro](docs/screenshots/15-aplicacoes-claro.jpg) |
+| ![Spotify no Discover, a partir do Flathub](docs/screenshots/13-flathub-discover.jpg) | ![Página de partições do instalador, com a legenda legível](docs/screenshots/14-instalador-particoes.jpg) |
+
 ## Experiência DMOS
 
-- **Bem-vindo ao DMOS**: na primeira sessão, um assistente em vidro guia por quatro passos. São
-  eles: escolher o visual claro ou escuro, ver a ligação à internet, escolher as fontes de notícias
-  e conhecer três atalhos. No modo de demonstração, oferece também a instalação.
+- **Bem-vindo ao DMOS**: na primeira sessão, um assistente em vidro guia por cinco passos. São
+  eles: escolher o visual claro ou escuro, ver a ligação à internet, escolher as fontes de notícias,
+  instalar aplicações populares e conhecer três atalhos. No modo de demonstração, oferece também
+  a instalação.
+- **Flathub ativado de origem**: o Discover mostra as aplicações do Flathub logo no primeiro
+  arranque.
 - **DMOS Hub**: painel no ambiente de trabalho com a hora, a data, uma saudação e as últimas
   notícias, intercaladas entre as fontes escolhidas. Há dez fontes, portuguesas e internacionais.
   Só as que o utilizador liga são contactadas, e por omissão nenhuma está ligada.
@@ -69,32 +85,32 @@ Para mudar entre claro e escuro: **Definições do Sistema > Tema Global**, ou p
 
 ## O que foi testado
 
-Tudo em máquina virtual QEMU, sem aceleração por hardware.
+A partir da 1.1, os testes são feitos no **VMware Workstation**, com aceleração por hardware e 3D,
+numa máquina virtual UEFI com 4 GB de RAM e 4 processadores.
 
-| Teste | BIOS | UEFI |
-|---|---|---|
-| Menu de arranque com o tema | Sim | Sim |
-| ISO até ao ambiente de trabalho (Wayland) | Sim | Sim |
-| Instalação completa no disco e arranque do sistema instalado | Sim | Sim |
+| Teste da 1.1 | VMware |
+|---|---|
+| ISO até ao ambiente de trabalho (Wayland), em menos de um minuto | Sim |
+| Ferramentas do VMware: resolução ajustada à janela e som | Sim |
+| Assistente, com a página "Aplicações populares", nos temas escuro e claro | Sim |
+| Aplicação do Flathub aberta no Discover a partir do assistente | Sim |
+| Instalação completa e arranque do sistema instalado | Sim |
 
-Também verificados: tema claro, entrada "Try DMOS (English)", Firefox e Dolphin.
+A instalação foi feita com a primeira compilação da 1.1. A compilação publicada só acrescenta o
+catálogo do Flathub, testado na sessão de demonstração. A instalação também foi repetida no QEMU,
+até ao fim, com a legenda das partições legível.
 
-A ISO final foi arrancada nos dois modos até ao ambiente de trabalho. As instalações completas foram
-feitas em compilações anteriores; depois disso mudaram o tema do GRUB (aplicado e verificado à mão
-num sistema instalado em BIOS) e foram acrescentadas as ferramentas do VMware.
+Na 1.0, o menu de arranque, a sessão de demonstração e a instalação completa foram testados em BIOS
+e em UEFI, no QEMU. Na 1.1 só se testou UEFI.
 
 Ainda por testar:
 
-- **VMware e VirtualBox**: as ferramentas do VMware vêm incluídas, mas nunca correram num VMware.
-- **Hardware real**, incluindo placas gráficas NVIDIA, AMD e Intel e Wi-Fi. O efeito de vidro e as
-  animações só foram vistos com renderização por software.
+- **VirtualBox**.
+- **Hardware real**, incluindo placas gráficas NVIDIA, AMD e Intel e Wi-Fi.
 - **Secure Boot**: a ISO inclui os componentes assinados, mas o arranque com ele ativo não foi
   experimentado. As fontes do menu não carregam nesse modo, por isso o menu usa a fonte de base.
 - Modo de compatibilidade gráfica, disco encriptado, instalação ao lado de outro sistema e
   atualização do sistema com `apt`.
-
-Limitação conhecida: na página de partições do instalador, os nomes da legenda ficam escuros sobre
-o fundo escuro. A cor vem do Calamares e não do tema.
 
 ## O que foi desenhado
 
@@ -152,7 +168,9 @@ bash scripts/dev_preview.sh desktop
 ```
 
 Os modos são `desktop`, `sddm` e `splash`, e as capturas ficam em `art/preview/`.
-`scripts/test_vm.sh` arranca a ISO em QEMU e controla a máquina virtual a partir da linha de comandos.
+`scripts/test_vmware.ps1` controla, a partir do Windows, uma sessão de demonstração no VMware
+Workstation: tira capturas e abre programas dentro da sessão. `scripts/test_vm.sh` faz o mesmo em
+QEMU, dentro do `dmos-builder`, mas muito mais devagar, porque o WSL não tem aceleração por hardware.
 
 ## Site
 
@@ -169,9 +187,11 @@ login screen (SDDM), a glass-style Plasma theme with light and dark variants, th
 wallpaper and a branded Calamares installer. All artwork and configuration are generated from the
 source code in this repository.
 
-Version 1.0 "Maré" also adds:
+Version 1.1 "Maré" also adds:
 
-- **Welcome to DMOS**: a first-run assistant (light or dark look, network, news sources, shortcuts).
+- **Welcome to DMOS**: a first-run assistant (light or dark look, network, news sources, popular
+  apps, shortcuts).
+- **Flathub enabled out of the box**: Discover lists Flathub apps from the first boot.
 - **DMOS Hub**: a desktop widget with the time, a greeting and news from the sources you choose.
   No source is enabled by default, so nothing is contacted until you opt in.
 - **Complete European Portuguese** translations, including the lock and logout screens.
@@ -187,8 +207,9 @@ Version 1.0 "Maré" also adds:
 | Default language | European Portuguese (an English live session is in the boot menu) |
 | License | GPL-3.0-or-later; "Maré" wallpaper under CC BY-SA 4.0 |
 
-**Download:** [DMOS 1.0 ISO](https://sourceforge.net/projects/dmos/files/latest/download) (2.6 GB, on SourceForge), with `SHA256SUMS` and the source code of
-every package in the ISO in the [same folder](https://sourceforge.net/projects/dmos/files/1.0/).
+**Download:** [DMOS 1.1 ISO](https://sourceforge.net/projects/dmos/files/latest/download) (2.8 GB, on SourceForge), with `SHA256SUMS` and the source code of
+every package in the ISO in the [same folder](https://sourceforge.net/projects/dmos/files/1.1/).
+What changed: [release notes](CHANGELOG.md) (in Portuguese).
 Requirements: 64-bit PC, 4 GB of RAM, 2 CPU cores, 15 GB of disk to install.
 
 **Testing status:** booting the ISO, the live desktop and a full install were tested on QEMU, in

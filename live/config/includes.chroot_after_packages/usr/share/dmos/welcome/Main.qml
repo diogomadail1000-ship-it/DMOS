@@ -16,7 +16,7 @@ Window {
     flags: Qt.FramelessWindowHint | Qt.Window
     title: "Bem-vindo ao DMOS"
 
-    readonly property var pages: ["inicio", "aparencia", "ligacao", "noticias", "pronto"]
+    readonly property var pages: ["inicio", "aparencia", "ligacao", "noticias", "aplicacoes", "pronto"]
     property int page: 0
     property bool dark: true
     property bool live: false
@@ -210,7 +210,7 @@ Window {
                         Layout.maximumWidth: 560
                         text: win.live
                               ? "Está a experimentar o DMOS sem alterar o seu computador. Em poucos passos fica com tudo a seu gosto, ou pode instalá-lo já."
-                              : "Vamos deixar o sistema a seu gosto. São só quatro passos, e pode mudar tudo mais tarde nas Definições."
+                              : "Vamos deixar o sistema a seu gosto. São só cinco passos, e pode mudar tudo mais tarde nas Definições."
                     }
                     Button {
                         Layout.alignment: Qt.AlignHCenter
@@ -440,6 +440,74 @@ Window {
 
             Page {
                 index: 4
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    Title { text: "Aplicações populares" }
+                    Body { text: "Instale com um clique a partir do Flathub. Cada uma abre no Discover, onde vê os detalhes antes de instalar." }
+                    GridLayout {
+                        Layout.topMargin: 20
+                        Layout.fillWidth: true
+                        columns: 4
+                        columnSpacing: 14
+                        rowSpacing: 14
+                        Repeater {
+                            model: [
+                                { name: "Spotify", icon: "spotify", id: "com.spotify.Client" },
+                                { name: "Visual Studio Code", icon: "visual-studio-code", id: "com.visualstudio.code" },
+                                { name: "Steam", icon: "steam", id: "com.valvesoftware.Steam" },
+                                { name: "Discord", icon: "discord", id: "com.discordapp.Discord" },
+                                { name: "GIMP", icon: "gimp", id: "org.gimp.GIMP" },
+                                { name: "OBS Studio", icon: "obs", id: "com.obsproject.Studio" },
+                                { name: "Telegram", icon: "telegram", id: "org.telegram.desktop" },
+                                { name: "Google Chrome", icon: "google-chrome", id: "com.google.Chrome" }
+                            ]
+                            delegate: Rectangle {
+                                required property var modelData
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 128
+                                radius: 16
+                                color: appArea.containsMouse ? Qt.rgba(win.accent.r, win.accent.g, win.accent.b, win.dark ? 0.18 : 0.14) : win.tile
+                                border.width: 1
+                                border.color: appArea.containsMouse ? win.accent : win.line
+                                Behavior on color { ColorAnimation { duration: 150 } }
+                                ColumnLayout {
+                                    anchors.centerIn: parent
+                                    width: parent.width - 20
+                                    spacing: 10
+                                    Kirigami.Icon {
+                                        Layout.alignment: Qt.AlignHCenter
+                                        source: modelData.icon
+                                        implicitWidth: 52
+                                        implicitHeight: 52
+                                    }
+                                    Text {
+                                        Layout.fillWidth: true
+                                        horizontalAlignment: Text.AlignHCenter
+                                        elide: Text.ElideRight
+                                        text: modelData.name
+                                        color: win.ink
+                                        font.family: "Inter"
+                                        font.weight: Font.DemiBold
+                                        font.pixelSize: 14
+                                    }
+                                }
+                                MouseArea {
+                                    id: appArea
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: shell.run("plasma-discover appstream://" + modelData.id)
+                                }
+                            }
+                        }
+                    }
+                    Item { Layout.fillHeight: true }
+                }
+            }
+
+            Page {
+                index: 5
                 ColumnLayout {
                     anchors.fill: parent
                     spacing: 10

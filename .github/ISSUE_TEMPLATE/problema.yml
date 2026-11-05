@@ -38,6 +38,7 @@ body:
     attributes:
       label: Versão do DMOS
       options:
+        - 1.1 «Maré»
         - 1.0 «Maré»
         - Compilada a partir do código (indique o commit abaixo)
     validations:

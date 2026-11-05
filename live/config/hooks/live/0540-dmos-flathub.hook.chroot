@@ -1,0 +1,12 @@
+#!/bin/sh
+# Adds Flathub as a system remote, so Discover and the welcome app offer its apps.
+# A network failure here leaves the image without Flathub, not without a build.
+flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
+    || echo "W: Flathub could not be added; Discover will show Debian packages only." >&2
+
+# Ships the Flathub catalogue. Without it, Discover only knows Flathub's apps after its own first
+# download, and links such as appstream://com.spotify.Client fail on the first boot.
+# Discover refreshes it later on its own.
+flatpak update --system --appstream -y flathub \
+    || echo "W: Flathub catalogue not downloaded; Discover will fetch it on first use." >&2
+flatpak remotes --system
