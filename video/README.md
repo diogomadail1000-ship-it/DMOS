@@ -10,6 +10,8 @@ Os vídeos do canal, em 1920x1080 a 30 fps (o Short em 1080x1920), feitos a part
 - **Programas essenciais** (cerca de 2 min 12 s): `programas.html`, texto em `youtube-programas.txt`.
 - **Personalizar o DMOS** (cerca de 1 min 51 s): `personalizar.html`, texto em `youtube-personalizar.txt`.
   Estes dois vídeos usam o estilo e o motor partilhados `lista.css` e `lista.js`.
+- **Lançamento da 1.1** (cerca de 63 s): `lancamento-1-1.html`, texto em `youtube-lancamento-1-1.txt`. Usa as
+  novidades do `CHANGELOG.md` e as capturas 12 a 15.
 - **Comparativo de desempenho**: `desempenho.html`. Só usa números medidos com `medir.sh`. Veja `COMPARATIVO.md`.
 
 - `scene.html`: as cenas, as legendas e a miniatura, desenhadas em HTML. `seek(t)` mostra o instante `t`.

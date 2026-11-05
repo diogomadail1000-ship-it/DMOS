@@ -1,0 +1,37 @@
+TÍTULO
+DMOS 1.1 «Maré» já chegou: Flathub de origem e aplicações populares a um clique
+
+DESCRIÇÃO
+A versão 1.1 do DMOS já está disponível! 🌊
+
+✨ Novidades
+• Flathub ativado de origem: o Discover mostra as aplicações do Flathub logo no primeiro arranque, sem comandos no terminal. A ISO já traz o catálogo.
+• Nova página «Aplicações populares» no assistente Bem-vindo ao DMOS: Spotify, Visual Studio Code, Steam, Discord, GIMP, OBS Studio, Telegram e Google Chrome, a um clique.
+• Instalador: a legenda das partições já se lê no tema escuro.
+• Pacotes do Debian 13 atualizados, com as correções de segurança publicadas desde a 1.0.
+
+🧪 Testada no VMware Workstation: sessão de demonstração, instalação completa e arranque do sistema instalado.
+
+⬇️ Descarregar o DMOS 1.1: https://sourceforge.net/projects/dmos/files/latest/download
+📝 Notas da versão: https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+💬 Dúvidas e sugestões: https://github.com/diogomadail1000-ship-it/DMOS/discussions
+
+Capítulos
+0:00 Apresentação e novidades
+0:12 Flathub de origem
+0:26 Aplicações populares
+0:39 Instalador, testes e descarga
+
+Música original gerada para este vídeo (video/music.py no repositório).
+O DMOS não é um projeto oficial do Debian nem do KDE.
+
+ETIQUETAS
+DMOS, DMOS 1.1, Linux, nova versão, Debian 13, KDE Plasma 6, Flathub, Flatpak, Discover, distribuição Linux, Linux português
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-lancamento-1-1-miniatura.png (1280x720), gerada por video/render.js
