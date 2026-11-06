@@ -251,10 +251,8 @@ var FADE = 0.7;
 // Tipos: intro, outro, card (cartão com lista), term (terminal), shot (captura com destaque).
 // spot: [x, y, largura, altura] na captura de 1920x1080. focus: ponto para onde o zoom se aproxima.
 var SCENES = [
-  { type: "intro", dur: 6 },
-  { type: "card", dur: 8, title: "Neste tutorial", sub: "Do download ao DMOS instalado, dentro do Windows.", two: true, numbered: true, items: [
-      "Descarregar o VMware e a ISO", "Criar a máquina virtual", "Experimentar sem instalar", "Instalar no disco virtual", "Ecrã inteiro e snapshots" ] },
-  { type: "card", dur: 9, title: "Do que precisa", sub: "Tudo corre dentro do Windows, sem mexer no seu disco.", check: true, items: [
+  { type: "intro", dur: 3.4 },
+  { type: "card", dur: 7, title: "Do que precisa", sub: "Tudo corre dentro do Windows, sem mexer no seu disco.", check: true, items: [
       "<b>Windows 10 ou 11</b> de 64 bits, com virtualização ativa na BIOS (Intel VT-x ou AMD-V)",
       "<b>8 GB de RAM</b> no computador, para dar 4 GB à máquina virtual",
       "<b>25 GB livres</b> no disco: 20 para a máquina virtual e 2,6 para a ISO",
@@ -384,8 +382,8 @@ SCENES.forEach(function (s) {
   } else if (s.type === "intro") {
     el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="">' +
       '<div class="badge">Tutorial</div>' +
-      '<div class="big">Instalar o <span class="tide-text">DMOS</span><br>no VMware Workstation</div>' +
-      '<div class="tag">Dentro do Windows, sem tocar no seu disco</div></div>';
+      '<div class="big">Linux dentro do <span class="tide-text">Windows</span><br>em 10 minutos</div>' +
+      '<div class="tag">O DMOS no VMware Workstation, sem tocar no seu disco</div></div>';
   } else if (s.type === "outro") {
     el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="" style="width:150px;height:150px">' +
       '<div class="big" style="font-size:96px">O <span class="tide-text">DMOS</span> dentro do Windows</div>' +
@@ -492,9 +490,9 @@ window.seek = function (t) {
       var kk = out((local - 0.2) / 1.0);
       logo.style.opacity = kk;
       logo.style.transform = "scale(" + lerp(0.7, 1, kk) + ")";
-      rise(el.querySelector(".badge"), local, 0.6, 20);
-      rise(el.querySelector(".big"), local, 0.9, 40);
-      rise(el.querySelector(".tag"), local, 1.4, 30);
+      rise(el.querySelector(".badge"), local, 0.3, 20);
+      rise(el.querySelector(".big"), local, 0.45, 40);
+      rise(el.querySelector(".tag"), local, 0.8, 30);
       el.querySelectorAll(".link").forEach(function (l, j) { rise(l, local, 2.0 + j * 0.35, 30); });
     }
   });
