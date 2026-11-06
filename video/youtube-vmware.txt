@@ -1,0 +1,40 @@
+TÍTULO
+Como instalar o DMOS no VMware Workstation: tutorial passo a passo (Linux dentro do Windows)
+
+DESCRIÇÃO
+Experimente e instale o DMOS 1.1 «Maré» dentro do Windows, numa máquina virtual do VMware Workstation Pro, sem tocar no seu disco. Do download ao sistema instalado, com snapshots para experimentar sem risco.
+
+📋 O que precisa
+• Windows 10 ou 11 de 64 bits, com a virtualização ativa na BIOS (Intel VT-x ou AMD-V)
+• 8 GB de RAM no computador e 25 GB livres no disco
+• VMware Workstation Pro: grátis para uso pessoal, com uma conta gratuita na Broadcom
+
+⚙️ Configuração usada (a testada na versão 1.1)
+Custom (advanced) · Debian 64-bit · UEFI, Secure Boot desligado · 4096 MB de RAM · 2 a 4 processadores · disco de 20 GB · Accelerate 3D graphics
+
+⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download
+🔒 SHA256SUMS: https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download
+💻 VMware Workstation Pro: https://support.broadcom.com (procure «Workstation Pro» e «personal use»)
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+💬 Dúvidas: https://github.com/diogomadail1000-ship-it/DMOS/discussions
+
+Capítulos
+0:00 Introdução e requisitos
+0:20 Passo 1: descarregar o VMware e a ISO
+0:38 Passo 2: criar a máquina virtual
+1:21 Passo 3: experimentar sem instalar
+1:53 Passo 4: instalar no disco virtual
+2:10 Passo 5: snapshots e dicas
+
+As janelas do VMware neste vídeo são ilustrações; os nomes das opções são os do VMware Workstation 17 em inglês e podem mudar entre versões. O DMOS aparece com capturas reais.
+O VMware é uma marca da Broadcom. O DMOS não está associado à Broadcom, ao Debian nem ao KDE.
+Música original gerada para este vídeo.
+
+ETIQUETAS
+DMOS, VMware, VMware Workstation, máquina virtual, instalar Linux no Windows, Linux no VMware, Debian 13, KDE Plasma 6, tutorial Linux, Linux português
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-vmware-miniatura.png (1280x720), gerada por video/render.js
