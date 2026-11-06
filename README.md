@@ -7,7 +7,7 @@ própria, gerada a partir do código deste repositório.
 
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
 
-**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · **[▶ Programas essenciais](https://youtu.be/mBz9nvQ8iWE)** · **[▶ Personalizar o DMOS](https://youtu.be/X7Uiz9RR-KA)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
+**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ Instalar no VMware](https://youtu.be/j-9vXxhwyh4)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · **[▶ Programas essenciais](https://youtu.be/mBz9nvQ8iWE)** · **[▶ Personalizar o DMOS](https://youtu.be/X7Uiz9RR-KA)** · [Site do DMOS](https://diogomadail1000-ship-it.github.io/DMOS/)
 
 ![Ambiente de trabalho escuro](docs/screenshots/4-ambiente-escuro.jpg)
 
@@ -19,7 +19,8 @@ própria, gerada a partir do código deste repositório.
 
 ## Experimentar
 
-O [tutorial em vídeo](https://youtu.be/glLq_Hi9V1A) mostra todos os passos, do download ao primeiro dia.
+O [tutorial em vídeo](https://youtu.be/glLq_Hi9V1A) mostra todos os passos, do download ao primeiro dia. Para o correr dentro do Windows,
+veja o [tutorial do VMware Workstation](https://youtu.be/j-9vXxhwyh4).
 
 **[Descarregar a ISO do DMOS 1.1](https://sourceforge.net/projects/dmos/files/latest/download)** (2,8 GB, na SourceForge). Para confirmar que a ISO
 chegou inteira, compare-a com o [`SHA256SUMS`](https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download):
