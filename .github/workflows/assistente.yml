@@ -1,7 +1,11 @@
 # Assistente da comunidade: responde a perguntas novas nas Discussões (Q&A e General)
 # e dá uma primeira resposta a Issues novos. Ver .github/assistente/responder.py.
-# Sem o segredo ANTHROPIC_API_KEY responde com as perguntas frequentes (faq.json), de graça.
-# Com o segredo (Settings › Secrets and variables › Actions) responde com o Claude.
+# Responde com o GitHub Copilot (Copilot CLI), autenticado com o GITHUB_TOKEN da própria Action
+# (permissão copilot-requests) ou com o segredo COPILOT_GITHUB_TOKEN, se existir (um token
+# fine-grained da conta pessoal com a permissão «Copilot Requests»). Se o Copilot falhar,
+# responde com as perguntas frequentes (faq.json), de graça. Com o segredo ANTHROPIC_API_KEY
+# responde com o Claude em vez do Copilot.
+# O botão «Run workflow» (Actions › Assistente da comunidade) testa uma pergunta sem a publicar.
 name: Assistente da comunidade
 
 on:
@@ -9,14 +13,25 @@ on:
     types: [created]
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      pergunta:
+        description: "Pergunta de teste (a resposta aparece só no registo da execução)"
+        required: true
+        default: "Como instalo o Spotify no DMOS?"
+      titulo:
+        description: "Título da pergunta"
+        required: false
+        default: "Pergunta de teste"
 
 permissions:
   contents: read
   discussions: write
   issues: write
+  copilot-requests: write
 
 concurrency:
-  group: assistente-${{ github.event.discussion.number || github.event.issue.number }}
+  group: assistente-${{ github.event.discussion.number || github.event.issue.number || github.run_id }}
   cancel-in-progress: false
 
 jobs:
@@ -31,9 +46,14 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install "anthropic>=2.5,<3"
+      - name: Instalar o Copilot CLI
+        run: npm install -g @github/copilot
       - name: Responder
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ASSISTENTE_MODELO: ${{ vars.ASSISTENTE_MODELO }}
+          ASSISTENTE_MODELO_COPILOT: ${{ vars.ASSISTENTE_MODELO_COPILOT }}
+          ASSISTENTE_COPILOT: ${{ vars.ASSISTENTE_COPILOT }}
         run: python .github/assistente/responder.py
