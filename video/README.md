@@ -14,6 +14,9 @@ Os vídeos do canal, em 1920x1080 a 30 fps (o Short em 1080x1920), feitos a part
   novidades do `CHANGELOG.md` e as capturas 12 a 15.
 - **Instalar no VMware** (cerca de 2 min 16 s): `vmware.html`, texto em `youtube-vmware.txt`. As janelas do VMware são
   ilustrações (cenas do tipo `dialog`); a configuração é a testada na 1.1.
+- **Instalar no Hyper-V** (cerca de 2 min 10 s): `hyperv.html`, texto em `youtube-hyperv.txt`. Gémeo do tutorial do
+  VMware, com as janelas do Windows em português; a configuração é a usada no teste da 1.1 (geração 2, Arranque
+  Seguro desligado, memória dinâmica desligada).
 - **Comparativo de desempenho**: `desempenho.html`. Só usa números medidos com `medir.sh`. Veja `COMPARATIVO.md`.
 
 - `scene.html`: as cenas, as legendas e a miniatura, desenhadas em HTML. `seek(t)` mostra o instante `t`.
