@@ -3,3 +3,5 @@ dist/
 art/preview/
 .claude/
 video/out/
+__pycache__/
+*.pyc
