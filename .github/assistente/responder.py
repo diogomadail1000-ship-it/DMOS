@@ -2,19 +2,27 @@
 """Assistente da comunidade do DMOS: responde a perguntas novas nas Discussões e dá uma
 primeira resposta a Issues novos.
 
-Tem dois modos:
-- Gratuito (sem ANTHROPIC_API_KEY): procura palavras-chave e responde com as perguntas
-  frequentes de faq.json. Não usa inteligência artificial e não custa nada.
+Tem três modos, por esta ordem:
 - Com o Claude (com ANTHROPIC_API_KEY): responde com o Claude e a documentação do repositório.
+- Com o GitHub Copilot (com o comando `copilot` instalado): responde com o Copilot CLI, o
+  assistente oficial do GitHub, e a mesma documentação. Na Action autentica-se com o GITHUB_TOKEN
+  (precisa da permissão copilot-requests: write) ou, se existir, com o segredo COPILOT_GITHUB_TOKEN.
+  Se o Copilot falhar (sem plano, sem créditos, erro), cai no modo gratuito.
+- Gratuito: procura palavras-chave e responde com as perguntas frequentes de faq.json.
+  Não usa inteligência artificial e não custa nada.
 
 Corre na GitHub Action .github/workflows/assistente.yml. Lê o evento do GitHub
-(GITHUB_EVENT_NAME e GITHUB_EVENT_PATH), chama o Claude e publica um comentário.
+(GITHUB_EVENT_NAME e GITHUB_EVENT_PATH), gera a resposta e publica um comentário.
 Precisa de GITHUB_TOKEN. Com DRY_RUN=1 só escreve a resposta no ecrã, sem publicar.
+O evento workflow_dispatch (botão «Run workflow») responde à pergunta dada, só no ecrã.
 """
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import unicodedata
 import urllib.request
 from pathlib import Path
@@ -22,6 +30,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 # O modelo pode mudar-se com a variável do repositório ASSISTENTE_MODELO (por exemplo claude-haiku-5-5, mais barato).
 MODEL = os.environ.get("ASSISTENTE_MODELO") or "claude-opus-5-5"
+# No Copilot, o modelo só se fixa se a variável ASSISTENTE_MODELO_COPILOT existir; senão o Copilot escolhe.
+COPILOT_MODEL = os.environ.get("ASSISTENTE_MODELO_COPILOT") or ""
+COPILOT_TIMEOUT = 300  # segundos
 # Se o modelo recusar uma pergunta, estes passam-na para outro modelo no mesmo pedido.
 # O Claude Haiku 5.5 não tem esta reserva do lado do servidor.
 MODELS_WITH_FALLBACK = {"claude-opus-5-5", "claude-opus-5", "claude-fable-5-1", "claude-sonnet-5-5"}
@@ -55,6 +66,12 @@ FOOTER = (
     "do projeto. Pode conter erros. Se não resolveu, responda aqui e um humano vê a conversa.</sub>"
 )
 
+COPILOT_FOOTER = (
+    "\n\n---\n"
+    "<sub>🤖 Resposta automática do assistente do DMOS, feita com o GitHub Copilot a partir da documentação "
+    "do projeto. Pode conter erros. Se não resolveu, responda aqui e um humano vê a conversa.</sub>"
+)
+
 INSTRUCTIONS = """És o assistente da comunidade do DMOS, uma distribuição Linux portuguesa baseada no Debian 13 \
 e no KDE Plasma 6. Respondes a perguntas nas Discussões do GitHub e dás uma primeira resposta a problemas \
 reportados nos Issues.
@@ -65,8 +82,9 @@ Como responder:
 KDE Plasma 6. Se a resposta não estiver lá e não tiveres a certeza, diz isso com franqueza e sugere que a \
 pessoa espere pela resposta de um humano ou abra um Issue. Não inventes funcionalidades, comandos, menus nem \
 resultados de testes.
-- O DMOS só foi testado em máquinas virtuais QEMU. Não digas que funciona em hardware real, com Secure Boot, \
-no VMware ou no VirtualBox: diz que ainda não foi testado.
+- O DMOS só foi testado em máquinas virtuais: VMware Workstation, Hyper-V e QEMU. No VirtualBox arranca mas \
+fica muito lento, por isso não é recomendado. Não digas que funciona em hardware real nem com Secure Boot: diz \
+que ainda não foi testado.
 - Sê direto e prático: passos numerados quando houver passos, comandos em blocos de código. Uma resposta curta \
 e certa vale mais do que uma longa.
 - Num Issue, se faltar informação para perceber o problema (onde corre, modo de arranque, o que aparece no ecrã, \
@@ -213,26 +231,91 @@ def ask_claude(kind: str, title: str, body: str) -> str | None:
     return text or None
 
 
+def ask_copilot(kind: str, title: str, body: str) -> str | None:
+    """Responde com o Copilot CLI (comando `copilot`), em modo não interativo e sem ferramentas.
+
+    Corre numa pasta vazia, para não carregar instruções nem ferramentas do repositório, e só com
+    as variáveis de ambiente de que precisa. Devolve None se o Copilot falhar, para o chamador
+    cair nas perguntas frequentes."""
+    truncated = len(body) > MAX_INPUT_CHARS
+    body = body[:MAX_INPUT_CHARS]
+    prompt = (
+        INSTRUCTIONS
+        + "\n\nDocumentação do projeto:\n\n" + knowledge()
+        + "\n\nResponde a esta mensagem (responde só com o texto do comentário, em Markdown):\n"
+        f"Tipo: {kind}\n<titulo>{title}</titulo>\n<mensagem>{body}</mensagem>"
+        + ("\n(A mensagem era mais longa e foi cortada.)" if truncated else "")
+    )
+    env = {k: os.environ[k] for k in ("PATH", "HOME", "LANG", "LC_ALL", "HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY") if k in os.environ}
+    token = os.environ.get("COPILOT_GITHUB_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if not token:
+        print("Sem token para o Copilot.", file=sys.stderr)
+        return None
+    env["COPILOT_GITHUB_TOKEN"] = token
+    env["CI"] = "true"  # sem atualizações automáticas nem perguntas
+    env["NO_COLOR"] = "1"
+    with tempfile.TemporaryDirectory(prefix="dmos-copilot-") as tmp:
+        env["COPILOT_HOME"] = str(Path(tmp) / "home")
+        cmd = ["copilot", "-p", prompt, "-s", "--disable-client-telemetry", "--log-dir", str(Path(tmp) / "logs")]
+        if COPILOT_MODEL:
+            cmd += ["--model", COPILOT_MODEL]
+        try:
+            run = subprocess.run(cmd, cwd=tmp, env=env, capture_output=True, text=True, timeout=COPILOT_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            print(f"O Copilot não respondeu em {COPILOT_TIMEOUT} s.", file=sys.stderr)
+            return None
+    if run.returncode != 0:
+        print(f"O Copilot falhou (código {run.returncode}):\n{(run.stderr or run.stdout).strip()[:2000]}", file=sys.stderr)
+        return None
+    text = run.stdout.strip()
+    if not text:
+        print("O Copilot devolveu uma resposta vazia.", file=sys.stderr)
+        return None
+    return text
+
+
+def answer_for(kind: str, title: str, body: str, mode: str) -> str | None:
+    """A resposta no modo pedido. Claude e Copilot acrescentam a sua assinatura; o Copilot cai nas
+    perguntas frequentes se falhar."""
+    what = "pergunta nas Discussões" if kind == "discussion" else "problema ou sugestão nos Issues"
+    if mode == "claude":
+        answer = ask_claude(what, title, body)
+        return answer + FOOTER if answer else None
+    if mode == "copilot":
+        answer = ask_copilot(what, title, body)
+        if answer:
+            return answer + COPILOT_FOOTER
+        print("A cair nas perguntas frequentes.", file=sys.stderr)
+    return faq_answer(kind, title, body)
+
+
 def main() -> int:
-    use_claude = bool(os.environ.get("ANTHROPIC_API_KEY"))
-    print("Modo:", "Claude" if use_claude else "perguntas frequentes (gratuito)")
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        mode = "claude"
+    elif shutil.which("copilot") and os.environ.get("ASSISTENTE_COPILOT", "1") != "0":
+        mode = "copilot"
+    else:
+        mode = "faq"
+    print("Modo:", {"claude": "Claude", "copilot": "GitHub Copilot", "faq": "perguntas frequentes (gratuito)"}[mode])
     event_name = os.environ["GITHUB_EVENT_NAME"]
     event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
     repo = os.environ["GITHUB_REPOSITORY"]
     api = os.environ.get("GITHUB_API_URL", "https://api.github.com")
     dry = os.environ.get("DRY_RUN") == "1"
 
+    if event_name == "workflow_dispatch":
+        # Teste manual: responde à pergunta dada, só no ecrã.
+        inputs = event.get("inputs") or {}
+        answer = answer_for("discussion", inputs.get("titulo") or "Pergunta de teste", inputs.get("pergunta") or "", mode)
+        print(answer or "(sem resposta)")
+        return 0
     if event_name == "discussion":
         d = event["discussion"]
         slug = (d.get("category") or {}).get("slug", "")
         if slug not in DISCUSSION_CATEGORIES:
             print(f"Categoria «{slug}» fora das que o assistente responde.")
             return 0
-        if use_claude:
-            answer = ask_claude("pergunta nas Discussões", d["title"], d.get("body") or "")
-            answer = answer + FOOTER if answer else None
-        else:
-            answer = faq_answer("discussion", d["title"], d.get("body") or "")
+        answer = answer_for("discussion", d["title"], d.get("body") or "", mode)
         if not answer:
             return 0
         if dry:
@@ -246,11 +329,7 @@ def main() -> int:
         print("Respondido:", result["data"]["addDiscussionComment"]["comment"]["url"])
     elif event_name == "issues":
         i = event["issue"]
-        if use_claude:
-            answer = ask_claude("problema ou sugestão nos Issues", i["title"], i.get("body") or "")
-            answer = answer + FOOTER if answer else None
-        else:
-            answer = faq_answer("issue", i["title"], i.get("body") or "")
+        answer = answer_for("issue", i["title"], i.get("body") or "", mode)
         if not answer:
             return 0
         if dry:
