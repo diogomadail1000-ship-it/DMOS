@@ -31,7 +31,7 @@
   --border: rgba(26, 34, 56, 0.1);
   --text: #1A2238;
   --muted: #5E6883;
-  --accent: #0E8F88;
+  --accent: #0B7A74; /* 5.2:1 sobre branco */
   --accent-ink: #FFFFFF;
   --link: #1469C7;
   --ok: #1C9A4F;
@@ -567,7 +567,7 @@ td.na { color: var(--muted); white-space: nowrap; }
 .cta h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; }
 .cta p { color: var(--muted); }
 
-.footer { margin-top: 80px; border-top: 1px solid var(--border); }
+.footer { margin-top: 80px; border-top: 1px solid var(--border); padding-bottom: 72px; }
 .footer-inner {
   max-width: 1180px;
   margin: 0 auto;
@@ -820,8 +820,8 @@ kbd {
 .assistente-cabeca span { display: block; font-size: 12px; color: var(--muted); }
 .assistente-fechar { margin-left: auto; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 20px; cursor: pointer; }
 .assistente-fechar:hover { background: var(--surface); }
-.assistente-conversa { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-.assistente-msg { max-width: 92%; padding: 12px 14px; border-radius: 16px; line-height: 1.5; font-size: 14px; }
+.assistente-conversa { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.assistente-msg { max-width: 92%; min-width: 0; padding: 12px 14px; border-radius: 16px; line-height: 1.5; font-size: 14px; overflow-wrap: anywhere; }
 .assistente-msg.bot { align-self: flex-start; background: var(--surface-2); border-bottom-left-radius: 6px; }
 .assistente-msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 6px; }
 .assistente-msg p { margin: 0 0 8px; }
@@ -841,7 +841,7 @@ kbd {
 .assistente-sugestoes button { font: inherit; font-size: 12.5px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
 .assistente-sugestoes button:hover { background: var(--surface-2); }
 .assistente form { display: flex; gap: 8px; padding: 12px 16px 16px; border-top: 1px solid var(--border); }
-.assistente input { flex: 1; min-width: 0; padding: 11px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-size: 14px; }
+.assistente input { flex: 1; min-width: 0; padding: 11px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-size: 16px; }
 .assistente input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 .assistente form button { padding: 0 16px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 700; cursor: pointer; }
 .assistente-nota { padding: 0 16px 12px; font-size: 11.5px; color: var(--muted); }
@@ -850,6 +850,8 @@ kbd {
   .assistente.aberto { inset: 0; }
   .assistente.aberto .assistente-abrir { display: none; }
   .assistente.aberto .assistente-painel { position: fixed; inset: 0; width: auto; height: auto; border-radius: 0; }
+  body:has(.assistente.aberto) { overflow: hidden; }
+  .footer { padding-bottom: 64px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .assistente-painel { animation: assistente-sobe 0.18s ease-out; }
