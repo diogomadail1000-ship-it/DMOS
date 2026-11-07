@@ -1,0 +1,24 @@
+SHORT: «Linux sem apagar o Windows»
+Vídeo: dmos-short-vmware.mp4 (1080x1920, 23 s), gerado por: node video/render.js video/out short-vmware.html dmos-short-vmware
+
+TÍTULO (até 100 caracteres)
+Queres Linux sem apagar o Windows? 🪟🐧 #Shorts
+
+DESCRIÇÃO
+O DMOS corre numa janela do Windows com o VMware Workstation, que é grátis para uso pessoal. Três passos: descarregar a ISO, criar a máquina virtual e instalar. Em 10 minutos está a funcionar, e se não gostares fechas a janela: o Windows fica exatamente igual.
+
+▶️ Tutorial completo, passo a passo: https://youtu.be/j-9vXxhwyh4
+⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download
+🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+
+#DMOS #Linux #Windows #VMware #Debian #KDE #Shorts
+
+VÍDEO RELACIONADO (no Studio, em «Vídeo relacionado», para o link aparecer no Short)
+Como instalar o DMOS no VMware Workstation: tutorial passo a passo (Linux dentro do Windows)
+
+COMENTÁRIO FIXADO (publique-o logo a seguir e fixe-o)
+Tutorial completo do VMware aqui 👉 https://youtu.be/j-9vXxhwyh4
+Já experimentaste Linux numa máquina virtual? Conta aqui 👇
+
+ETIQUETAS
+DMOS, Linux, Shorts, VMware, máquina virtual, Linux no Windows, experimentar Linux, Debian 13, KDE Plasma 6, Linux português

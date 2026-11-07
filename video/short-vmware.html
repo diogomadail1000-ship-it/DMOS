@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: short Linux sem apagar o Windows</title>
+<!--
+  YouTube Short vertical (1080x1920, ~22 s): "Queres Linux sem apagar o Windows?". Puxa pelo tutorial do VMware.
+  Gerar: node video/render.js video/out short-vmware.html dmos-short-vmware
+  O texto fica entre y=230 e y=1500 e longe da margem direita, fora das zonas que o YouTube tapa.
+-->
+<style>
+  :root { --text: #E8ECF5; --muted: #B4BCD2; --accent: #2DD4BF; --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0C1122; color: var(--text); font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .full { position: absolute; inset: 0; }
+  .full img { position: absolute; top: 0; height: 100%; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,11,24,0.92) 0%, rgba(8,11,24,0.6) 24%, rgba(8,11,24,0) 40%); }
+  .shade.bottom { background: linear-gradient(0deg, rgba(8,11,24,0.95) 0%, rgba(8,11,24,0.7) 30%, rgba(8,11,24,0) 50%); }
+  .cap { position: absolute; left: 70px; right: 140px; top: 250px; }
+  .cap.low { top: auto; bottom: 440px; }
+  .kicker { font-size: 34px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .title { font-size: 96px; font-weight: 900; letter-spacing: -0.04em; line-height: 0.98; text-shadow: 0 6px 30px rgba(0,0,0,0.45); }
+  .hook { position: absolute; left: 70px; right: 140px; font-weight: 900; letter-spacing: -0.045em; line-height: 1; text-shadow: 0 10px 40px rgba(0,0,0,0.45); }
+  .backdrop { position: absolute; inset: -100px; background: url(../docs/screenshots/4-ambiente-escuro.jpg) 62% 70% / auto 120%; filter: blur(30px) saturate(1.3); }
+  .dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(12,17,34,0.3), rgba(12,17,34,0.88)); }
+  .center { position: absolute; left: 70px; right: 140px; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .big { font-size: 130px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.95; }
+  .sub { font-size: 50px; font-weight: 600; color: var(--muted); margin-top: 30px; }
+  .pill { margin-top: 60px; font-size: 48px; font-weight: 800; padding: 26px 48px; border-radius: 999px; background: #11172B; border: 3px solid rgba(45,212,191,0.6); color: var(--accent); }
+  .logo { width: 150px; height: 150px; margin-bottom: 40px; }
+  /* Ambiente de trabalho do Windows, desenhado, com o DMOS numa janela do VMware. */
+  .win { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, #3C7BE0, #0F3A8C 55%, #061C4A); }
+  .taskbar { position: absolute; left: 0; right: 0; bottom: 0; height: 110px; background: rgba(20, 28, 52, 0.85); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; gap: 34px; }
+  .taskbar i { width: 54px; height: 54px; border-radius: 12px; background: rgba(255,255,255,0.16); }
+  .taskbar i.start { background: linear-gradient(135deg, #5CB4FF, #1C6FDC); }
+  .taskbar i.vm { background: #2DD4BF; box-shadow: 0 0 0 3px rgba(255,255,255,0.4); }
+  .taskbar .clock { position: absolute; right: 36px; font-size: 26px; font-weight: 600; color: #fff; }
+  .vmwin { position: absolute; left: 50%; top: 50%; width: 960px; height: 640px; margin: -320px 0 0 -480px; border-radius: 16px; overflow: hidden; background: #1A1F30; box-shadow: 0 50px 120px rgba(0,0,0,0.65); transform-origin: 50% 50%; }
+  .vmbar { height: 56px; background: #2A3048; display: flex; align-items: center; gap: 14px; padding: 0 22px; font-size: 24px; font-weight: 700; color: #E8ECF5; }
+  .vmbar i { width: 16px; height: 16px; border-radius: 50%; background: #8D96B0; }
+  .vmbar .dots { margin-left: auto; display: flex; gap: 18px; font-weight: 800; color: #B4BCD2; }
+  .vmbody { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
+  .vmbody img { position: absolute; top: 0; height: 100%; }
+  /* Passos. */
+  .steps { position: absolute; left: 70px; right: 140px; top: 560px; display: grid; gap: 34px; }
+  .step { display: flex; align-items: center; gap: 30px; padding: 30px 36px; border-radius: 36px; background: rgba(17, 23, 43, 0.92); border: 3px solid rgba(255,255,255,0.14); font-size: 54px; font-weight: 800; line-height: 1.05; }
+  .step b { flex: none; width: 92px; height: 92px; border-radius: 50%; background: var(--tide); color: #0C1122; display: flex; align-items: center; justify-content: center; font-size: 50px; font-weight: 900; }
+  .step small { display: block; font-size: 32px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+<script>
+window.SIZE = [1080, 1920];
+window.MUSIC_BAR = 2.4;
+var CUT = 0.3;
+var SCENES = [
+  { type: "hook", dur: 3.2 },
+  { type: "window", dur: 5.6 },
+  { type: "steps", dur: 6.4 },
+  { type: "safe", dur: 4.4 },
+  { type: "cta", dur: 5.0 }
+];
+var stage = document.getElementById("stage");
+var start = 0;
+SCENES.forEach(function (s) {
+  s.start = start; start += s.dur - CUT;
+  var el = document.createElement("div"); el.className = "scene";
+  if (s.type === "hook") {
+    el.innerHTML = '<div class="backdrop"></div><div class="dim"></div>' +
+      '<div class="hook h1" style="top:520px;font-size:170px">Queres<br>Linux</div>' +
+      '<div class="hook h2" style="top:940px;font-size:120px;color:var(--muted)">sem apagar</div>' +
+      '<div class="hook h3" style="top:1100px;font-size:170px"><span class="tide-text">o Windows?</span></div>';
+  } else if (s.type === "window") {
+    el.innerHTML = '<div class="win"></div>' +
+      '<div class="vmwin"><div class="vmbar"><i></i>DMOS 1.1 - VMware Workstation<span class="dots">&#8211; &#9633; &#10005;</span></div>' +
+      '<div class="vmbody"><img class="i1" src="../docs/screenshots/4-ambiente-escuro.jpg"></div></div>' +
+      '<div class="taskbar"><i class="start"></i><i></i><i></i><i class="vm"></i><i></i><span class="clock">21:07</span></div>' +
+      '<div class="cap"><div class="kicker">VMware Workstation, grátis</div><div class="title">O DMOS corre numa janela do Windows</div></div>';
+  } else if (s.type === "steps") {
+    el.innerHTML = '<div class="full"><img class="i1" src="../docs/screenshots/8-instalador.jpg"></div><div class="shade"></div><div class="shade bottom"></div>' +
+      '<div class="cap"><div class="kicker">Só três passos</div><div class="title">Em 10 minutos está a correr</div></div>' +
+      '<div class="steps"><div class="step"><b>1</b><span>Descarregar a ISO<small>3 GB, grátis</small></span></div>' +
+      '<div class="step"><b>2</b><span>Criar a máquina virtual<small>4 GB de RAM, 2 núcleos</small></span></div>' +
+      '<div class="step"><b>3</b><span>Instalar e usar<small>o assistente faz o resto</small></span></div></div>';
+  } else if (s.type === "safe") {
+    el.innerHTML = '<div class="full"><img class="i1" src="../docs/screenshots/5-aplicacoes.jpg"></div><div class="shade"></div>' +
+      '<div class="cap"><div class="kicker">Sem riscos</div><div class="title">Não gostaste? Fechas a janela. O Windows fica igual.</div></div>';
+  } else {
+    el.innerHTML = '<div class="backdrop"></div><div class="dim"></div><div class="center"><img class="logo" src="../art/logo.svg" alt="">' +
+      '<div class="big">Tutorial completo</div><div class="sub">passo a passo, no canal</div>' +
+      '<div class="pill">Link na descrição &#8595;</div></div>';
+  }
+  stage.appendChild(el); s.el = el;
+});
+window.TOTAL = start + CUT;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function back(x) { x = clamp(x); var c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function pop(el, local, t0, from) {
+  if (!el) return; var k = clamp((local - t0) / 0.45);
+  el.style.opacity = out(k); el.style.transform = "translateY(" + (1 - out(k)) * 40 + "px) scale(" + lerp(from || 0.85, 1, back(k)) + ")";
+}
+// Imagem 1920x1080 com a altura do contentor; cx é o ponto (na captura) que fica ao centro.
+function place(img, boxW, boxH, cx, zoom) {
+  var k = boxH / 1080 * (zoom || 1), w = 1920 * k;
+  var left = Math.min(0, Math.max(boxW - w, boxW / 2 - cx * k));
+  img.style.height = 1080 * k + "px"; img.style.left = left + "px";
+}
+
+window.seek = function (t) {
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start, el = s.el;
+    if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+    el.style.display = "block"; el.style.zIndex = i;
+    var fin = i === 0 ? 1 : clamp(local / CUT), fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 0.8) : 1;
+    el.style.opacity = Math.min(ease(fin), ease(fout));
+    var p = local / s.dur;
+    if (s.type === "hook") {
+      pop(el.querySelector(".h1"), local, 0.05, 0.6); pop(el.querySelector(".h2"), local, 0.7); pop(el.querySelector(".h3"), local, 1.1, 0.6);
+    } else if (s.type === "window") {
+      // A janela do VMware aparece pequena e cresce até ocupar quase todo o ecrã.
+      var k = ease((local - 0.4) / 1.6);
+      var win = el.querySelector(".vmwin");
+      win.style.transform = "translateY(" + lerp(120, 60, k) + "px) scale(" + lerp(0.55, 1.08, k) + ")";
+      win.style.opacity = out(clamp(local / 0.4));
+      place(el.querySelector(".i1"), 960, 584, lerp(980, 900, p), 1.0);
+      pop(el.querySelector(".kicker"), local, 1.9); pop(el.querySelector(".title"), local, 2.1);
+    } else if (s.type === "steps") {
+      place(el.querySelector(".i1"), 1080, 1920, lerp(1000, 900, p), lerp(1.0, 1.06, p));
+      pop(el.querySelector(".kicker"), local, 0.15); pop(el.querySelector(".title"), local, 0.3);
+      el.querySelectorAll(".step").forEach(function (st, j) { pop(st, local, 1.3 + j * 1.1); });
+    } else if (s.type === "safe") {
+      place(el.querySelector(".i1"), 1080, 1920, lerp(900, 1000, p), lerp(1.0, 1.06, p));
+      pop(el.querySelector(".kicker"), local, 0.15); pop(el.querySelector(".title"), local, 0.3);
+    } else {
+      var logo = el.querySelector(".logo"), lk = clamp(local / 0.6);
+      logo.style.opacity = out(lk); logo.style.transform = "scale(" + lerp(0.5, 1, back(lk)) + ")";
+      pop(el.querySelector(".big"), local, 0.2, 0.7); pop(el.querySelector(".sub"), local, 0.6);
+      var pill = el.querySelector(".pill"); pop(pill, local, 1.0);
+      if (local > 1.6) pill.style.transform += " scale(" + (1 + 0.03 * Math.sin((local - 1.6) * 5)) + ")";
+    }
+  });
+};
+window.thumbnail = function () { window.seek(2.2); };
+window.seek(location.hash ? parseFloat(location.hash.slice(1)) || 0 : 0);
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
-TÍTULO
-7 dicas para o dia a dia no DMOS (atalhos do KDE Plasma 6)
+TÍTULO (renomeado a 7 de novembro, para pesquisa)
+7 atalhos do KDE Plasma 6 que todo o utilizador de Linux devia saber (no DMOS)
+(título original: 7 dicas para o dia a dia no DMOS (atalhos do KDE Plasma 6))
 
 DESCRIÇÃO
 Sete atalhos e truques que poupam tempo no DMOS 1.0 «Maré», e duas dicas bónus.

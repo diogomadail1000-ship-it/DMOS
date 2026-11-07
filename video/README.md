@@ -79,3 +79,13 @@ capturas reais e acaba a pedir uma resposta nos comentários. Texto em `youtube-
 ```bash
 node video/render.js video/out short-tema.html dmos-short-tema
 ```
+
+## Short «Linux sem apagar o Windows»
+
+`short-vmware.html` é um terceiro Short (1080x1920, 23 s) para quem tem Windows e quer experimentar o DMOS sem
+risco: mostra o DMOS numa janela do VMware, os três passos e remete para o tutorial do VMware. Texto em
+`youtube-short-vmware.txt`.
+
+```bash
+node video/render.js video/out short-vmware.html dmos-short-vmware
+```
