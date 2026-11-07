@@ -32,8 +32,9 @@
     faq.entradas.forEach(function (entry, order) {
       var hits = 0;
       entry.palavras.forEach(function (word) {
-        var re = new RegExp("(?<![\\w-])" + escapeRe(normalize(word)) + "(?![\\w-])");
-        if (re.test(norm)) hits++;
+        // Palavra inteira; sem lookbehind, para funcionar em Safari antigos.
+        var re = new RegExp("(^|[^\\w-])" + escapeRe(normalize(word)) + "(?![\\w-])");
+        if (re.test(norm)) hits += normalize(word).length; // palavras mais específicas pesam mais
       });
       if (hits) scored.push({ hits: hits, order: order, entry: entry });
     });
@@ -45,17 +46,22 @@
   function escapeHtml(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
+  function link(url, text) { return '<a href="' + url + '" target="_blank" rel="noopener">' + text + "</a>"; }
   function inline(s) {
-    return s
-      .replace(/`([^`]+)`/g, function (_, c) { return "<code>" + c + "</code>"; })
-      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-      .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-      .replace(/(^|[^"=>])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+    // Os trechos de código saem primeiro, para não serem tocados pelas outras regras.
+    var codes = [];
+    s = s.replace(/`([^`]+)`/g, function (_, c) { codes.push("<code>" + c + "</code>"); return "\u0000" + (codes.length - 1) + "\u0000"; });
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    // Ligações [texto](url) e URLs soltos, numa só passagem, para o HTML gerado não voltar a ser lido.
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|(^|[^\w"=>])(https?:\/\/[^\s<)]+)/g, function (m, text, url, pre, bare) {
+      return url ? link(url, text) : pre + link(bare, bare);
+    });
+    return s.replace(/\u0000(\d+)\u0000/g, function (_, i) { return codes[+i]; });
   }
   function markdown(text) {
     var html = "", lines = escapeHtml(text).split("\n"), i = 0, list = null, para = [];
     function flush() {
-      if (para.length) { html += "<p>" + inline(para.join(" ")) + "</p>"; para = []; }
+      if (para.length) { html += "<p>" + inline(para.join("<br>")) + "</p>"; para = []; }
       if (list) { html += "</" + list + ">"; list = null; }
     }
     while (i < lines.length) {
@@ -82,7 +88,8 @@
   }
 
   function discussionLink(question) {
-    var title = question.length > 100 ? question.slice(0, 97) + "…" : question;
+    var chars = Array.from(question); // por pontos de código, para não partir emojis
+    var title = chars.length > 100 ? chars.slice(0, 97).join("") + "…" : question;
     return DISCUSSIONS + "/new?category=q-a&title=" + encodeURIComponent(title) +
       "&body=" + encodeURIComponent(question) + "&pergunta=" + encodeURIComponent(question);
   }
@@ -112,6 +119,14 @@
     add("bot", html + communityRow(question, "Não resolveu?"));
   }
 
+  var errorShown = false;
+  function loadError() {
+    if (errorShown) return;
+    errorShown = true;
+    add("bot", "<p>Não consegui carregar as perguntas frequentes. Pode perguntar diretamente nas " +
+      '<a href="' + DISCUSSIONS + '/new?category=q-a" target="_blank" rel="noopener">Discussões</a>.</p>');
+  }
+
   function load() {
     if (faq) return Promise.resolve(faq);
     if (!loading) {
@@ -131,8 +146,6 @@
         return faq;
       }).catch(function () {
         loading = null;
-        add("bot", "<p>Não consegui carregar as perguntas frequentes. Pode perguntar diretamente nas " +
-          '<a href="' + DISCUSSIONS + '/new?category=q-a" target="_blank" rel="noopener">Discussões</a>.</p>');
         throw new Error("faq");
       });
     }
@@ -145,14 +158,20 @@
     add("user", "<p>" + escapeHtml(question) + "</p>");
     root.classList.add("perguntou");
     input.value = "";
-    load().then(function () { answer(question); }, function () {});
+    input.focus(); // as sugestões desaparecem; o foco fica dentro do painel
+    function fallback() {
+      add("bot", "<p>Não consigo responder a isso aqui.</p>" + communityRow(question, "Leve a pergunta para as Discussões: o assistente do projeto responde em minutos."));
+    }
+    load().then(function () {
+      try { answer(question); } catch (e) { fallback(); }
+    }, function () { loadError(); fallback(); });
   }
 
   function open() {
     root.classList.add("aberto");
     openBtn.setAttribute("aria-expanded", "true");
     panel.hidden = false;
-    load().then(null, function () {});
+    load().then(null, loadError);
     setTimeout(function () { input.focus(); }, 50);
   }
   function close() {
@@ -164,7 +183,18 @@
 
   openBtn.addEventListener("click", function () { root.classList.contains("aberto") ? close() : open(); });
   closeBtn.addEventListener("click", close);
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && root.classList.contains("aberto")) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && root.classList.contains("aberto") && !document.querySelector("dialog[open]")) close();
+  });
+  // Dentro do painel, o Tab anda em círculo (importa no telemóvel, onde o painel tapa a página).
+  panel.addEventListener("keydown", function (e) {
+    if (e.key !== "Tab") return;
+    var items = Array.prototype.filter.call(panel.querySelectorAll("button, a[href], input"), function (el) { return el.offsetParent !== null; });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   form.addEventListener("submit", function (e) { e.preventDefault(); ask(input.value); });
   // As ligações «Perguntar» do site abrem o assistente.
   document.querySelectorAll('a[href="#perguntar"]').forEach(function (a) {
