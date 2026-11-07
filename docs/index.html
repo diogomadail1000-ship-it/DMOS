@@ -487,7 +487,8 @@
         <article class="try-card">
           <span class="step">2</span>
           <h3>Numa máquina virtual</h3>
-          <p>VirtualBox, VMware ou Hyper-V, tipo Linux/Debian 64 bits. Pelo menos <strong>4 GB de RAM</strong> e <strong>2 CPUs</strong>. Ative a aceleração 3D, se existir.</p>
+          <p>Tipo Linux/Debian 64 bits, pelo menos <strong>4 GB de RAM</strong> e <strong>2 CPUs</strong>. Recomendados o <strong>VMware Workstation</strong>, com aceleração 3D, e o <strong>Hyper-V</strong> (geração 2, Arranque Seguro e memória dinâmica desligados).</p>
+          <p class="small"><strong>VirtualBox: não recomendado.</strong> O DMOS fica muito lento com as definições de origem. Se só tiver o VirtualBox, use VMSVGA com aceleração 3D e 128 MB de vídeo e escolha a sessão Plasma (X11) no ecrã de entrada.</p>
         </article>
         <article class="try-card">
           <span class="step">3</span>
@@ -507,7 +508,7 @@
       <div class="section-head">
         <p class="eyebrow">Estado</p>
         <h2>O que foi testado, com franqueza.</h2>
-        <p>A partir da 1.1, os testes são feitos no VMware Workstation, com aceleração por hardware e 3D. A 1.0 foi testada no QEMU.</p>
+        <p>A partir da 1.1, os testes são feitos no VMware Workstation, com aceleração por hardware e 3D. A 1.0 foi testada no QEMU. A 1.1 publicada foi ainda instalada no Hyper-V, onde corre bem.</p>
       </div>
       <div class="status-grid">
         <div class="table-wrap">
@@ -521,12 +522,11 @@
               <tr><td>Resolução automática e som (ferramentas do VMware)</td><td class="ok">Sim</td><td class="na">Não se aplica</td></tr>
             </tbody>
           </table>
-          <p class="small">A instalação no VMware foi feita com a primeira compilação da 1.1; a compilação publicada só acrescenta o catálogo do Flathub, testado na sessão de demonstração. Na 1.0 também foram verificados o tema claro, a entrada "Try DMOS (English)", o Firefox e o Dolphin.</p>
+          <p class="small">A instalação no VMware foi feita com a primeira compilação da 1.1; a compilação publicada só acrescenta o catálogo do Flathub, testado na sessão de demonstração. Na 1.0 também foram verificados o tema claro, a entrada "Try DMOS (English)", o Firefox e o Dolphin. No Hyper-V (geração 2, Arranque Seguro desligado), a 1.1 publicada arrancou e foi instalada até ao fim. No VirtualBox arranca, mas a sessão fica demasiado lenta com as definições de origem.</p>
         </div>
         <div class="pending">
           <h3>Ainda por testar</h3>
           <ul>
-            <li><strong>VirtualBox</strong>.</li>
             <li><strong>Hardware real</strong>, incluindo gráficas NVIDIA, AMD e Intel e Wi-Fi.</li>
             <li><strong>Secure Boot</strong>: os componentes assinados estão na ISO, mas o arranque com ele ativo não foi experimentado.</li>
             <li>Modo de compatibilidade gráfica, disco encriptado, dual boot e atualização com <code>apt</code>.</li>

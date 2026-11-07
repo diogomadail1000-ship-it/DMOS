@@ -50,9 +50,12 @@
         "vm",
         "qemu",
         "gnome boxes",
-        "virt-manager"
+        "virt-manager",
+        "lento",
+        "lentidao",
+        "lentidão"
       ],
-      "resposta": "Definições recomendadas para a máquina virtual:\n\n- Tipo **Linux**, versão **Debian (64 bits)**\n- Memória **4096 MB** e **2** processadores\n- Disco novo com **20 GB** ou mais\n- **Aceleração 3D** ativa, se existir, e a ISO ligada ao leitor ótico\n\nO DMOS 1.1 foi testado no **VMware Workstation**, onde arranca em menos de um minuto, com ajuste automático da resolução e som. No VirtualBox ainda não foi testado, por isso conte-nos como correu: ajuda muito!\n\n🎬 Tutorial completo no VMware Workstation: https://youtu.be/j-9vXxhwyh4\n🎬 Tutorial geral, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
+      "resposta": "Definições recomendadas para a máquina virtual:\n\n- Tipo **Linux**, versão **Debian (64 bits)**\n- Memória **4096 MB** e **2** processadores\n- Disco novo com **20 GB** ou mais\n- A ISO ligada ao leitor ótico\n\n**Programas recomendados:**\n\n- **VMware Workstation** (grátis para uso pessoal): ative a aceleração 3D. Arranca em menos de um minuto, com ajuste automático da resolução e som.\n- **Hyper-V** (já vem no Windows 10/11 Pro e Education): máquina de **geração 2**, **Arranque Seguro desligado**, memória dinâmica desligada. Testado com o DMOS 1.1, corre bem.\n\n**VirtualBox: não recomendado.** O DMOS fica muito lento com as definições de origem. Se só tiver o VirtualBox, use **VMSVGA** com aceleração 3D e 128 MB de vídeo e escolha a sessão **Plasma (X11)** no ecrã de entrada.\n\n🎬 Tutorial completo no VMware Workstation: https://youtu.be/j-9vXxhwyh4\n🎬 Tutorial geral, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
     },
     {
       "id": "pen-usb",

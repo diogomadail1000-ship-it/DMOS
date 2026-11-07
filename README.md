@@ -40,8 +40,12 @@ A ISO não faz parte do repositório, por ser demasiado grande para o GitHub. De
 (`dmos-1.1-mare-source.*`). Quem publicar a ISO deve publicar também este arquivo, porque a GPL pede que
 o código-fonte acompanhe os binários.
 
-- **Numa máquina virtual** (VirtualBox, VMware, Hyper-V): tipo Linux/Debian 64 bits, pelo menos
-  4 GB de RAM e 2 CPUs. Ative a aceleração 3D, se existir.
+- **Numa máquina virtual**: tipo Linux/Debian 64 bits, pelo menos 4 GB de RAM e 2 CPUs.
+  Recomendados o **VMware Workstation** (grátis para uso pessoal, com aceleração 3D) e o
+  **Hyper-V** (já vem no Windows Pro e Education; máquina de geração 2 com o Arranque Seguro
+  desligado e memória dinâmica desligada). **VirtualBox: não recomendado**, porque o DMOS fica
+  muito lento com as definições de origem; se só tiver o VirtualBox, use VMSVGA com aceleração 3D
+  e 128 MB de vídeo e escolha a sessão Plasma (X11) no ecrã de entrada.
 - **Numa pen USB**: grave a ISO com o [Rufus](https://rufus.ie) em modo DD, ou com o
   [balenaEtcher](https://etcher.balena.io). A gravação apaga o conteúdo da pen.
 
@@ -101,12 +105,16 @@ A instalação foi feita com a primeira compilação da 1.1. A compilação publ
 catálogo do Flathub, testado na sessão de demonstração. A instalação também foi repetida no QEMU,
 até ao fim, com a legenda das partições legível.
 
+A compilação publicada da 1.1 foi ainda instalada no **Hyper-V** (Windows, máquina de geração 2 com
+o Arranque Seguro desligado), do arranque da ISO ao sistema instalado, e corre bem. No
+**VirtualBox** arranca, mas a sessão fica demasiado lenta com as definições de origem, por isso
+não é recomendado (veja [Experimentar](#experimentar)).
+
 Na 1.0, o menu de arranque, a sessão de demonstração e a instalação completa foram testados em BIOS
 e em UEFI, no QEMU. Na 1.1 só se testou UEFI.
 
 Ainda por testar:
 
-- **VirtualBox**.
 - **Hardware real**, incluindo placas gráficas NVIDIA, AMD e Intel e Wi-Fi.
 - **Secure Boot**: a ISO inclui os componentes assinados, mas o arranque com ele ativo não foi
   experimentado. As fontes do menu não carregam nesse modo, por isso o menu usa a fonte de base.
@@ -214,7 +222,10 @@ What changed: [release notes](CHANGELOG.md) (in Portuguese).
 Requirements: 64-bit PC, 4 GB of RAM, 2 CPU cores, 15 GB of disk to install.
 
 **Testing status:** booting the ISO, the live desktop and a full install were tested on QEMU, in
-both BIOS and UEFI modes. Real hardware, Secure Boot, VMware and VirtualBox have not been tested yet.
+both BIOS and UEFI modes. Version 1.1 was also installed on VMware Workstation and on Hyper-V
+(generation 2, Secure Boot off), where it runs well. VirtualBox is not recommended: the desktop is
+very slow with its default settings (use VMSVGA with 3D acceleration and the Plasma X11 session if
+you must). Real hardware and Secure Boot have not been tested yet.
 
 **Building:** on Windows with WSL 2, run `.\build.ps1` (see [Compilar a ISO](#compilar-a-iso)). It
 uses live-build inside a dedicated `dmos-builder` WSL instance.
