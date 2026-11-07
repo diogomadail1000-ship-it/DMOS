@@ -38,6 +38,7 @@
         <a href="#incluido">Incluído</a>
         <a href="#experimentar">Experimentar</a>
         <a href="#compilar">Compilar</a>
+        <a href="#perguntar">Perguntar</a>
       </nav>
       <div class="topbar-actions">
         <button class="theme-toggle" type="button" aria-label="Mudar entre tema claro e escuro">
@@ -570,6 +571,14 @@
         <a class="btn btn-ghost" href="https://github.com/diogomadail1000-ship-it/DMOS/blob/main/LICENSE">Ler a licença</a>
       </div>
     </section>
+    <section id="ajuda" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Ajuda</p>
+        <h2>Tem uma pergunta?</h2>
+        <p>O assistente do site responde na hora com as perguntas frequentes do projeto. Se não souber, leva a pergunta para as Discussões, onde o assistente da comunidade responde em minutos e um humano acompanha.</p>
+        <p><a class="btn btn-primary" href="#perguntar">Perguntar ao assistente</a> <a class="btn btn-ghost" href="https://github.com/diogomadail1000-ship-it/DMOS/discussions">Ver as Discussões</a></p>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -579,6 +588,29 @@
       <span>Baseado no <a href="https://www.debian.org">Debian</a> e no <a href="https://kde.org/plasma-desktop/">KDE Plasma</a>. Não é um projeto oficial de nenhum deles.</span>
     </div>
   </footer>
+
+  <div class="assistente">
+    <button class="assistente-abrir" type="button" aria-expanded="false" aria-controls="assistente-painel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>
+      Perguntar
+    </button>
+    <div class="assistente-painel" id="assistente-painel" role="dialog" aria-label="Assistente do DMOS" hidden>
+      <div class="assistente-cabeca">
+        <img src="assets/logo.svg" alt="">
+        <div><strong>Assistente do DMOS</strong><span>Responde com as perguntas frequentes do projeto</span></div>
+        <button class="assistente-fechar" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="assistente-conversa" aria-live="polite">
+        <div class="assistente-msg bot"><p>Olá! 🌊 Pergunte-me como descarregar, experimentar ou instalar o DMOS. Se eu não souber, levo a pergunta para a comunidade.</p></div>
+      </div>
+      <div class="assistente-sugestoes" aria-label="Perguntas comuns"></div>
+      <form>
+        <input type="text" name="pergunta" placeholder="Escreva a sua pergunta" autocomplete="off" maxlength="500" aria-label="A sua pergunta">
+        <button type="submit">Enviar</button>
+      </form>
+      <p class="assistente-nota">As respostas vêm das perguntas frequentes do projeto e são dadas no seu navegador. Nada é enviado a terceiros.</p>
+    </div>
+  </div>
 
   <dialog class="lightbox" aria-label="Captura ampliada">
     <button class="lightbox-close" type="button" aria-label="Fechar">×</button>
@@ -591,5 +623,6 @@
   </dialog>
 
   <script src="main.js"></script>
+  <script src="assistente.js"></script>
 </body>
 </html>
