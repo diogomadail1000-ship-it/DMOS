@@ -1,5 +1,6 @@
-TÍTULO
-Programas essenciais para instalar depois do DMOS (Flathub, Discover e terminal)
+TÍTULO (renomeado a 7 de novembro, para pesquisa)
+Como instalar Spotify, Steam, GIMP e OBS no Linux com o Flathub (DMOS, Debian 13)
+(título original: Programas essenciais para instalar depois do DMOS (Flathub, Discover e terminal))
 
 DESCRIÇÃO
 Acabou de instalar o DMOS? Estes são os programas que recomendamos para o completar, todos grátis e no Flathub.
