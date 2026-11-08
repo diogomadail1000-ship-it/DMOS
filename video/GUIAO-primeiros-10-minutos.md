@@ -47,7 +47,7 @@ Capítulos: um por minuto, com os tempos finais do vídeo.
 ⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download
 🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
 🪟 No VMware: https://youtu.be/j-9vXxhwyh4 · No Hyper-V: https://youtu.be/NariiOTl-0o
-🌊 Site: https://diogomadail1000-ship-it.github.io/DMOS/
+🌊 Site: https://dmos.cc/
 💬 Dúvidas: https://github.com/diogomadail1000-ship-it/DMOS/discussions
 
 Etiquetas: DMOS, depois de instalar Linux, primeiros passos Linux, Debian 13, KDE Plasma 6, Flathub,
