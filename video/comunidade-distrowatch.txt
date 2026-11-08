@@ -1,0 +1,53 @@
+PUBLICAÇÕES PARA A COMUNIDADE DO YOUTUBE: semana de 9 de novembro
+Sem imagem obrigatória. Se quiser imagem na primeira, use uma captura da lista de espera do DistroWatch com o DMOS visível.
+
+1) SEGUNDA-FEIRA, 9 DE NOVEMBRO (depois de confirmar que a edição do DistroWatch Weekly menciona o DMOS)
+
+🌊 O DMOS já está na lista de espera do DistroWatch!
+
+O DistroWatch é o maior catálogo de distribuições Linux do mundo. O DMOS foi submetido no dia 6 e já aparece na lista de espera para avaliação, com a data e a ligação ao site.
+
+A entrada no catálogo demora meses e depende de o projeto continuar vivo: versões regulares, utilizadores reais e comunidade ativa. É aí que vocês entram.
+
+Se já experimentaram o DMOS e gostaram, podem ajudar em 10 segundos:
+👉 https://distrowatch.com/dwres.php?resource=submit
+Procurem «DMOS» na lista e carreguem em «Recommend». Só uma vez por pessoa, e só se tiverem mesmo experimentado: eles detetam votos artificiais.
+
+Obrigado a todos os que já instalaram, comentaram e partilharam. Uma semana depois do lançamento, já são 27 neste canal e mais de 130 transferências em 25 países. 🙏
+
+#DMOS #Linux #DistroWatch
+
+(Se a edição do Weekly não mencionar o DMOS nesta segunda-feira, publique na mesma, sem a primeira frase sobre o Weekly: a lista de espera já é pública.)
+
+
+2) SONDAGEM, QUARTA-FEIRA, 11 DE NOVEMBRO
+
+Pergunta: Que Windows tem no seu computador?
+• Windows 11 Home
+• Windows 11 Pro ou Education
+• Windows 10
+• Já só uso Linux 🐧
+
+Texto: Isto ajuda-nos a escolher o próximo tutorial. O Hyper-V só existe no Pro e no Education; no Home a solução é o VMware. Os dois tutoriais estão na playlist «Comece aqui».
+
+
+3) SONDAGEM, SEXTA-FEIRA, 13 DE NOVEMBRO
+
+Pergunta: Qual é o próximo vídeo que quer ver?
+• Dual boot: DMOS ao lado do Windows 11
+• Primeiros 10 minutos depois de instalar
+• DMOS vs Windows 11 no dia a dia
+• Jogos no DMOS com o Steam e o Proton
+
+Texto: Votem e digam nos comentários porquê. O mais votado é o próximo da lista.
+
+
+4) SÁBADO, 14 DE NOVEMBRO (com o vídeo da semana)
+
+Texto curto a anunciar o vídeo novo, no mesmo modelo de comunidade-tutorial.txt: título, três frases sobre o que mostra, ligação, pergunta final.
+
+
+REGRAS QUE VALEM PARA TODAS
+- Uma publicação por dia, no máximo. Duas a três por semana chegam.
+- Responder a todos os comentários nas primeiras horas.
+- Terminar sempre com uma pergunta: é o que faz as pessoas escrever.
