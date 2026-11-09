@@ -115,7 +115,8 @@ Na 1.0, o menu de arranque, a sessão de demonstração e a instalação complet
 e em UEFI, no QEMU. Na 1.1 só se testou UEFI.
 
 Em **hardware real**, a 1.1 arrancou da pen e correu num **HP Omen de 2017**. Num **Toshiba Tecra
-R840 de 2011** não arrancou; a causa ainda está por apurar (veja os Issues). Se experimentar noutro
+R840 de 2011** só não arrancou enquanto a pen estava gravada com a opção «Large FAT32» do Rufus, que
+as BIOS antigas não leem: a causa foi o formato da pen, não o DMOS. Grave sempre em modo DD. Se experimentar noutro
 computador, conte-nos o modelo e o que funcionou.
 
 Ainda por testar:
@@ -232,7 +233,8 @@ both BIOS and UEFI modes. Version 1.1 was also installed on VMware Workstation a
 (generation 2, Secure Boot off), where it runs well. VirtualBox is not recommended: the desktop is
 very slow with its default settings (use VMSVGA with 3D acceleration and the Plasma X11 session if
 you must). On real hardware, 1.1 boots and runs from a USB stick on an HP Omen (2017); a Toshiba Tecra
-R840 (2011) did not boot, cause still unknown. Secure Boot has not been tested yet.
+R840 (2011) only failed while the USB stick was written with Rufus's "Large FAT32" option, which old
+BIOSes cannot read: write the stick in DD mode. Secure Boot has not been tested yet.
 
 **Building:** on Windows with WSL 2, run `.\build.ps1` (see [Compilar a ISO](#compilar-a-iso)). It
 uses live-build inside a dedicated `dmos-builder` WSL instance.

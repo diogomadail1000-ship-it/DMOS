@@ -71,7 +71,7 @@
         "ventoy",
         "gravar a iso"
       ],
-      "resposta": "Grave a ISO com o [Rufus](https://rufus.ie) e, quando ele perguntar, escolha o **modo DD**. Também pode usar o [balenaEtcher](https://etcher.balena.io). ⚠️ A gravação apaga tudo o que estiver na pen.\n\nDepois reinicie o computador com a pen ligada e abra o menu de arranque (normalmente **F12**, **F11** ou **Esc**, conforme o computador) para escolher a pen.\n\n🎬 Tutorial, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
+      "resposta": "Grave a ISO com o [Rufus](https://rufus.ie) e, quando ele perguntar, escolha o **modo DD**. Não use a opção «Large FAT32»: as BIOS de computadores antigos (por exemplo um Toshiba Tecra de 2011) não arrancam dessa pen. Também pode usar o [balenaEtcher](https://etcher.balena.io). ⚠️ A gravação apaga tudo o que estiver na pen.\n\nDepois reinicie o computador com a pen ligada e abra o menu de arranque (normalmente **F12**, **F11** ou **Esc**, conforme o computador) para escolher a pen.\n\n🎬 Tutorial, passo 2: https://youtu.be/glLq_Hi9V1A?t=33"
     },
     {
       "id": "instalar",
@@ -170,7 +170,7 @@
         "drivers",
         "driver"
       ],
-      "resposta": "O DMOS 1.1 foi testado em máquinas virtuais (VMware, Hyper-V, QEMU) e, em hardware real, arrancou da pen e correu num **HP Omen de 2017**. Num **Toshiba Tecra R840 de 2011** não arrancou, e a causa ainda está por apurar. O Secure Boot ainda não foi testado. A ISO traz firmware para Wi-Fi Intel, Realtek, Atheros, Broadcom e MediaTek.\n\nSe o experimentar num computador real, conte-nos o modelo, a placa gráfica, o Wi-Fi e o que funcionou ou falhou. Ajuda muito! Se puder, abra o Konsole, corra `fastfetch` e cole o resultado."
+      "resposta": "O DMOS 1.1 foi testado em máquinas virtuais (VMware, Hyper-V, QEMU) e, em hardware real, arrancou da pen e correu num **HP Omen de 2017**. Num **Toshiba Tecra R840 de 2011** só não arrancou enquanto a pen estava gravada com a opção «Large FAT32» do Rufus, que as BIOS antigas não leem: grave a pen em modo DD. O Secure Boot ainda não foi testado. A ISO traz firmware para Wi-Fi Intel, Realtek, Atheros, Broadcom e MediaTek.\n\nSe o experimentar num computador real, conte-nos o modelo, a placa gráfica, o Wi-Fi e o que funcionou ou falhou. Ajuda muito! Se puder, abra o Konsole, corra `fastfetch` e cole o resultado."
     },
     {
       "id": "atualizar",
