@@ -17,8 +17,5 @@ O DMOS 1.1 instalado num HP Omen de 2017, sem máquina virtual: do ambiente de t
 VÍDEO RELACIONADO
 Como experimentar e instalar o DMOS: tutorial passo a passo
 
-COMENTÁRIO FIXADO
-Em que computador gostavas de ver o DMOS a correr? Diz o modelo 👇
-
 ETIQUETAS
 DMOS, Linux, Shorts, HP Omen, hardware real, Debian 13, KDE Plasma 6, Linux português
