@@ -1,0 +1,21 @@
+SHORT: «O meu Linux num portátil a sério»
+Vídeo: dmos-short-omen.mp4 (1080x1920, 22 s). Feito a partir de uma filmagem real de um HP Omen de 2017
+a reiniciar o DMOS 1.1: cortaram-se os momentos de ecrã preto e juntaram-se títulos e música.
+
+TÍTULO
+O meu Linux num portátil a sério 💻🌊 #Shorts
+
+DESCRIÇÃO
+O DMOS 1.1 instalado num HP Omen de 2017, sem máquina virtual: do ambiente de trabalho ao menu de arranque, à animação da maré e ao ecrã de entrada, em cerca de 35 segundos. Filmado com o telemóvel, sem truques.
+
+⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🌊 Site: https://dmos.cc/
+
+#DMOS #Linux #Debian #KDE #Shorts
+
+VÍDEO RELACIONADO
+Como experimentar e instalar o DMOS: tutorial passo a passo
+
+ETIQUETAS
+DMOS, Linux, Shorts, HP Omen, hardware real, Debian 13, KDE Plasma 6, Linux português
