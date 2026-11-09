@@ -114,9 +114,14 @@ não é recomendado (veja [Experimentar](#experimentar)).
 Na 1.0, o menu de arranque, a sessão de demonstração e a instalação completa foram testados em BIOS
 e em UEFI, no QEMU. Na 1.1 só se testou UEFI.
 
+Em **hardware real**, a 1.1 arrancou da pen e correu num **HP Omen de 2017**. Num **Toshiba Tecra
+R840 de 2011** não arrancou; a causa ainda está por apurar (veja os Issues). Se experimentar noutro
+computador, conte-nos o modelo e o que funcionou.
+
 Ainda por testar:
 
-- **Hardware real**, incluindo placas gráficas NVIDIA, AMD e Intel e Wi-Fi.
+- **Hardware real** em mais máquinas, incluindo placas gráficas NVIDIA, AMD e Intel e Wi-Fi em
+  computadores diferentes.
 - **Secure Boot**: a ISO inclui os componentes assinados, mas o arranque com ele ativo não foi
   experimentado. As fontes do menu não carregam nesse modo, por isso o menu usa a fonte de base.
 - Modo de compatibilidade gráfica, disco encriptado, instalação ao lado de outro sistema e
@@ -226,7 +231,8 @@ Requirements: 64-bit PC, 4 GB of RAM, 2 CPU cores, 15 GB of disk to install.
 both BIOS and UEFI modes. Version 1.1 was also installed on VMware Workstation and on Hyper-V
 (generation 2, Secure Boot off), where it runs well. VirtualBox is not recommended: the desktop is
 very slow with its default settings (use VMSVGA with 3D acceleration and the Plasma X11 session if
-you must). Real hardware and Secure Boot have not been tested yet.
+you must). On real hardware, 1.1 boots and runs from a USB stick on an HP Omen (2017); a Toshiba Tecra
+R840 (2011) did not boot, cause still unknown. Secure Boot has not been tested yet.
 
 **Building:** on Windows with WSL 2, run `.\build.ps1` (see [Compilar a ISO](#compilar-a-iso)). It
 uses live-build inside a dedicated `dmos-builder` WSL instance.
