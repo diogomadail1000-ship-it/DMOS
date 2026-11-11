@@ -31,7 +31,7 @@ English subtitles available (CC). O DMOS não é um projeto oficial do Debian ne
 Música original gerada para este vídeo.
 
 DESCRIÇÃO EM INGLÊS
-DMOS is a Portuguese Linux distribution based on Debian 13 and KDE Plasma 6. This tour uses real screenshots of version 1.1 to show what it adds on top of a fresh Debian install, and, frankly, what it still lacks. Audio-free, with English subtitles.
+DMOS is a Portuguese Linux distribution based on Debian 13 and KDE Plasma 6. This tour uses real screenshots of version 1.1 to show what it adds on top of a fresh Debian install, and, frankly, what it still lacks. No voice-over; English subtitles available.
 Download: https://sourceforge.net/projects/dmos/files/latest/download · Website: https://dmos.cc/
 
 LEGENDAS EM INGLÊS

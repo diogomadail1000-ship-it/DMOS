@@ -7,7 +7,7 @@ própria, gerada a partir do código deste repositório.
 
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
 
-**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ Instalar no VMware](https://youtu.be/j-9vXxhwyh4)** · **[▶ Instalar no Hyper-V](https://youtu.be/NariiOTl-0o)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · **[▶ Programas essenciais](https://youtu.be/mBz9nvQ8iWE)** · **[▶ Personalizar o DMOS](https://youtu.be/X7Uiz9RR-KA)** · [Site do DMOS](https://dmos.cc/)
+**[▶ Vídeo de apresentação](https://youtu.be/6xOphpjiomE)** · **[▶ Tour da 1.1](https://youtu.be/v97XyyNyhDE)** · **[▶ Tutorial: experimentar e instalar](https://youtu.be/glLq_Hi9V1A)** · **[▶ Instalar no VMware](https://youtu.be/j-9vXxhwyh4)** · **[▶ Instalar no Hyper-V](https://youtu.be/NariiOTl-0o)** · **[▶ 7 dicas para o dia a dia](https://youtu.be/r8VG6ZlcGRY)** · **[▶ Programas essenciais](https://youtu.be/mBz9nvQ8iWE)** · **[▶ Personalizar o DMOS](https://youtu.be/X7Uiz9RR-KA)** · [Site do DMOS](https://dmos.cc/)
 
 ![Ambiente de trabalho escuro](docs/screenshots/4-ambiente-escuro.jpg)
 
@@ -242,7 +242,7 @@ BIOSes cannot read: write the stick in DD mode. Secure Boot has not been tested 
 **Building:** on Windows with WSL 2, run `.\build.ps1` (see [Compilar a ISO](#compilar-a-iso)). It
 uses live-build inside a dedicated `dmos-builder` WSL instance.
 
-Website: <https://dmos.cc/> · Videos (Portuguese):
+Website: <https://dmos.cc/> · [2-minute tour with English subtitles](https://youtu.be/v97XyyNyhDE) · Videos (Portuguese):
 <https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ>
 
 DMOS is an independent project and is not affiliated with Debian or KDE.
