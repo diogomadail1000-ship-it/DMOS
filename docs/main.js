@@ -60,6 +60,35 @@
     });
   });
 
+  // Publicidade: um banner no fim da página, no maior tamanho que couber no ecrã. Fica numa
+  // moldura isolada: o anúncio não acede à página, não a pode redirecionar e só abre ligações
+  // num separador novo.
+  var ad = document.querySelector(".ad");
+  if (ad) {
+    var units = ad.dataset.units.split(" ").map(function (u) {
+      var m = /^(\d+)x(\d+):([0-9a-f]{32})$/.exec(u);
+      return m && { w: +m[1], h: +m[2], key: m[3] };
+    }).filter(Boolean).sort(function (a, b) { return b.w - a.w; });
+    var unit = units.filter(function (u) { return window.innerWidth >= u.w + 32; })[0];
+    if (unit) {
+      var adFrame = document.createElement("iframe");
+      adFrame.width = unit.w; adFrame.height = unit.h; adFrame.title = "Publicidade";
+      adFrame.setAttribute("sandbox", "allow-scripts allow-popups allow-popups-to-escape-sandbox");
+      adFrame.setAttribute("referrerpolicy", "no-referrer");
+      adFrame.srcdoc = '<!doctype html><html><body style="margin:0;overflow:hidden"><script>atOptions={key:"' + unit.key +
+        '",format:"iframe",height:' + unit.h + ',width:' + unit.w + ',params:{}};<\/script><script src="' +
+        ad.dataset.host.replace(/"/g, "") + unit.key + '"><\/script>' +
+        // A moldura avisa a página se o anúncio chegou; sem anúncio, o espaço não aparece.
+        '<script>setTimeout(function(){parent.postMessage({dmosAd:document.querySelectorAll("iframe,img,a,ins").length},"*")},4000)<\/script></body></html>';
+      ad.classList.add("ad-vazio");
+      window.addEventListener("message", function (e) {
+        if (e.source === adFrame.contentWindow && e.data && e.data.dmosAd > 0) ad.classList.remove("ad-vazio");
+      });
+      ad.appendChild(adFrame);
+      ad.hidden = false;
+    }
+  }
+
   // Copiar comandos do terminal.
   document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {
