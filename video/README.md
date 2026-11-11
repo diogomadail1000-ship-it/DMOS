@@ -17,6 +17,8 @@ Os vídeos do canal, em 1920x1080 a 30 fps (o Short em 1080x1920), feitos a part
 - **Instalar no Hyper-V** (cerca de 2 min 10 s): `hyperv.html`, texto em `youtube-hyperv.txt`. Gémeo do tutorial do
   VMware, com as janelas do Windows em português; a configuração é a usada no teste da 1.1 (geração 2, Arranque
   Seguro desligado, memória dinâmica desligada).
+- **Tour da 1.1** (cerca de 2 min 19 s): `tour.html`, texto em `youtube-tour.txt` e legendas em inglês em
+  `dmos-tour.en.srt`. Responde a «é só mais um Debian com KDE?» com capturas reais, e diz o que ainda falta.
 - **Comunidade**: `comunidade-tutorial.txt` e `comunidade-distrowatch.txt` têm as publicações e sondagens para o
   separador Comunidade do canal. `GUIAO-primeiros-10-minutos.md` é o guião do próximo vídeo longo.
 - **Comparativo de desempenho**: `desempenho.html`. Só usa números medidos com `medir.sh`. Veja `COMPARATIVO.md`.

@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>DMOS: tour da versão 1.1</title>
+<!--
+  Tour do DMOS 1.1 (1920x1080): o que é, o que traz de diferente de um Debian com KDE e o que
+  ainda lhe falta. Mesmo motor do tutorial do VMware (vmware.html); só capturas reais.
+  Gerar: node video/render.js video/out tour.html dmos-tour
+-->
+<style>
+  :root {
+    --bg: #0C1122;
+    --text: #E8ECF5;
+    --muted: #A7B0C8;
+    --accent: #2DD4BF;
+    --warn: #FFB86B;
+    --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; display: none; }
+  .tide-text { background: var(--tide); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Fundo abstrato */
+  .backdrop {
+    position: absolute;
+    inset: -80px;
+    background: url(../docs/screenshots/4-ambiente-escuro.jpg) center 70% / cover;
+    filter: blur(28px) saturate(1.25);
+  }
+  .backdrop-dim { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(12,17,34,0.45), rgba(12,17,34,0.9)); }
+
+  /* Capturas com destaque */
+  .zoomer { position: absolute; inset: 0; width: 1920px; height: 1080px; will-change: transform; }
+  .zoomer img { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  .spot {
+    position: absolute;
+    border-radius: 14px;
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 0 9999px rgba(6, 9, 20, 0.55), 0 0 40px rgba(45, 212, 191, 0.55);
+    opacity: 0;
+  }
+  .scrim { position: absolute; left: 0; right: 0; height: 380px; }
+  .scrim.bottom { bottom: 0; background: linear-gradient(to top, rgba(8, 11, 24, 0.94) 0%, rgba(8, 11, 24, 0.75) 50%, transparent 100%); }
+  .scrim.top { top: 0; background: linear-gradient(to bottom, rgba(8, 11, 24, 0.94) 0%, rgba(8, 11, 24, 0.75) 50%, transparent 100%); }
+  .caption { position: absolute; left: 110px; max-width: 1450px; }
+  .caption.bottom { bottom: 90px; }
+  .caption.top { top: 90px; }
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .kicker .num {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--tide);
+    color: #0C1122;
+    letter-spacing: 0;
+    font-size: 24px;
+    font-weight: 900;
+  }
+  .title { font-size: 70px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .sub { font-size: 32px; color: var(--muted); margin-top: 16px; line-height: 1.4; }
+  .sub b, .item b { color: var(--text); }
+  kbd {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 0.85em;
+    color: var(--text);
+    padding: 2px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Cartões */
+  .card-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .card {
+    width: 1320px;
+    padding: 64px 76px;
+    border-radius: 36px;
+    background: rgba(17, 23, 43, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.5);
+  }
+  .card .title { font-size: 64px; }
+  .card .sub { margin-top: 12px; }
+  .list { margin-top: 40px; display: grid; gap: 22px; }
+  .list.two { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+  .item { display: flex; align-items: flex-start; gap: 22px; font-size: 34px; color: var(--muted); line-height: 1.35; }
+  .item .dot {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #0C1122;
+    background: var(--tide);
+    margin-top: -2px;
+  }
+  .item .dot.check { background: var(--accent); }
+  .note {
+    margin-top: 40px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 28px;
+    color: var(--text);
+    padding: 20px 26px;
+    border-radius: 18px;
+    background: rgba(255, 184, 107, 0.12);
+    border: 1px solid rgba(255, 184, 107, 0.4);
+  }
+  .note::before { content: "!"; flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--warn); color: #2A1A06; font-weight: 900; }
+  .note.tip { background: rgba(45, 212, 191, 0.1); border-color: rgba(45, 212, 191, 0.4); }
+  .note.tip::before { content: "i"; background: var(--accent); color: #04201C; }
+
+  /* Terminal */
+  .term {
+    margin-top: 36px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0A0E1C;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .term-bar { display: flex; gap: 10px; align-items: center; padding: 16px 20px; background: #10162A; }
+  .term-bar i { width: 15px; height: 15px; border-radius: 50%; display: block; }
+  .term-bar span { margin: 0 auto; color: #8D96B0; font-size: 20px; padding-right: 70px; }
+  .term-body { padding: 26px 30px; font-family: "JetBrains Mono", monospace; font-size: 32px; line-height: 1.7; min-height: 250px; }
+  .term-body .p { color: var(--accent); }
+  .term-body .c { color: #6B7594; }
+  .cursor { display: inline-block; width: 18px; height: 34px; background: var(--text); vertical-align: -6px; margin-left: 2px; }
+
+  /* Abertura e fecho */
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .logo { width: 180px; height: 180px; filter: drop-shadow(0 20px 50px rgba(45, 212, 191, 0.35)); }
+  .badge {
+    margin-top: 40px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 26px;
+    border-radius: 999px;
+    color: #04201C;
+    background: var(--accent);
+  }
+  .big { font-size: 112px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; margin-top: 30px; }
+  .tag { font-size: 36px; color: var(--muted); margin-top: 24px; }
+  .links { margin-top: 50px; display: grid; gap: 18px; }
+  .link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 32px;
+    padding: 16px 32px;
+    border-radius: 18px;
+    background: rgba(17, 23, 43, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .link em { font-style: normal; color: var(--accent); font-family: "Inter", sans-serif; font-weight: 700; margin-right: 18px; }
+
+  .watermark { position: absolute; right: 50px; bottom: 44px; display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 26px; opacity: 0; z-index: 100; }
+  .watermark img { width: 38px; height: 38px; }
+
+  /* Miniatura */
+  /* Janela ilustrada (não é uma captura do VMware) */
+  .dlg-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .dlg { width: 1180px; border-radius: 18px; overflow: hidden; background: #F3F6FA; color: #1A2238; box-shadow: 0 50px 120px rgba(0,0,0,0.6); }
+  .dlg-bar { height: 58px; display: flex; align-items: center; padding: 0 24px; background: #E3E8F0; font-size: 22px; font-weight: 700; color: #1A2238; }
+  .dlg-bar i { width: 14px; height: 14px; border-radius: 50%; background: #B8C0D0; margin-right: 10px; }
+  .dlg-body { padding: 34px 40px 28px; }
+  .dlg-h { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+  .dlg-sub { font-size: 20px; color: #5E6883; margin-bottom: 22px; }
+  .dlg-row { display: flex; align-items: center; gap: 18px; padding: 16px 20px; border-radius: 12px; font-size: 24px; margin-bottom: 10px; border: 2px solid transparent; }
+  .dlg-row .rb { width: 24px; height: 24px; border-radius: 50%; border: 3px solid #8D96B0; flex: none; }
+  .dlg-row .cb { width: 24px; height: 24px; border-radius: 6px; border: 3px solid #8D96B0; flex: none; }
+  .dlg-row.on { background: rgba(14,143,136,0.12); border-color: #0E8F88; }
+  .dlg-row.on .rb { border-color: #0E8F88; background: radial-gradient(#0E8F88 45%, transparent 50%); }
+  .dlg-row.on .cb { border-color: #0E8F88; background: #0E8F88; }
+  .dlg-row small { color: #5E6883; font-size: 18px; margin-left: auto; }
+  .dlg-field { display: flex; align-items: center; gap: 18px; font-size: 22px; margin-bottom: 14px; }
+  .dlg-field label { width: 260px; color: #5E6883; }
+  .dlg-field .val { flex: 1; padding: 12px 16px; border-radius: 10px; background: #fff; border: 2px solid #CBD3E1; font-family: "JetBrains Mono", monospace; font-size: 20px; }
+  .dlg-field .val.on { border-color: #0E8F88; }
+  .dlg-foot { display: flex; justify-content: flex-end; gap: 12px; padding: 0 40px 28px; }
+  .dlg-btn { padding: 12px 28px; border-radius: 10px; font-size: 20px; font-weight: 700; background: #fff; border: 2px solid #CBD3E1; color: #1A2238; }
+  .dlg-btn.primary { background: #0E8F88; border-color: #0E8F88; color: #fff; }
+  .dlg-note { position: absolute; left: 110px; right: 110px; bottom: 60px; text-align: center; font-size: 22px; color: var(--muted); }
+  .click { position: absolute; width: 60px; height: 60px; border-radius: 50%; border: 4px solid var(--accent); box-shadow: 0 0 30px rgba(45,212,191,0.6); opacity: 0; }
+  #thumbnail { display: none; position: absolute; inset: 0; }
+  body.thumb #stage, body.thumb .watermark { display: none; }
+  body.thumb #thumbnail { display: block; }
+  #thumbnail .tshot {
+    position: absolute;
+    right: 70px;
+    top: 230px;
+    width: 1000px;
+    border-radius: 26px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+    border: 2px solid rgba(255,255,255,0.15);
+    transform: perspective(1800px) rotateY(-14deg) rotate(-2deg);
+  }
+  #thumbnail .ttext { position: absolute; left: 90px; top: 150px; width: 780px; }
+  #thumbnail .tlogo { width: 150px; height: 150px; }
+  #thumbnail .tpill { display: table; margin-top: 34px; font-size: 44px; font-weight: 900; letter-spacing: 0.08em; padding: 12px 30px; border-radius: 999px; background: #FFB86B; color: #2A1A06; }
+  #thumbnail .tbig { font-size: 104px; font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; margin-top: 28px; }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="watermark" id="wm"><img src="../art/logo.svg" alt="">DMOS 1.1 · Tour</div>
+
+  <div id="thumbnail">
+    <div class="backdrop"></div><div class="backdrop-dim"></div>
+    <img class="tshot" src="../docs/screenshots/4-ambiente-escuro.jpg" alt="">
+    <div class="ttext">
+      <img class="tlogo" src="../art/logo.svg" alt="">
+      <div class="tpill">Tour</div>
+      <div class="tbig">Mais um Debian com KDE? <span class="tide-text">Veja por dentro</span></div>
+    </div>
+  </div>
+
+<script>
+var FADE = 0.7;
+// Tipos: intro, outro, card (cartão com lista), term (terminal), shot (captura com destaque).
+// spot: [x, y, largura, altura] na captura de 1920x1080. focus: ponto para onde o zoom se aproxima.
+var SCENES = [
+  { type: "intro", dur: 4 },
+  { type: "card", dur: 9, title: "«É só mais um Debian com KDE?»", sub: "É a pergunta certa. A resposta, em dois minutos.", items: [
+      "A base é mesmo essa: <b>Debian 13 «trixie»</b> e <b>KDE Plasma 6</b>, sem repositórios próprios nem pacotes alterados",
+      "O que o DMOS acrescenta é o que falta a um Debian acabado de instalar: <b>identidade</b>, <b>português de origem</b> e um <b>primeiro dia sem terminal</b>",
+      "Tudo o que vê neste vídeo são capturas reais da versão 1.1" ], check: true },
+
+  { type: "shot", dur: 8, img: "1-menu-arranque", kicker: "1 · Identidade", title: "Começa no menu de arranque",
+    sub: "Tema próprio no GRUB, com entrada em português, entrada em inglês e modo de compatibilidade gráfica.", zoom: 1.08, focus: [960, 470] },
+  { type: "shot", dur: 7, img: "2-animacao-arranque", kicker: "1 · Identidade", title: "A animação da maré",
+    sub: "O arranque não mostra texto a correr: mostra o logótipo sobre as ondas.", zoom: 1.06, focus: [960, 540], cap: "top" },
+  { type: "shot", dur: 7, img: "3-inicio-sessao", kicker: "1 · Identidade", title: "O ecrã de entrada",
+    sub: "Desenhado de raiz para o DMOS, com a mesma maré e a mesma tipografia.", zoom: 1.06, focus: [960, 540], cap: "top" },
+  { type: "shot", dur: 9, img: "4-ambiente-escuro", kicker: "1 · Identidade", title: "O ambiente de trabalho «Maré»",
+    sub: "Barra superior e dock flutuantes, efeito de vidro, wallpaper gerado por código, ícones Papirus e fonte Inter.", zoom: 1.05, focus: [960, 540], cap: "top" },
+  { type: "shot", dur: 8, img: "15-aplicacoes-claro", kicker: "1 · Identidade", title: "Dois temas completos",
+    sub: "DMOS Maré Escuro e DMOS Maré Claro. Muda-se num clique e muda tudo: janelas, painéis, terminal e wallpaper.", zoom: 1.05, focus: [960, 540] },
+
+  { type: "shot", dur: 9, img: "9-bem-vindo", kicker: "2 · Primeiro dia", title: "Um assistente recebe-o na primeira sessão",
+    sub: "Cinco passos: escolher o visual, ver a internet, escolher notícias, instalar aplicações e conhecer três atalhos.", zoom: 1.06, focus: [960, 540] },
+  { type: "shot", dur: 9, img: "12-aplicacoes-populares", kicker: "2 · Primeiro dia", title: "Aplicações populares a um clique",
+    sub: "Spotify, Visual Studio Code, Steam, Discord, GIMP, OBS Studio, Telegram e Google Chrome.", zoom: 1.06, focus: [960, 560] },
+  { type: "shot", dur: 9, img: "13-flathub-discover", kicker: "2 · Primeiro dia", title: "O Flathub já vem ligado",
+    sub: "Num Debian normal é preciso ativá-lo no terminal. Aqui, o Discover mostra as aplicações logo no primeiro arranque.", zoom: 1.05, focus: [960, 540], cap: "top" },
+  { type: "shot", dur: 9, img: "11-hub", kicker: "2 · Primeiro dia", title: "DMOS Hub: hora, saudação e notícias",
+    sub: "Um painel no ambiente de trabalho com as fontes que escolher. Por omissão nenhuma está ligada, e só as que ligar são contactadas.", zoom: 1.05, focus: [1400, 400], cap: "bottom" },
+  { type: "shot", dur: 8, img: "10-noticias", kicker: "2 · Primeiro dia", title: "Dez fontes, portuguesas e internacionais",
+    sub: "A escolha é sua, e pode mudá-la quando quiser.", zoom: 1.06, focus: [960, 540] },
+
+  { type: "card", dur: 10, kicker: "3 · Pronto a usar", title: "O que vem incluído", items: [
+      "<b>Firefox</b>, <b>LibreOffice</b> em português, <b>VLC</b>, Dolphin, Konsole e as aplicações do KDE",
+      "Firmware para Wi-Fi <b>Intel, Realtek, Atheros, Broadcom e MediaTek</b>, Bluetooth, impressoras e som com PipeWire",
+      "Ferramentas para máquinas virtuais: redimensionar a janela funciona logo no VMware e no QEMU",
+      "Português de Portugal, teclado e fuso horário certos <b>sem configurar nada</b>" ], check: true },
+  { type: "shot", dur: 8, img: "6-menu-aplicacoes", kicker: "3 · Pronto a usar", title: "Tudo à mão, em português",
+    sub: "O menu de aplicações, com os favoritos e a procura.", zoom: 1.08, focus: [400, 400] },
+  { type: "shot", dur: 9, img: "8-instalador", kicker: "3 · Pronto a usar", title: "Experimenta-se sem instalar",
+    sub: "A ISO arranca numa sessão de demonstração. Para ficar, o instalador Calamares trata do resto em cerca de 7 GB.", zoom: 1.05, focus: [960, 540], cap: "bottom" },
+
+  { type: "card", dur: 11, kicker: "Com franqueza", title: "O que o DMOS ainda não é", items: [
+      "É um projeto <b>novo</b>, de <b>uma pessoa</b>: a 1.0 saiu a 2 de novembro de 2026 e a 1.1 dois dias depois",
+      "Foi testado no <b>VMware, Hyper-V e QEMU</b>, num HP Omen de 2017 e num Toshiba Tecra de 2011",
+      "<b>Secure Boot e dual boot</b> ainda não foram testados; no VirtualBox fica lento",
+      "As atualizações vêm diretamente do Debian: a segurança não depende do DMOS" ], check: true,
+    tip: "Código, testes e problemas conhecidos estão todos à vista no GitHub." },
+  { type: "card", dur: 9, kicker: "Experimente", title: "Grátis, de código aberto, em 10 minutos", items: [
+      "Descarregue a ISO de <b>2,8 GB</b> em <b>dmos.cc</b>",
+      "Corra-a dentro do Windows com o <b>Hyper-V</b> ou o <b>VMware</b>, ou a partir de uma <b>pen USB</b>",
+      "Os três tutoriais estão na playlist <b>«Comece aqui»</b>, neste canal" ], numbered: true },
+
+  { type: "outro", dur: 8 }
+];
+
+var stage = document.getElementById("stage");
+
+function captionHtml(s) {
+  return '<div class="kicker">' + (s.step ? '<span class="num">' + s.step + '</span>' : "") +
+    (s.step ? "Passo " + s.step + " · " : "") + s.kicker + '</div>' +
+    '<div class="title">' + s.title + '</div>' + (s.sub ? '<div class="sub">' + s.sub + '</div>' : "");
+}
+
+var start = 0;
+SCENES.forEach(function (s) {
+  s.start = start;
+  start += s.dur - FADE;
+  var el = document.createElement("div");
+  el.className = "scene";
+  var bg = '<div class="backdrop"></div><div class="backdrop-dim"></div>';
+  if (s.type === "shot") {
+    // A legenda fica do lado oposto ao destaque.
+    var pos = s.cap || (s.spot && s.spot[1] + s.spot[3] / 2 > 600 ? "top" : "bottom");
+    var spots = "";
+    [s.spot, s.spot2].forEach(function (r) {
+      if (!r) return;
+      spots += '<div class="spot" style="left:' + r[0] + 'px;top:' + r[1] + 'px;width:' + r[2] + 'px;height:' + r[3] + 'px"></div>';
+    });
+    el.innerHTML = '<div class="zoomer"><img src="../docs/screenshots/' + s.img + '.jpg" alt="">' + spots + '</div>' +
+      '<div class="scrim ' + pos + '"></div><div class="caption ' + pos + '">' + captionHtml(s) + '</div>';
+  } else if (s.type === "card" || s.type === "term") {
+    var body = "";
+    if (s.items) {
+      body += '<div class="list' + (s.two ? " two" : "") + '">' + s.items.map(function (it, j) {
+        return '<div class="item"><span class="dot' + (s.check ? " check" : "") + '">' + (s.check ? "✓" : j + 1) + '</span><span>' + it + '</span></div>';
+      }).join("") + '</div>';
+    }
+    if (s.lines) {
+      body += '<div class="term"><div class="term-bar"><i style="background:#FF7A6B"></i><i style="background:#F5BE5B"></i><i style="background:#2DD4BF"></i><span>PowerShell</span></div><div class="term-body"></div></div>';
+    }
+    if (s.note) body += '<div class="note tip"><span>' + s.note + '</span></div>';
+    if (s.tip) body += '<div class="note tip"><span>' + s.tip + '</span></div>';
+    if (s.warn) body += '<div class="note"><span>' + s.warn + '</span></div>';
+    el.innerHTML = bg + '<div class="card-wrap"><div class="card">' +
+      (s.kicker || s.step ? '<div class="kicker">' + (s.step ? '<span class="num">' + s.step + '</span>Passo ' + s.step + ' · ' : "") + (s.kicker || "") + '</div>' : "") +
+      '<div class="title">' + s.title + '</div>' + (s.sub ? '<div class="sub">' + s.sub + '</div>' : "") + body + '</div></div>';
+  } else if (s.type === "dialog") {
+    var d = s.dlg, inner = "";
+    (d.rows || []).forEach(function (row, j) {
+      inner += '<div class="dlg-row' + (row[2] ? " on" : "") + '"><span class="' + row[0] + '"></span><span>' + row[1] + '</span>' + (row[3] ? '<small>' + row[3] + '</small>' : "") + '</div>';
+    });
+    (d.fields || []).forEach(function (f) {
+      inner += '<div class="dlg-field"><label>' + f[0] + '</label><span class="val' + (f[2] ? " on" : "") + '">' + f[1] + '</span></div>';
+    });
+    el.innerHTML = bg + '<div class="caption top" style="left:110px;right:110px;top:70px"><div class="kicker"><span class="num">' + s.step + '</span>Passo ' + s.step + ' · ' + s.kicker + '</div><div class="title" style="font-size:60px">' + s.title + '</div>' + (s.sub ? '<div class="sub">' + s.sub + '</div>' : "") + '</div>' +
+      '<div class="dlg-wrap" style="top:120px"><div class="dlg"><div class="dlg-bar"><i></i><i></i><i></i>' + d.bar + '</div><div class="dlg-body">' +
+      (d.h ? '<div class="dlg-h">' + d.h + '</div>' : "") + (d.sub ? '<div class="dlg-sub">' + d.sub + '</div>' : "") + inner + '</div>' +
+      '<div class="dlg-foot"><span class="dlg-btn">Back</span><span class="dlg-btn primary">' + (d.btn || "Next") + '</span></div></div><div class="click"></div></div>' +
+      (s.note ? '<div class="dlg-note"' + (s.tip ? ' style="bottom:110px"' : "") + '>' + s.note + '</div>' : "") + (s.tip ? '<div class="dlg-note" style="color:var(--accent)">' + s.tip + '</div>' : "");
+  } else if (s.type === "intro") {
+    el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="">' +
+      '<div class="badge">Tour · versão 1.1</div>' +
+      '<div class="big">O <span class="tide-text">DMOS</span> por dentro</div>' +
+      '<div class="tag">O que é, o que traz de diferente e o que ainda lhe falta</div></div>';
+  } else if (s.type === "outro") {
+    el.innerHTML = bg + '<div class="center"><img class="logo" src="../art/logo.svg" alt="" style="width:150px;height:150px">' +
+      '<div class="big" style="font-size:96px">Um Linux com <span class="tide-text">maré própria</span></div>' +
+      '<div class="tag">Dúvidas? Pergunte nas Discussões do GitHub. O assistente responde na hora.</div>' +
+      '<div class="links"><div class="link"><em>Site</em>dmos.cc</div>' +
+      '<div class="link"><em>Código</em>github.com/diogomadail1000-ship-it/DMOS</div></div></div>';
+  }
+  stage.appendChild(el);
+  s.el = el;
+});
+var TOTAL = start + FADE;
+window.TOTAL = TOTAL;
+
+function clamp(x) { return Math.max(0, Math.min(1, x)); }
+function ease(x) { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function out(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function rise(el, local, t0, dist) {
+  if (!el) return;
+  var k = out((local - t0) / 0.7);
+  el.style.opacity = k;
+  el.style.transform = "translateY(" + ((1 - k) * (dist || 30)) + "px)";
+}
+
+function typeTerm(s, local) {
+  var body = s.el.querySelector(".term-body");
+  var t = local - 1.0, html = "", done = true;
+  for (var i = 0; i < s.lines.length; i++) {
+    var kind = s.lines[i][0], text = s.lines[i][1];
+    var n = kind === "c" ? text.length : Math.floor(t * 34);
+    if (t < 0) { done = false; break; }
+    var shown = text.slice(0, Math.max(0, n));
+    var esc = shown.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    html += kind === "c" ? '<div class="c">' + esc + '</div>' : '<div><span class="p">PS&gt;</span> ' + esc + (n < text.length ? '<span class="cursor"></span>' : "") + '</div>';
+    if (n < text.length) { done = false; break; }
+    t -= (kind === "c" ? 0.3 : text.length / 34 + 0.5);
+  }
+  if (done) html += '<div><span class="p">PS&gt;</span> <span class="cursor" style="opacity:' + (Math.floor(local * 2) % 2) + '"></span></div>';
+  body.innerHTML = html;
+}
+
+window.seek = function (t) {
+  SCENES.forEach(function (s, i) {
+    var local = t - s.start, el = s.el;
+    if (local < 0 || local > s.dur) { el.style.display = "none"; return; }
+    el.style.display = "block";
+    var fin = i === 0 ? clamp(local / 0.6) : clamp(local / FADE);
+    var fout = i === SCENES.length - 1 ? clamp((s.dur - local) / 1.0) : clamp((s.dur - local) / FADE);
+    el.style.opacity = Math.min(ease(fin), ease(fout));
+    el.style.zIndex = i;
+    var p = local / s.dur;
+    var bd = el.querySelector(".backdrop");
+    if (bd) bd.style.transform = "scale(" + lerp(1.05, 1.15, p) + ") translateX(" + lerp(-20, 20, p) + "px)";
+
+    if (s.type === "shot") {
+      var z = el.querySelector(".zoomer");
+      var k = ease((local - 0.6) / 2.4);
+      var f = s.focus || [960, 540];
+      z.style.transformOrigin = f[0] + "px " + f[1] + "px";
+      z.style.transform = "scale(" + lerp(1, s.zoom || 1.06, k) + ")";
+      el.querySelectorAll(".spot").forEach(function (sp) {
+        var a = out((local - 1.6) / 0.6);
+        var pulse = 1 + 0.025 * Math.sin(Math.max(0, local - 2.2) * 4);
+        sp.style.opacity = a;
+        sp.style.transform = "scale(" + (lerp(1.15, 1, a) * pulse) + ")";
+      });
+      var leave = clamp((s.dur - local - FADE * 0.4) / 0.5);
+      var cap = el.querySelector(".caption");
+      ["kicker", "title", "sub"].forEach(function (c, j) { rise(cap.querySelector("." + c), local, 0.4 + j * 0.2, 30); });
+      cap.style.opacity = ease(leave);
+      el.querySelector(".scrim").style.opacity = ease(Math.min(clamp((local - 0.2) / 0.6), leave));
+    } else if (s.type === "dialog") {
+      var capd = el.querySelector(".caption");
+      ["kicker", "title", "sub"].forEach(function (c, j) { rise(capd.querySelector("." + c), local, 0.3 + j * 0.2, 26); });
+      var dlg = el.querySelector(".dlg");
+      var kd = out((local - 0.9) / 0.8);
+      dlg.style.opacity = kd; dlg.style.transform = "translateY(" + (1 - kd) * 50 + "px) scale(" + lerp(0.96, 1, kd) + ")";
+      // As opções marcadas acendem uma a uma.
+      el.querySelectorAll(".dlg-row.on, .dlg-field .val.on").forEach(function (o, j) {
+        var k = out((local - 2.0 - j * 0.7) / 0.4);
+        o.style.opacity = 0.35 + 0.65 * k;
+        o.style.transform = "scale(" + lerp(1, 1.0, k) + ")";
+      });
+      var btn = el.querySelector(".dlg-btn.primary"), ck = el.querySelector(".click");
+      var tb = s.dur - 2.6, kb = clamp((local - tb) / 0.5);
+      btn.style.boxShadow = "0 0 " + (30 * kb) + "px rgba(45,212,191," + kb + ")";
+      var r = btn.getBoundingClientRect(), w = el.querySelector(".dlg-wrap").getBoundingClientRect();
+      ck.style.left = (r.left - w.left + r.width / 2 - 30) + "px"; ck.style.top = (r.top - w.top + r.height / 2 - 30) + "px";
+      ck.style.opacity = kb * (1 - clamp((local - tb - 0.5) / 0.9)); ck.style.transform = "scale(" + lerp(0.6, 2.2, clamp((local - tb) / 1.2)) + ")";
+      el.querySelectorAll(".dlg-note").forEach(function (n, j) { rise(n, local, 1.6 + j * 0.3, 20); });
+    } else if (s.type === "card" || s.type === "term") {
+      var card = el.querySelector(".card");
+      rise(card, local, 0.2, 40);
+      rise(card.querySelector(".kicker"), local, 0.35, 20);
+      rise(card.querySelector(".title"), local, 0.45, 26);
+      rise(card.querySelector(".sub"), local, 0.6, 22);
+      card.querySelectorAll(".item").forEach(function (it, j) { rise(it, local, 1.0 + j * 0.45, 26); });
+      if (s.lines) { rise(card.querySelector(".term"), local, 0.8, 26); typeTerm(s, local); }
+      var notes = card.querySelectorAll(".note");
+      var tn = s.lines ? 7.5 : 1.0 + (s.items ? s.items.length : 0) * 0.45 + 0.6;
+      notes.forEach(function (n, j) { rise(n, local, tn + j * 0.4, 20); });
+    } else {
+      var logo = el.querySelector(".logo");
+      var kk = out((local - 0.2) / 1.0);
+      logo.style.opacity = kk;
+      logo.style.transform = "scale(" + lerp(0.7, 1, kk) + ")";
+      rise(el.querySelector(".badge"), local, 0.3, 20);
+      rise(el.querySelector(".big"), local, 0.45, 40);
+      rise(el.querySelector(".tag"), local, 0.8, 30);
+      el.querySelectorAll(".link").forEach(function (l, j) { rise(l, local, 2.0 + j * 0.35, 30); });
+    }
+  });
+  var wm = document.getElementById("wm");
+  var first = SCENES[1].start, last = SCENES[SCENES.length - 1].start;
+  wm.style.opacity = 0.8 * Math.min(clamp((t - first - 0.5) / 0.8), clamp((last - t) / 0.8));
+};
+window.thumbnail = function () { document.body.classList.add("thumb"); };
+window.seek(location.hash ? parseFloat(location.hash.slice(1)) || 0 : 0);
+</script>
+</body>
+</html>

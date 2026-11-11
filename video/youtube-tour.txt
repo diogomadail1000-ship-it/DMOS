@@ -1,0 +1,47 @@
+TÍTULO
+É só mais um Debian com KDE? O DMOS 1.1 por dentro (tour completo em 2 minutos)
+
+TÍTULO EM INGLÊS (Studio › Legendas › Adicionar idioma › Inglês › Título e descrição)
+Just another Debian with KDE? A 2-minute tour of DMOS 1.1 (Debian 13 + KDE Plasma 6)
+
+DESCRIÇÃO
+O DMOS é uma distribuição Linux portuguesa baseada no Debian 13 e no KDE Plasma 6. Este tour mostra, com capturas reais da versão 1.1, o que ela acrescenta a um Debian acabado de instalar e, com franqueza, o que ainda lhe falta.
+
+🎨 Identidade: menu de arranque, animação, ecrã de entrada, ambiente de trabalho «Maré» e dois temas completos
+🚀 Primeiro dia: assistente Bem-vindo ao DMOS, aplicações populares a um clique, Flathub ligado de origem e o painel DMOS Hub
+📦 Pronto a usar: Firefox, LibreOffice, VLC, firmware Wi-Fi, português de Portugal sem configurar nada
+🔎 Com franqueza: projeto novo, de uma pessoa; testado em VMware, Hyper-V, QEMU e em dois portáteis; Secure Boot e dual boot por testar
+
+⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download
+🌊 Site: https://dmos.cc/
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🪟 Dentro do Windows: Hyper-V https://youtu.be/NariiOTl-0o · VMware https://youtu.be/j-9vXxhwyh4
+💻 Código: https://github.com/diogomadail1000-ship-it/DMOS
+💬 Dúvidas: https://github.com/diogomadail1000-ship-it/DMOS/discussions
+
+Capítulos
+0:00 É só mais um Debian com KDE?
+0:12 Identidade: do arranque ao ambiente de trabalho
+0:47 Primeiro dia: assistente, aplicações e Flathub
+1:28 O que vem incluído
+1:53 Com franqueza: o que ainda não é
+2:03 Como experimentar
+
+English subtitles available (CC). O DMOS não é um projeto oficial do Debian nem do KDE.
+Música original gerada para este vídeo.
+
+DESCRIÇÃO EM INGLÊS
+DMOS is a Portuguese Linux distribution based on Debian 13 and KDE Plasma 6. This tour uses real screenshots of version 1.1 to show what it adds on top of a fresh Debian install, and, frankly, what it still lacks. Audio-free, with English subtitles.
+Download: https://sourceforge.net/projects/dmos/files/latest/download · Website: https://dmos.cc/
+
+LEGENDAS EM INGLÊS
+Ficheiro dmos-tour.en.srt (Studio › Legendas › Adicionar idioma › Inglês › Carregar ficheiro › Com temporização).
+
+ETIQUETAS
+DMOS, distribuição Linux, Debian 13, KDE Plasma 6, Linux português, review Linux, tour Linux, Flathub, distro nova, Linux 2026
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-tour-miniatura.png (1280x720), gerada por video/render.js
