@@ -236,6 +236,9 @@ you must). On real hardware, 1.1 boots and runs from a USB stick on an HP Omen (
 R840 (2011) only failed while the USB stick was written with Rufus's "Large FAT32" option, which old
 BIOSes cannot read: write the stick in DD mode. Secure Boot has not been tested yet.
 
+**Supporting:** DMOS is free and made in spare time. If it is useful to you, you can
+[sponsor the project on GitHub](https://github.com/sponsors/diogomadail1000-ship-it).
+
 **Building:** on Windows with WSL 2, run `.\build.ps1` (see [Compilar a ISO](#compilar-a-iso)). It
 uses live-build inside a dedicated `dmos-builder` WSL instance.
 
@@ -243,6 +246,12 @@ Website: <https://dmos.cc/> · Videos (Portuguese):
 <https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ>
 
 DMOS is an independent project and is not affiliated with Debian or KDE.
+
+## Apoiar
+
+O DMOS é gratuito e feito nas horas livres. Se lhe for útil, pode
+[apoiar o projeto no GitHub Sponsors](https://github.com/sponsors/diogomadail1000-ship-it). Experimentar, reportar
+problemas e partilhar também ajuda muito.
 
 ## Licença
 
