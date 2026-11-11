@@ -20,8 +20,7 @@ O DMOS é uma distribuição Linux portuguesa baseada no Debian 13 e no KDE Plas
 💬 Dúvidas: https://github.com/diogomadail1000-ship-it/DMOS/discussions
 
 Capítulos
-0:00 O DMOS por dentro
-0:03 É só mais um Debian com KDE?
+0:00 É só mais um Debian com KDE?
 0:12 Identidade: do arranque ao ambiente de trabalho
 0:47 Primeiro dia: assistente, aplicações e Flathub
 1:28 O que vem incluído
