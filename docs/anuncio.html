@@ -7,7 +7,8 @@
 <style>html, body { margin: 0; overflow: hidden; background: transparent; }</style>
 </head>
 <body>
-<!-- Moldura de um anúncio: ?w=LARGURA&h=ALTURA&k=CHAVE. É carregada pelo site dentro de um iframe. -->
+<!-- Moldura de um anúncio: ?w=LARGURA&h=ALTURA&k=CHAVE. É carregada por main.js dentro de um iframe
+     com sandbox; avisa a página se o anúncio chegou, para o espaço só aparecer nesse caso. -->
 <script>
   (function () {
     var q = new URLSearchParams(location.search);
