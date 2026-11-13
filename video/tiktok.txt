@@ -1,0 +1,31 @@
+TIKTOK: conta, legendas e etiquetas
+Só os Shorts que já existem, sem conteúdo exclusivo. Carregar sempre o ficheiro original (.mp4),
+não o descarregado do YouTube, que traz marca de água.
+
+CONTA
+Nome de utilizador: dmos.linux (ou dmos.cc, se estiver livre)
+Nome: DMOS
+Bio (80 caracteres no máximo):
+Criei o meu próprio Linux 🌊 Debian 13 + KDE Plasma 6 · grátis · dmos.cc
+Imagem: o logótipo do DMOS (o mesmo do canal).
+
+ORDEM DE PUBLICAÇÃO: um por dia, ao fim da tarde (18h às 21h).
+
+1) dmos-short.mp4 · «Criei o meu próprio Linux»
+Criei o meu próprio Linux 🌊 Chama-se DMOS, é grátis e está em português. O que achas? #linux #debian #kde #programação #tecnologia #opensource #portugal
+
+2) dmos-short-omen.mp4 · «O meu Linux num portátil a sério»
+O Linux que eu criei a correr num portátil a sério 💻 Sem máquina virtual, sem truques. #linux #debian #kde #portátil #tecnologia #opensource #setup
+
+3) dmos-short-vmware.mp4 · «Queres Linux sem apagar o Windows?»
+Queres experimentar Linux sem apagar o Windows? 🪟🐧 Dá para o correr numa janela, em 10 minutos. Tutorial no YouTube: DM OS. #linux #windows #dicas #tecnologia #vmware #informática #pc
+
+4) dmos-short-tema.mp4 · «Escuro ou claro?»
+Escuro ou claro? 🌙☀️ O meu Linux tem os dois. Qual escolhias? #linux #kde #temaescuro #setup #tecnologia #design #desktop
+
+REGRAS
+- Três a sete etiquetas por vídeo; as primeiras palavras da legenda contam mais do que as etiquetas.
+- Os links não são clicáveis nas legendas: escreva «dmos.cc» por extenso e ponha-o na bio.
+- Acabar com uma pergunta, e responder a todos os comentários no primeiro dia.
+- Não usar música do TikTok por cima: os vídeos já têm música própria.
+- Avaliar ao fim de um mês. Se nenhum vídeo passar de algumas centenas de visualizações, a conta fica parada.
