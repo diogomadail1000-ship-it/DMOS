@@ -857,11 +857,3 @@ kbd {
   .assistente-painel { animation: assistente-sobe 0.18s ease-out; }
   @keyframes assistente-sobe { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 }
-
-/* Publicidade: um banner discreto antes do rodapé, sempre identificado. */
-.ad { margin: 60px auto 0; max-width: 760px; text-align: center; }
-.ad[hidden] { display: none; }
-.ad.ad-vazio { height: 0; margin: 0; overflow: hidden; }
-.ad-label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.ad iframe { border: 0; max-width: 100%; border-radius: 8px; background: var(--surface-2); }
-.ad + .footer { margin-top: 40px; }
