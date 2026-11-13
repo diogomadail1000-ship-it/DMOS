@@ -60,30 +60,6 @@
     });
   });
 
-  // Publicidade: um banner no fim da página, no maior tamanho que couber no ecrã. Corre numa
-  // moldura própria (anuncio.html) com sandbox: não pode redirecionar a página e só abre
-  // ligações num separador novo. O espaço só aparece quando a rede entrega um anúncio.
-  var ad = document.querySelector(".ad");
-  if (ad) {
-    var units = ad.dataset.units.split(" ").map(function (u) {
-      var m = /^(\d+)x(\d+):([0-9a-f]{32})$/.exec(u);
-      return m && { w: +m[1], h: +m[2], key: m[3] };
-    }).filter(Boolean).sort(function (a, b) { return b.w - a.w; });
-    var unit = units.filter(function (u) { return window.innerWidth >= u.w + 32; })[0];
-    if (unit) {
-      var adFrame = document.createElement("iframe");
-      adFrame.width = unit.w; adFrame.height = unit.h; adFrame.title = "Publicidade";
-      adFrame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox");
-      adFrame.src = "anuncio.html?w=" + unit.w + "&h=" + unit.h + "&k=" + unit.key;
-      ad.classList.add("ad-vazio");
-      window.addEventListener("message", function (e) {
-        if (e.source === adFrame.contentWindow && e.data && e.data.dmosAd > 0) ad.classList.remove("ad-vazio");
-      });
-      ad.appendChild(adFrame);
-      ad.hidden = false;
-    }
-  }
-
   // Copiar comandos do terminal.
   document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {
