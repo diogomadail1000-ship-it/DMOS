@@ -18,7 +18,7 @@
         "thunderbird",
         "loja de aplicacoes"
       ],
-      "resposta": "No DMOS 1.1, o **Flathub** já vem ativado: abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. O assistente **Bem-vindo ao DMOS** também sugere oito aplicações populares.\n\nNo DMOS 1.0, ative o Flathub uma vez. Abra o Konsole e corra:\n\n```bash\nflatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo\n```\n\nDepois abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. Também pode instalar pelo terminal, por exemplo `flatpak install flathub org.gimp.GIMP`.\n\n🎬 Vídeo com os programas que recomendamos: https://youtu.be/mBz9nvQ8iWE"
+      "resposta": "A partir do DMOS 1.1, o **Flathub** já vem ativado: abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. O assistente **Bem-vindo ao DMOS** também sugere oito aplicações populares.\n\nNo DMOS 1.0, ative o Flathub uma vez. Abra o Konsole e corra:\n\n```bash\nflatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo\n```\n\nDepois abra o **Discover**, na dock, procure o programa e carregue em **Instalar**. Também pode instalar pelo terminal, por exemplo `flatpak install flathub org.gimp.GIMP`.\n\n🎬 Vídeo com os programas que recomendamos: https://youtu.be/mBz9nvQ8iWE"
     },
     {
       "id": "ecra-preto",
@@ -36,7 +36,7 @@
         "compatibilidade grafica",
         "nomodeset"
       ],
-      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando-a com o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
+      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando-a com o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
     },
     {
       "id": "maquina-virtual",
@@ -106,7 +106,7 @@
         "sourceforge",
         "onde esta a iso"
       ],
-      "resposta": "⬇️ A ISO do DMOS 1.1 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.1-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
+      "resposta": "⬇️ A ISO do DMOS 1.2 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
     },
     {
       "id": "tema",
@@ -122,9 +122,13 @@
         "dark",
         "light",
         "aspeto",
-        "cores"
+        "cores",
+        "fundo",
+        "wallpaper",
+        "papel de parede",
+        "cor de destaque"
       ],
-      "resposta": "O DMOS traz dois temas completos: **DMOS Maré Escuro** e **DMOS Maré Claro**. Para mudar, abra as **Definições do Sistema** e procure **Tema global**, ou use o assistente **Bem-vindo ao DMOS**, no menu de aplicações.\n\n🎬 Vídeo com mais ajustes: https://youtu.be/X7Uiz9RR-KA"
+      "resposta": "O DMOS traz dois temas completos: **DMOS Maré Escuro** e **DMOS Maré Claro**. Para mudar, abra as **Definições do Sistema** e procure **Tema global**, ou use o assistente **Bem-vindo ao DMOS**, no menu de aplicações. A partir do DMOS 1.2, a página **Cor e fundo** do assistente muda também o fundo (Maré, Aurora ou Âmbar) e a cor de destaque.\n\n🎬 Vídeo com mais ajustes: https://youtu.be/X7Uiz9RR-KA"
     },
     {
       "id": "hub",
@@ -139,6 +143,23 @@
       "resposta": "O **DMOS Hub** é o painel à direita do ambiente de trabalho. Por omissão, nenhuma fonte de notícias vem ligada, e só as que ligar são contactadas. Para escolher as fontes, carregue em **Escolher fontes** no painel, ou abra o assistente **Bem-vindo ao DMOS**. O botão ao lado de «Notícias» volta a carregar as notícias."
     },
     {
+      "id": "ia",
+      "titulo": "DMOS IA (assistente de pesquisa com o Claude)",
+      "palavras": [
+        "dmos ia",
+        "dmos ai",
+        "inteligencia artificial",
+        "claude",
+        "anthropic",
+        "chave da api",
+        "api key",
+        "assistente de pesquisa",
+        "chatgpt",
+        "chatbot"
+      ],
+      "resposta": "A **DMOS IA** chegou no DMOS 1.2 e está na dock. Faz-se uma pergunta e a resposta vem com as páginas em que se baseia. Quem responde é o **Claude**, da Anthropic, que pesquisa na web quando é preciso.\n\nPara a usar precisa de uma **chave da API da Anthropic**, que é sua e se paga à utilização:\n\n1. Crie a conta e a chave em https://platform.claude.com/settings/keys\n2. Abra a DMOS IA, cole a chave e carregue em **Guardar**\n\nA ISO não traz chave nenhuma. A chave fica só no seu computador e é enviada apenas à Anthropic, tal como as perguntas que fizer. Nas definições da aplicação (a roda dentada) escolhe o modelo e pode **esquecer a chave**.\n\n⚠️ A IA pode errar: confirme nas fontes o que for importante. Não cole a sua chave em Issues nem nas Discussões."
+    },
+    {
       "id": "atalhos",
       "titulo": "Atalhos de teclado",
       "palavras": [
@@ -149,7 +170,7 @@
         "shortcuts",
         "tecla super"
       ],
-      "resposta": "Alguns atalhos úteis:\n\n- **Alt + Espaço**: procurar aplicações, ficheiros e definições\n- **Super + W**: ver todas as janelas\n- **Alt + Tab**: trocar de janela, com miniaturas em grelha\n- **Super + ← / →**: encaixar janelas lado a lado\n- **Ctrl + Alt + T**: abrir o terminal\n- **Super + L**: bloquear o ecrã\n\nPara criar os seus, abra as **Definições do Sistema** e procure **Atalhos**.\n\n🎬 Vídeo com as 7 dicas: https://youtu.be/r8VG6ZlcGRY"
+      "resposta": "Alguns atalhos úteis:\n\n- **Alt + Espaço**: procurar aplicações, ficheiros e definições\n- **Super + A**: ver todas as aplicações em ecrã inteiro (a partir do DMOS 1.2)\n- **Super + W**: ver todas as janelas\n- **Alt + Tab**: trocar de janela, com miniaturas em grelha\n- **Super + ← / →**: encaixar janelas lado a lado\n- **Ctrl + Alt + T**: abrir o terminal\n- **Super + L**: bloquear o ecrã\n\nPara criar os seus, abra as **Definições do Sistema** e procure **Atalhos**.\n\n🎬 Vídeo com as 7 dicas: https://youtu.be/r8VG6ZlcGRY"
     },
     {
       "id": "hardware",
@@ -198,7 +219,7 @@
         "layout do teclado",
         "abnt"
       ],
-      "resposta": "O DMOS vem em português de Portugal. Para experimentar em inglês, escolha **Try DMOS (English)** no menu de arranque. Num sistema instalado, abra as **Definições do Sistema** e procure **Idioma** (ou **Teclado**, para mudar a disposição do teclado)."
+      "resposta": "O DMOS vem em português de Portugal. Para experimentar em inglês, escolha **Try DMOS (English)** no menu de arranque. A partir do DMOS 1.2, o assistente, o DMOS Hub e a DMOS IA também aparecem em inglês nessa sessão. Num sistema instalado, abra as **Definições do Sistema** e procure **Idioma** (ou **Teclado**, para mudar a disposição do teclado)."
     },
     {
       "id": "compilar",

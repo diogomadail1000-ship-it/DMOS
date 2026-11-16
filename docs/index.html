@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DMOS 1.1 "Maré"</title>
+  <title>DMOS 1.2 "Maré"</title>
   <meta name="description" content="DMOS é uma distribuição Linux baseada no Debian 13, com KDE Plasma 6 e uma identidade visual própria.">
   <meta name="theme-color" content="#0C1122">
-  <meta property="og:title" content="DMOS 1.1 &quot;Maré&quot;">
+  <meta property="og:title" content="DMOS 1.2 &quot;Maré&quot;">
   <meta property="og:description" content="Distribuição Linux baseada no Debian 13, com KDE Plasma 6 e uma identidade visual própria.">
   <meta property="og:image" content="https://dmos.cc/screenshots/4-ambiente-escuro.jpg">
   <meta property="og:url" content="https://dmos.cc/">
@@ -65,7 +65,7 @@
         <path class="wave wave-c" fill="url(#w1)" d="M0 500 C 280 450, 560 470, 800 505 S 1240 480, 1440 450 V600 H0 Z"/>
       </svg>
       <div class="hero-inner">
-        <p class="eyebrow">Versão 1.1 · "Maré" · Debian 13 trixie</p>
+        <p class="eyebrow">Versão 1.2 · "Maré" · Debian 13 trixie</p>
         <h1>Um Linux com <span class="tide-text">maré</span> própria.</h1>
         <p class="lede">
           O DMOS é uma distribuição baseada no Debian 13, com KDE Plasma 6 e uma identidade visual
@@ -79,7 +79,7 @@
           </a>
           <a class="btn btn-ghost" href="#experimentar">Como experimentar</a>
         </div>
-        <p class="dl-note">ISO de 2,8 GB · BIOS e UEFI · alojada na SourceForge</p>
+        <p class="dl-note">ISO de 2,9 GB · BIOS e UEFI · alojada na SourceForge</p>
         <ul class="hero-facts">
           <li><strong>Debian 13</strong><span>base estável</span></li>
           <li><strong>Plasma 6</strong><span>Wayland por omissão</span></li>
@@ -138,9 +138,56 @@
 
     <section id="novidades" class="section">
       <div class="section-head">
-        <p class="eyebrow">Novo na 1.1</p>
+        <p class="eyebrow">Novo na 1.2</p>
+        <h2>Pergunte, e veja de onde vem a resposta.</h2>
+        <p>A 1.2 traz a DMOS IA, um assistente de pesquisa que responde com as fontes, mais fundos e cores à escolha e um painel com todas as aplicações. <a href="https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md">Ler as notas de versão</a>.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-text">
+          <span class="tag">DMOS IA</span>
+          <h3>Respostas com as fontes à vista.</h3>
+          <p>Faça a pergunta por palavras suas. Quem responde é o Claude, da Anthropic, que pesquisa na web quando é preciso e mostra, numeradas, as páginas em que se baseou. Está na dock e no campo «Pergunte à IA…» do DMOS Hub.</p>
+          <p class="privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span><strong>A chave é sua.</strong> Usa a sua chave da API da Anthropic, paga à utilização. A ISO não traz chave nenhuma e, sem ela, nada é enviado. A chave fica só no seu computador.</span></p>
+          <ul class="sources" aria-label="Modelos à escolha na DMOS IA">
+            <li>Claude Opus 5.5</li><li>Claude Sonnet 5.5</li><li>Claude Haiku 5.5</li>
+          </ul>
+        </div>
+        <div class="feature-pair">
+          <button class="shot feature-shot" type="button" data-src="screenshots/16-dmos-ia.jpg" data-caption="DMOS IA, pronta a receber uma pergunta"><img src="screenshots/16-dmos-ia.jpg" width="1920" height="1080" loading="lazy" alt="Janela da DMOS IA com o campo de pergunta e quatro sugestões"></button>
+          <button class="shot feature-shot" type="button" data-src="screenshots/17-dmos-ia-resposta.jpg" data-caption="DMOS IA com uma resposta de ensaio: a captura foi tirada sem chave, com o servidor de teste do projeto"><img src="screenshots/17-dmos-ia-resposta.jpg" width="1920" height="1080" loading="lazy" alt="Janela da DMOS IA com uma resposta de ensaio e as fontes numeradas por baixo"></button>
+        </div>
+      </div>
+
+      <div class="feature feature-flip">
+        <div class="feature-text">
+          <span class="tag">Cor e fundo</span>
+          <h3>Três fundos, seis cores.</h3>
+          <p>Uma página nova no assistente muda o fundo do ambiente de trabalho e a cor de destaque. Aplicam-se de imediato a todo o sistema, das janelas abertas ao DMOS Hub.</p>
+          <ul class="sources" aria-label="Fundos e cores de destaque">
+            <li>Maré</li><li>Aurora</li><li>Âmbar</li><li>Coral</li><li>Azul</li><li>Violeta</li><li>Verde</li>
+          </ul>
+        </div>
+        <button class="shot feature-shot" type="button" data-src="screenshots/18-cor-e-fundo.jpg" data-caption="Página Cor e fundo, com o fundo Âmbar e a cor Violeta"><img src="screenshots/18-cor-e-fundo.jpg" width="1920" height="1080" loading="lazy" alt="Página Cor e fundo do assistente, com três fundos e seis cores de destaque"></button>
+      </div>
+
+      <div class="mini-cards">
+        <article class="mini">
+          <h3>Todas as aplicações num ecrã</h3>
+          <p>O primeiro botão da dock, ou <kbd>Super</kbd>+<kbd>A</kbd>, abre um painel em ecrã inteiro com todas as aplicações, por categoria e com pesquisa.</p>
+          <button class="shot" type="button" data-src="screenshots/19-painel-aplicacoes.jpg" data-caption="Painel de aplicações em ecrã inteiro"><img src="screenshots/19-painel-aplicacoes.jpg" width="1920" height="1080" loading="lazy" alt="Painel de aplicações em ecrã inteiro, com favoritos, lista e categorias"></button>
+        </article>
+        <article class="mini">
+          <h3>Também em inglês</h3>
+          <p>Na sessão «Try DMOS (English)», o assistente, o DMOS Hub e a DMOS IA passam a aparecer em inglês. Em português, o painel de aplicações ficou todo traduzido.</p>
+          <button class="shot" type="button" data-src="screenshots/20-ingles.jpg" data-caption="O assistente em inglês, na sessão em inglês"><img src="screenshots/20-ingles.jpg" width="1920" height="1080" loading="lazy" alt="Assistente Welcome to DMOS em inglês"></button>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <p class="eyebrow">Desde a 1.1</p>
         <h2>Mais aplicações, menos passos.</h2>
-        <p>O Flathub vem ligado de origem, o assistente ganhou uma página com aplicações populares e o instalador ficou mais legível. Tudo testado no VMware. <a href="https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md">Ler as notas de versão</a>.</p>
+        <p>O Flathub vem ligado de origem, o assistente tem uma página com aplicações populares e o instalador ficou mais legível.</p>
       </div>
 
       <div class="feature">
@@ -191,10 +238,11 @@
       <div class="feature">
         <div class="feature-text">
           <span class="tag">Bem-vindo ao DMOS</span>
-          <h3>Cinco passos e fica a seu gosto.</h3>
+          <h3>Seis passos e fica a seu gosto.</h3>
           <p>Na primeira sessão abre-se um assistente em vidro. Pode voltar a ele quando quiser, a partir do menu de aplicações.</p>
           <ol class="steps">
             <li><strong>Visual</strong> claro ou escuro, aplicado de imediato a todo o sistema.</li>
+            <li><strong>Cor e fundo</strong>: três fundos e seis cores de destaque.</li>
             <li><strong>Ligação à internet</strong>, para as notícias, as atualizações e as aplicações.</li>
             <li><strong>Notícias</strong>: escolha as fontes que aparecem no painel.</li>
             <li><strong>Aplicações populares</strong> do Flathub, a um clique.</li>
@@ -223,16 +271,17 @@
 
       <div class="mini-cards">
         <article class="mini">
-          <h3>Três atalhos para começar</h3>
+          <h3>Quatro atalhos para começar</h3>
           <ul class="keys">
             <li><span><kbd>Super</kbd></span>Abre o menu de aplicações</li>
+            <li><span><kbd>Super</kbd>+<kbd>A</kbd></span>Mostra todas as aplicações em ecrã inteiro</li>
             <li><span><kbd>Super</kbd>+<kbd>W</kbd></span>Mostra todas as janelas e áreas de trabalho</li>
             <li><span><kbd>Alt</kbd>+<kbd>Espaço</kbd></span>Procura aplicações, ficheiros e definições</li>
           </ul>
         </article>
         <article class="mini">
           <h3>Português de Portugal completo</h3>
-          <p>Os ecrãs de bloqueio e de "Sair", que no Debian ficavam em inglês, estão traduzidos. As traduções em falta ficam em <code>/usr/local/share/locale</code> e não substituem os ficheiros dos pacotes.</p>
+          <p>Os ecrãs de bloqueio e de "Sair" e o painel de aplicações, que no Debian ficavam em inglês, estão traduzidos. As traduções em falta ficam em <code>/usr/local/share/locale</code> e não substituem os ficheiros dos pacotes.</p>
         </article>
       </div>
     </section>
@@ -249,7 +298,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 15c3-3 5-3 8 0s5 3 8 0 3-2 4-2M2 19c3-3 5-3 8 0s5 3 8 0 3-2 4-2M2 11c3-3 5-3 8 0s5 3 8 0 3-2 4-2"/></svg>
           </div>
           <h3>Wallpaper "Maré"</h3>
-          <p>Ondas procedurais em 4K, em versão clara e escura, geradas em Python.</p>
+          <p>Ondas procedurais em 4K, em versão clara e escura, geradas em Python. A 1.2 junta-lhe os fundos "Aurora" e "Âmbar".</p>
           <code>art/gen_wallpaper.py</code>
         </article>
         <article class="card">
@@ -520,7 +569,7 @@
         <article class="try-card">
           <span class="step">1</span>
           <h3>Descarregar a ISO</h3>
-          <p>Descarregue a <a href="https://sourceforge.net/projects/dmos/files/latest/download">ISO do DMOS 1.1</a> (2,8 GB) na SourceForge. Para confirmar que chegou inteira, compare-a com o <a href="https://sourceforge.net/projects/dmos/files/1.1/SHA256SUMS/download"><code>SHA256SUMS</code></a>. Também a pode <a href="#compilar">compilar</a> a partir do código.</p>
+          <p>Descarregue a <a href="https://sourceforge.net/projects/dmos/files/latest/download">ISO do DMOS 1.2</a> (2,9 GB) na SourceForge. Para confirmar que chegou inteira, compare-a com o <a href="https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download"><code>SHA256SUMS</code></a>. Também a pode <a href="#compilar">compilar</a> a partir do código.</p>
         </article>
         <article class="try-card">
           <span class="step">2</span>
@@ -546,26 +595,30 @@
       <div class="section-head">
         <p class="eyebrow">Estado</p>
         <h2>O que foi testado, com franqueza.</h2>
-        <p>A partir da 1.1, os testes são feitos no VMware Workstation, com aceleração por hardware e 3D. A 1.0 foi testada no QEMU. A 1.1 publicada foi ainda instalada no Hyper-V, onde corre bem.</p>
+        <p>A partir da 1.1, os testes são feitos no VMware Workstation, com aceleração por hardware e 3D. Na 1.2, os cliques e as teclas são dados dentro da sessão por um script, e a instalação foi feita assim do princípio ao fim. A 1.0 foi testada no QEMU. A 1.1 publicada foi ainda instalada no Hyper-V, onde corre bem.</p>
       </div>
       <div class="status-grid">
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Teste</th><th>1.1 · VMware (UEFI)</th><th>1.0 · QEMU (BIOS e UEFI)</th></tr></thead>
+            <thead><tr><th>Teste</th><th>1.2 · VMware (UEFI)</th><th>1.1 · VMware (UEFI)</th><th>1.0 · QEMU (BIOS e UEFI)</th></tr></thead>
             <tbody>
-              <tr><td>ISO até ao ambiente de trabalho (Wayland)</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
-              <tr><td>Instalação completa e arranque do sistema instalado</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
-              <tr><td>Menu de arranque com o tema</td><td class="na">Não verificado</td><td class="ok">Sim</td></tr>
-              <tr><td>Assistente e aplicações do Flathub no Discover</td><td class="ok">Sim</td><td class="na">Não existia</td></tr>
-              <tr><td>Resolução automática e som (ferramentas do VMware)</td><td class="ok">Sim</td><td class="na">Não se aplica</td></tr>
+              <tr><td>ISO até ao ambiente de trabalho (Wayland)</td><td class="ok">Sim</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
+              <tr><td>Instalação completa e arranque do sistema instalado</td><td class="ok">Sim</td><td class="ok">Sim</td><td class="ok">Sim</td></tr>
+              <tr><td>Menu de arranque com o tema</td><td class="na">Não verificado</td><td class="na">Não verificado</td><td class="ok">Sim</td></tr>
+              <tr><td>Assistente e aplicações do Flathub no Discover</td><td class="na">Só o assistente</td><td class="ok">Sim</td><td class="na">Não existia</td></tr>
+              <tr><td>Cor e fundo, painel de aplicações e favoritos, com cliques e teclas reais</td><td class="ok">Sim</td><td class="na">Não existia</td><td class="na">Não existia</td></tr>
+              <tr><td>DMOS IA com o servidor de ensaio do projeto</td><td class="ok">Sim</td><td class="na">Não existia</td><td class="na">Não existia</td></tr>
+              <tr><td>DMOS IA com uma chave verdadeira da Anthropic</td><td class="na">Não testado</td><td class="na">Não existia</td><td class="na">Não existia</td></tr>
+              <tr><td>Resolução automática e som (ferramentas do VMware)</td><td class="na">Não verificado</td><td class="ok">Sim</td><td class="na">Não se aplica</td></tr>
             </tbody>
           </table>
-          <p class="small">A instalação no VMware foi feita com a primeira compilação da 1.1; a compilação publicada só acrescenta o catálogo do Flathub, testado na sessão de demonstração. Na 1.0 também foram verificados o tema claro, a entrada "Try DMOS (English)", o Firefox e o Dolphin. No Hyper-V (geração 2, Arranque Seguro desligado), a 1.1 publicada arrancou e foi instalada até ao fim. No VirtualBox arranca, mas a sessão fica demasiado lenta com as definições de origem. Em hardware real, a 1.1 arrancou da pen e correu num HP Omen de 2017; um Toshiba Tecra R840 de 2011 só não arrancou com a pen gravada em «Large FAT32» pelo Rufus, formato que as BIOS antigas não leem; em modo DD não há problema.</p>
+          <p class="small">Na 1.2, a DMOS IA foi testada contra um servidor de ensaio que imita a API na própria máquina, sem chave nenhuma: a ligação ao serviço da Anthropic não foi experimentada. O inglês foi testado mudando a língua de uma sessão aberta, e não pela entrada "Try DMOS (English)". O Hyper-V, o VirtualBox e o hardware real só foram experimentados com a 1.1. A instalação no VMware da 1.1 foi feita com a primeira compilação dessa versão; a compilação publicada só acrescenta o catálogo do Flathub, testado na sessão de demonstração. Na 1.0 também foram verificados o tema claro, a entrada "Try DMOS (English)", o Firefox e o Dolphin. No Hyper-V (geração 2, Arranque Seguro desligado), a 1.1 publicada arrancou e foi instalada até ao fim. No VirtualBox arranca, mas a sessão fica demasiado lenta com as definições de origem. Em hardware real, a 1.1 arrancou da pen e correu num HP Omen de 2017; um Toshiba Tecra R840 de 2011 só não arrancou com a pen gravada em «Large FAT32» pelo Rufus, formato que as BIOS antigas não leem; em modo DD não há problema.</p>
         </div>
         <div class="pending">
           <h3>Ainda por testar</h3>
           <ul>
-            <li><strong>Mais hardware real</strong>: só foi experimentado num HP Omen de 2017 e num Toshiba Tecra R840 de 2011.</li>
+            <li><strong>DMOS IA com uma chave verdadeira</strong>: os testes usaram um servidor de ensaio, sem contactar a Anthropic.</li>
+            <li><strong>Mais hardware real</strong>: só foi experimentado, com a 1.1, num HP Omen de 2017 e num Toshiba Tecra R840 de 2011.</li>
             <li><strong>Secure Boot</strong>: os componentes assinados estão na ISO, mas o arranque com ele ativo não foi experimentado.</li>
             <li>Modo de compatibilidade gráfica, disco encriptado, dual boot e atualização com <code>apt</code>.</li>
           </ul>
@@ -601,7 +654,7 @@
     <section class="section cta">
       <img src="assets/logo.svg" alt="" width="72" height="72">
       <h2>Livre para usar, estudar e alterar.</h2>
-      <p>O código e os temas estão sob a GPL-3.0-or-later. O código-fonte de todos os pacotes da ISO está <a href="https://sourceforge.net/projects/dmos/files/1.1/">na SourceForge</a>, ao lado da ISO. O wallpaper "Maré" está sob a CC BY-SA 4.0. O Debian, o KDE Plasma e as restantes aplicações mantêm as licenças próprias.</p>
+      <p>O código e os temas estão sob a GPL-3.0-or-later. O código-fonte de todos os pacotes da ISO está <a href="https://sourceforge.net/projects/dmos/files/1.2/">na SourceForge</a>, ao lado da ISO. Os wallpapers estão sob a CC BY-SA 4.0. O Debian, o KDE Plasma e as restantes aplicações mantêm as licenças próprias.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="https://sourceforge.net/projects/dmos/files/latest/download">Descarregar o DMOS</a>
         <a class="btn btn-ghost" href="https://github.com/diogomadail1000-ship-it/DMOS">Ver no GitHub</a>
@@ -620,7 +673,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <span class="brand"><img src="assets/logo.svg" alt="" width="20" height="20"> DMOS 1.1 "Maré"</span>
+      <span class="brand"><img src="assets/logo.svg" alt="" width="20" height="20"> DMOS 1.2 "Maré"</span>
       <span><a href="https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ">Vídeos: playlist «Comece aqui»</a> · <a href="https://www.tiktok.com/@dmos.linux">TikTok</a></span>
       <span><a href="https://github.com/sponsors/diogomadail1000-ship-it">Apoiar o projeto</a></span>
       <span>Baseado no <a href="https://www.debian.org">Debian</a> e no <a href="https://kde.org/plasma-desktop/">KDE Plasma</a>. Não é um projeto oficial de nenhum deles.</span>

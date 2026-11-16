@@ -292,6 +292,8 @@ h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; margin: 0; }
   text-align: center;
 }
 .section-head h2 { font-size: clamp(30px, 4.5vw, 46px); font-weight: 800; }
+/* A second heading inside one section (what an earlier version brought). */
+.mini-cards + .section-head { margin-top: 88px; }
 .section-head p:not(.eyebrow) { color: var(--muted); margin: 16px 0 0; }
 
 /* Identidade */
