@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=DMOS IA
+Name[en]=DMOS AI
+GenericName=Assistente de pesquisa
+GenericName[en]=Research assistant
+Comment=Pesquise na web e receba respostas com fontes, com o Claude
+Comment[en]=Search the web and get answers with sources, with Claude
+Exec=dmos-ia
+Icon=dmos-ia
+Terminal=false
+Categories=Network;Utility;
+Keywords=IA;AI;Claude;pesquisa;pesquisar;search;assistente;assistant;chat;
+StartupNotify=true
+StartupWMClass=org.dmos.ia

@@ -29,9 +29,8 @@ bar.floating = true;
 var launcher = bar.addWidget("org.kde.plasma.kickoff");
 launcher.currentConfigGroup = ["General"];
 launcher.writeConfig("icon", "dmos-logo");
-// With the flag off, Kickoff imports this list into its favourites on first start.
-launcher.writeConfig("favoritesPortedToKAstats", "false");
-launcher.writeConfig("favorites", "firefox-esr.desktop,org.kde.dolphin.desktop,org.kde.konsole.desktop,libreoffice-writer.desktop,org.kde.discover.desktop,systemsettings.desktop");
+// Favourites cannot be set from here: the launcher has already filled in its defaults
+// by the time this line runs. /usr/bin/dmos-favorites sets them at the first login.
 
 bar.addWidget("org.kde.plasma.pager");
 bar.addWidget("org.kde.plasma.panelspacer");
@@ -59,9 +58,18 @@ dock.alignment = "center";
 dock.lengthMode = "fit";
 dock.hiding = "dodgewindows";
 
+// Every application on one full-screen page, also on Super+A.
+var apps = dock.addWidget("org.kde.plasma.kickerdash");
+apps.currentConfigGroup = ["General"];
+apps.writeConfig("icon", "dmos-apps");
+// It opens on the full list, not on a "recent" page that starts out empty.
+apps.writeConfig("showRecentApps", "false");
+apps.writeConfig("showRecentDocs", "false");
+apps.globalShortcut = "Meta+A";
+
 var tasks = dock.addWidget("org.kde.plasma.icontasks");
 tasks.currentConfigGroup = ["General"];
-tasks.writeConfig("launchers", "applications:firefox-esr.desktop,applications:org.kde.dolphin.desktop,applications:org.kde.konsole.desktop,applications:org.kde.kate.desktop,applications:org.kde.gwenview.desktop,applications:org.kde.elisa.desktop,applications:libreoffice-writer.desktop,applications:org.kde.discover.desktop,applications:systemsettings.desktop");
+tasks.writeConfig("launchers", "applications:firefox-esr.desktop,applications:org.dmos.ia.desktop,applications:org.kde.dolphin.desktop,applications:org.kde.konsole.desktop,applications:org.kde.kate.desktop,applications:org.kde.gwenview.desktop,applications:org.kde.elisa.desktop,applications:libreoffice-writer.desktop,applications:org.kde.discover.desktop,applications:systemsettings.desktop");
 tasks.writeConfig("iconSpacing", "2");
 tasks.writeConfig("fill", "false");
 tasks.writeConfig("maxStripes", "1");

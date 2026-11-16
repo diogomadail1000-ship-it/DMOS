@@ -1,0 +1,5 @@
+#!/bin/sh
+# DMOS IA: research assistant answered by Claude, with the user's own API key.
+#   dmos-ia                 open the window
+#   dmos-ia --ask "text"    open it and ask this straight away
+exec python3 /usr/lib/dmos-ia/dmos_ia.py "$@"

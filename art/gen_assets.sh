@@ -11,7 +11,7 @@ TOOL_STAMP="$(sha256sum "$ART/gen_wallpaper.py" | cut -c1-16)"
 mkdir -p "$CACHE"
 
 # Wallpapers take about a minute at 4K, so they are cached against the generator's hash.
-for theme in dark light; do
+for theme in dark light aurora ambar; do
     cached="$CACHE/$theme-$TOOL_STAMP.jpg"
     if [ ! -f "$cached" ]; then
         python3 -I "$ART/gen_wallpaper.py" "$theme" 3840 2160 "$cached"
@@ -33,6 +33,26 @@ cat > "$WP/metadata.json" <<'EOF'
 }
 EOF
 
+# The two extra wallpapers look the same under the light and the dark theme.
+extra_wallpaper() {
+    local dir="$OUT/usr/share/wallpapers/$1"
+    mkdir -p "$dir/contents/images"
+    cp "$CACHE/$3-$TOOL_STAMP.jpg" "$dir/contents/images/3840x2160.jpg"
+    convert "$CACHE/$3-$TOOL_STAMP.jpg" -resize 640x360 -quality 90 "$dir/contents/screenshot.jpg"
+    cat > "$dir/metadata.json" <<EOF
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "DMOS" }],
+        "Id": "$1",
+        "License": "CC-BY-SA-4.0",
+        "Name": "$2"
+    }
+}
+EOF
+}
+extra_wallpaper DMOS-Aurora "Maré Aurora" aurora
+extra_wallpaper DMOS-Ambar "Maré Âmbar" ambar
+
 python3 -I "$ART/gen_theme.py" "$OUT"
 
 # The light look-and-feel differs from the dark one only by its names and defaults.
@@ -48,6 +68,8 @@ sed -i -e 's/DMOSDark/DMOSLight/' -e 's/Papirus-Dark/Papirus-Light/' -e 's/DMOS-
 ICON="$OUT/usr/share/icons/hicolor"
 mkdir -p "$ICON/scalable/apps" "$OUT/usr/share/pixmaps" "$OUT/usr/share/sddm/themes/dmos/assets"
 install -m 644 "$ART/logo.svg" "$ICON/scalable/apps/dmos-logo.svg"
+install -m 644 "$ART/apps.svg" "$ICON/scalable/apps/dmos-apps.svg"
+install -m 644 "$ART/ia.svg" "$ICON/scalable/apps/dmos-ia.svg"
 install -m 644 "$ART/logo.svg" "$OUT/usr/share/sddm/themes/dmos/assets/logo.svg"
 for flavour in dark light; do
     mkdir -p "$LNF/org.dmos.mare.$flavour/contents/splash/images"

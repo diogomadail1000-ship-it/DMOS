@@ -1,6 +1,6 @@
 #!/bin/sh
 # Opens "Bem-vindo ao DMOS". With --first-run it opens only until the user finishes it once.
-# --page <inicio|aparencia|ligacao|noticias|pronto> opens a given page.
+# --page <inicio|aparencia|personalizar|ligacao|noticias|aplicacoes|pronto> opens a given page.
 if [ "$1" = "--first-run" ]; then
     [ "$(kreadconfig6 --file dmosrc --group Welcome --key Done)" = "true" ] && exit 0
     shift

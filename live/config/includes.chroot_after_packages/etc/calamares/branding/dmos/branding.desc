@@ -9,10 +9,10 @@ windowPlacement: center
 strings:
     productName:         DMOS
     shortProductName:    DMOS
-    version:             "1.1"
-    shortVersion:        "1.1"
-    versionedName:       DMOS 1.1 Maré
-    shortVersionedName:  DMOS 1.1
+    version:             "1.2"
+    shortVersion:        "1.2"
+    versionedName:       DMOS 1.2 Maré
+    shortVersionedName:  DMOS 1.2
     bootloaderEntryName: DMOS
     productUrl:          https://www.debian.org
     supportUrl:          https://www.debian.org/support

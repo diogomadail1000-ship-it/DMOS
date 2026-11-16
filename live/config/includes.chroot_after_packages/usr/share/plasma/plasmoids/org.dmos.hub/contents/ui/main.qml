@@ -23,6 +23,10 @@ PlasmoidItem {
     readonly property color dimColor: fade(Kirigami.Theme.textColor, 0.62)
     readonly property color accent: Kirigami.Theme.highlightColor
 
+    // Portuguese by default; any other session language gets English.
+    readonly property bool pt: Qt.locale().name.indexOf("pt") === 0
+    function t(portuguese, english) { return pt ? portuguese : english }
+
     function fade(c, a) {
         return Qt.rgba(c.r, c.g, c.b, a)
     }
@@ -30,18 +34,26 @@ PlasmoidItem {
     function greeting() {
         var h = now.getHours()
         var who = (kuser.fullName || kuser.loginName || "").split(" ")[0]
-        var hello = h < 6 ? "Boa noite" : h < 12 ? "Bom dia" : h < 20 ? "Boa tarde" : "Boa noite"
+        var hello = pt ? (h < 6 ? "Boa noite" : h < 12 ? "Bom dia" : h < 20 ? "Boa tarde" : "Boa noite")
+                       : (h < 5 ? "Good evening" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening")
         return who ? hello + ", " + who : hello
     }
 
     function ago(time) {
         if (!time) return ""
         var minutes = Math.max(1, Math.round((now.getTime() - time) / 60000))
-        if (minutes < 60) return "há " + minutes + " min"
+        if (minutes < 60) return pt ? "há " + minutes + " min" : minutes + " min ago"
         var hours = Math.round(minutes / 60)
-        if (hours < 24) return "há " + hours + " h"
+        if (hours < 24) return pt ? "há " + hours + " h" : hours + " h ago"
         var days = Math.round(hours / 24)
-        return days === 1 ? "ontem" : "há " + days + " dias"
+        if (days === 1) return t("ontem", "yesterday")
+        return pt ? "há " + days + " dias" : days + " days ago"
+    }
+
+    // Hands a question to DMOS IA. The text goes through a shell, hence the quoting.
+    function askAi(question) {
+        question = question.trim()
+        if (question) shell.run("dmos-ia --ask '" + question.replace(/'/g, "'\\''") + "'")
     }
 
     // Fetches every enabled feed, merges them and keeps the most recent headlines.
@@ -174,7 +186,7 @@ PlasmoidItem {
                 Layout.fillWidth: true
                 Text {
                     Layout.fillWidth: true
-                    text: "Notícias"
+                    text: root.t("Notícias", "News")
                     color: root.textColor
                     font.family: "Inter"
                     font.weight: Font.DemiBold
@@ -278,8 +290,10 @@ PlasmoidItem {
                     font.family: "Inter"
                     font.pixelSize: Kirigami.Units.gridUnit * 0.9
                     text: root.enabledSources.length === 0
-                          ? "Escolha as fontes de notícias que quer ver aqui. Só essas são contactadas."
-                          : root.offline ? "Sem ligação à internet." : "A carregar as notícias…"
+                          ? root.t("Escolha as fontes de notícias que quer ver aqui. Só essas são contactadas.",
+                                   "Choose the news sources you want to see here. Only those are contacted.")
+                          : root.offline ? root.t("Sem ligação à internet.", "No internet connection.")
+                                         : root.t("A carregar as notícias…", "Loading the news…")
                 }
                 Rectangle {
                     visible: root.enabledSources.length === 0
@@ -291,7 +305,7 @@ PlasmoidItem {
                     Text {
                         id: chooseLabel
                         anchors.centerIn: parent
-                        text: "Escolher fontes"
+                        text: root.t("Escolher fontes", "Choose sources")
                         color: Kirigami.Theme.highlightedTextColor
                         font.family: "Inter"
                         font.weight: Font.DemiBold
@@ -306,6 +320,60 @@ PlasmoidItem {
                     }
                 }
                 Item { Layout.fillHeight: true }
+            }
+
+            // A question for DMOS IA, without opening it first.
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.largeSpacing
+                implicitHeight: Kirigami.Units.gridUnit * 2.3
+                radius: height / 2
+                color: root.fade(root.textColor, askField.activeFocus ? 0.12 : 0.07)
+                border.width: 1
+                border.color: askField.activeFocus ? root.accent : root.fade(root.textColor, 0.12)
+                Kirigami.Icon {
+                    id: askIcon
+                    anchors.left: parent.left
+                    anchors.leftMargin: Kirigami.Units.largeSpacing
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "dmos-ia"
+                    width: Kirigami.Units.iconSizes.smallMedium
+                    height: width
+                }
+                TextInput {
+                    id: askField
+                    anchors.left: askIcon.right
+                    anchors.right: parent.right
+                    anchors.leftMargin: Kirigami.Units.smallSpacing * 2
+                    anchors.rightMargin: Kirigami.Units.largeSpacing
+                    anchors.verticalCenter: parent.verticalCenter
+                    clip: true
+                    selectByMouse: true
+                    color: root.textColor
+                    selectionColor: root.accent
+                    selectedTextColor: Kirigami.Theme.highlightedTextColor
+                    font.family: "Inter"
+                    font.pixelSize: Kirigami.Units.gridUnit * 0.9
+                    onAccepted: {
+                        root.askAi(text)
+                        text = ""
+                    }
+                    Text {
+                        anchors.fill: parent
+                        verticalAlignment: Text.AlignVCenter
+                        visible: askField.text.length === 0
+                        text: root.t("Pergunte à IA…", "Ask the AI…")
+                        color: root.dimColor
+                        font: askField.font
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    enabled: !askField.activeFocus
+                    cursorShape: Qt.IBeamCursor
+                    onClicked: askField.forceActiveFocus()
+                }
             }
         }
     }

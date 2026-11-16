@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Completes Plasma's European Portuguese catalogues for the lock and logout screens.
+"""Completes Plasma's European Portuguese catalogues for the lock and logout screens
+and for the application dashboard.
 
 Debian's "pt" catalogues lack these strings, so those screens appeared in English.
 The merged catalogues go to /usr/local/share, which comes before /usr/share in
@@ -70,6 +71,10 @@ ADDITIONS = {
         "&Log Out Now": "&Terminar sessão agora",
         "&Cancel": "&Cancelar",
     },
+    "plasma_applet_org.kde.plasma.kicker": {
+        "@info:placeholder as in, 'start typing to initiate a search'" + CTX + "Type to search…":
+            "Escreva para procurar…",
+    },
 }
 
 
@@ -122,3 +127,13 @@ for domain, additions in ADDITIONS.items():
             added += 1
     write_mo(f"/usr/local/share/locale/pt/LC_MESSAGES/{domain}.mo", pairs)
     print(f"{domain}: {added} translations added, {len(pairs)} entries")
+
+# The "Help" category of the application menus has no Portuguese name either.
+directory = "/usr/share/desktop-directories/kf5-help.directory"
+if os.path.exists(directory):
+    text = open(directory, encoding="utf-8").read()
+    if "\nName[pt]=" not in text:
+        os.makedirs("/usr/local/share/desktop-directories", exist_ok=True)
+        with open("/usr/local/share/desktop-directories/kf5-help.directory", "w", encoding="utf-8") as handle:
+            handle.write(text.rstrip("\n") + "\nName[pt]=Ajuda\n")
+        print("kf5-help.directory: Portuguese name added")

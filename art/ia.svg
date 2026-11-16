@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="16" x2="0" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1F2A4C"/>
+      <stop offset="1" stop-color="#0D1326"/>
+    </linearGradient>
+    <linearGradient id="tide" x1="44" y1="46" x2="214" y2="208" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5EEAD4"/>
+      <stop offset="0.48" stop-color="#46B6E0"/>
+      <stop offset="0.78" stop-color="#FF8A70"/>
+      <stop offset="1" stop-color="#FFC38A"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="224" height="224" rx="52" fill="url(#tile)"/>
+  <rect x="16.5" y="16.5" width="223" height="223" rx="51.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  <path fill="url(#tide)" d="M116 64 Q129 123 188 136 Q129 149 116 208 Q103 149 44 136 Q103 123 116 64 Z"/>
+  <path fill="url(#tide)" d="M184 46 Q190 70 214 76 Q190 82 184 106 Q178 82 154 76 Q178 70 184 46 Z"/>
+</svg>

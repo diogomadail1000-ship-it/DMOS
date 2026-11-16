@@ -37,6 +37,13 @@ qml6-module-org-kde-plasma-plasma5support
 qml6-module-org-kde-networkmanager
 qml6-module-org-kde-coreaddons
 
+# Runtime for DMOS IA (its Anthropic SDK comes from the 0550 hook)
+python3-pyside6.qtcore
+python3-pyside6.qtgui
+python3-pyside6.qtwidgets
+python3-pyside6.qtqml
+python3-pyside6.qtquick
+
 # Look and feel
 fonts-inter
 fonts-jetbrains-mono

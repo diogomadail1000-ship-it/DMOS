@@ -1,7 +1,7 @@
 #!/bin/bash
 # Gathers a finished build into dist/<version>/, ready to upload to SourceForge:
 # the ISO, the source archives, SHA256SUMS and the folder's README.md.
-#   release.sh 1.1
+#   release.sh 1.2
 set -euo pipefail
 
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
@@ -49,7 +49,10 @@ $notes
 Os ficheiros \`dmos-$VERSION-mare-source.*\` têm o código-fonte de todos os pacotes da ISO, como pede a GPL.
 O código do próprio DMOS está em https://github.com/diogomadail1000-ship-it/DMOS
 
-Site: https://diogomadail1000-ship-it.github.io/DMOS/
+A DMOS IA usa o SDK da Anthropic para Python e as bibliotecas de que ele depende, que vêm do PyPI e
+não de pacotes Debian. A lista com as versões está na ISO, em \`/usr/lib/dmos-ia/vendor/VERSIONS.txt\`.
+
+Site: https://dmos.cc/
 EOF
 
 ls -la "$OUT"

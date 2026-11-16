@@ -1,0 +1,22 @@
+#!/bin/sh
+# DMOS IA talks to Claude through Anthropic's official Python SDK. Debian does not package
+# it, so it is fetched from PyPI at build time into a directory of its own, next to the app.
+set -e
+
+VENDOR=/usr/lib/dmos-ia/vendor
+
+# pip is only needed here: whatever installing it adds leaves the image again.
+dpkg-query -W -f='${Package}\n' | sort > /tmp/dmos-ia-before
+apt-get install -y --no-install-recommends python3-pip
+dpkg-query -W -f='${Package}\n' | sort > /tmp/dmos-ia-after
+
+rm -rf "$VENDOR"
+PIP_BREAK_SYSTEM_PACKAGES=1 python3 -m pip install --no-cache-dir --target "$VENDOR" 'anthropic>=2.5,<3'
+python3 -m pip list --path "$VENDOR" --format=freeze > "$VENDOR/VERSIONS.txt"
+
+apt-get purge -y $(comm -13 /tmp/dmos-ia-before /tmp/dmos-ia-after)
+rm -f /tmp/dmos-ia-before /tmp/dmos-ia-after
+
+# The build must fail here, not on someone's desktop, if the SDK does not load.
+python3 -c "import sys; sys.path.insert(0, '$VENDOR'); import anthropic; print('anthropic', anthropic.__version__)"
+python3 -m compileall -q /usr/lib/dmos-ia/dmos_ia.py

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Procedural "Mare" wallpaper: layered tidal ribbons with silk filaments.
 
-Usage: gen_wallpaper.py {dark,light} WIDTH HEIGHT OUTPUT
+Usage: gen_wallpaper.py {dark,light,aurora,ambar} WIDTH HEIGHT OUTPUT
 Everything is deterministic, so the art can be rebuilt from source at any size.
 """
 import sys
@@ -44,6 +44,21 @@ THEMES = {
         ribbon_right=[lin("#F6D2DA"), lin("#F7A9A0"), lin("#FF8F73"), lin("#E9674F")],
         body=0.58, crest=0.75, filament=0.30, blend="normal",
     ),
+    # Extra wallpapers (1.2). Each has its own seed, so the swells differ from "Maré".
+    "aurora": dict(
+        sky_top=lin("#03060D"), sky_mid=lin("#061220"), sky_low=lin("#0A2230"),
+        glow=lin("#4ADE80"), glow_strength=0.20, glow_pos=(0.30, 0.40),
+        ribbon_left=[lin("#0B3B4F"), lin("#0E6B5E"), lin("#15A36E"), lin("#5EEAA0")],
+        ribbon_right=[lin("#2A1F6E"), lin("#5B2A9A"), lin("#8E44C9"), lin("#C084FC")],
+        body=0.44, crest=0.95, filament=0.66, blend="screen", seed=20261116, vignette=True,
+    ),
+    "ambar": dict(
+        sky_top=lin("#0D0710"), sky_mid=lin("#24101C"), sky_low=lin("#4A1C1E"),
+        glow=lin("#FFB45A"), glow_strength=0.40, glow_pos=(0.62, 0.42),
+        ribbon_left=[lin("#3A1230"), lin("#6E1F3A"), lin("#A8322F"), lin("#D9622B")],
+        ribbon_right=[lin("#7A2A1C"), lin("#C2501F"), lin("#F08A2C"), lin("#FFC766")],
+        body=0.46, crest=0.90, filament=0.60, blend="screen", seed=20261117, vignette=True,
+    ),
 }
 
 
@@ -67,7 +82,7 @@ def curve(rng, x, amplitude):
 
 def render(theme_name, width, height, seed=20261030):
     theme = THEMES[theme_name]
-    rng = np.random.default_rng(seed)
+    rng = np.random.default_rng(theme.get("seed", seed))
     aspect = width / height
     ys, xs = np.mgrid[0:height, 0:width].astype(np.float32)
     x = xs / width
@@ -135,7 +150,7 @@ def render(theme_name, width, height, seed=20261030):
     # Vignette keeps the eye centred and gives panels something calm to sit on.
     vx = (x - 0.5) * 1.12
     vy = (y - 0.5) * 1.12
-    if theme_name == "dark":
+    if theme.get("vignette", theme_name == "dark"):
         vignette = 1 - 0.55 * np.clip(vx * vx + vy * vy, 0, 1) ** 1.2
         img = img * vignette[..., None]
 

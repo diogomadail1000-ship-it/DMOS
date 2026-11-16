@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Favoritos do DMOS
+Exec=dmos-favorites
+Icon=dmos-logo
+NoDisplay=true
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2

@@ -1,0 +1,34 @@
+#!/bin/sh
+# Sets the favourites of the application menu and of the dashboard, once for each user.
+# The desktop layout cannot do it: both launchers fill in their own default favourites as
+# soon as they are created, before the layout gets to configure them. Favourites live in
+# the activity manager, so that is where this puts them.
+[ "$(kreadconfig6 --file dmosrc --group Setup --key Favorites)" = "done" ] && exit 0
+
+call() {
+    qdbus6 org.kde.ActivityManager /ActivityManager/Resources/Linking \
+        "org.kde.ActivityManager.ResourcesLinking.$1" org.kde.plasma.favorites.applications "$2" :global
+}
+
+# At login, the activity manager and the launchers may still be starting.
+tries=0
+until call IsResourceLinkedToActivity preferred://browser >/dev/null 2>&1; do
+    tries=$((tries + 1))
+    [ "$tries" -ge 30 ] && exit 1
+    sleep 1
+done
+sleep 3
+
+wanted="preferred://browser applications:org.dmos.ia.desktop applications:org.kde.dolphin.desktop
+        applications:org.kde.konsole.desktop applications:libreoffice-writer.desktop
+        applications:org.kde.discover.desktop applications:systemsettings.desktop"
+
+# Out go the launchers' defaults; in comes the DMOS list. Everything is taken out first,
+# because a favourite keeps the place it already had, and the order should be this one.
+for old in org.kde.kontact.desktop $wanted; do
+    call UnlinkResourceFromActivity "$old"
+done
+for new in $wanted; do
+    call LinkResourceToActivity "$new"
+done
+kwriteconfig6 --file dmosrc --group Setup --key Favorites done

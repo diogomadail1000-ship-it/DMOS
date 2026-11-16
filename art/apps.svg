@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="16" x2="0" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1F2A4C"/>
+      <stop offset="1" stop-color="#0D1326"/>
+    </linearGradient>
+    <linearGradient id="tide" x1="60" y1="60" x2="196" y2="196" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5EEAD4"/>
+      <stop offset="0.48" stop-color="#46B6E0"/>
+      <stop offset="0.78" stop-color="#FF8A70"/>
+      <stop offset="1" stop-color="#FFC38A"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="224" height="224" rx="52" fill="url(#tile)"/>
+  <rect x="16.5" y="16.5" width="223" height="223" rx="51.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  <g fill="url(#tide)">
+    <rect x="60" y="60" width="36" height="36" rx="12"/>
+    <rect x="110" y="60" width="36" height="36" rx="12"/>
+    <rect x="160" y="60" width="36" height="36" rx="12"/>
+    <rect x="60" y="110" width="36" height="36" rx="12"/>
+    <rect x="110" y="110" width="36" height="36" rx="12"/>
+    <rect x="160" y="110" width="36" height="36" rx="12"/>
+    <rect x="60" y="160" width="36" height="36" rx="12"/>
+    <rect x="110" y="160" width="36" height="36" rx="12"/>
+    <rect x="160" y="160" width="36" height="36" rx="12"/>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+#!/bin/sh
+# Sets the accent colour of the whole desktop, at once.
+#   dmos-accent '#RRGGBB'   use this colour
+#   dmos-accent default     go back to the colour of the current DMOS theme
+case "$1" in
+    default)
+        theme="$(kreadconfig6 --file kdeglobals --group KDE --key LookAndFeelPackage)"
+        plasma-apply-lookandfeel --apply "${theme:-org.dmos.mare.dark}" || exit 1
+        ;;
+    *)
+        if ! printf '%s' "$1" | grep -Eq '^#[0-9A-Fa-f]{6}$'; then
+            echo "usage: dmos-accent '#RRGGBB' | default" >&2
+            exit 2
+        fi
+        plasma-apply-colorscheme --accent-color "$1" || exit 1
+        ;;
+esac
+# Plasma 6.3 tells running apps to reload before it has written the new colours, which leaves
+# them one change behind. A second notification brings them up to date.
+sleep 0.5
+dbus-send --session --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:0 int32:0

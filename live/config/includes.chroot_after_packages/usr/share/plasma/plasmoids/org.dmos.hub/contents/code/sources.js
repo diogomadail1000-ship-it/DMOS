@@ -3,16 +3,16 @@
 .pragma library
 
 var list = [
-    { id: "publico", name: "Público", kind: "Atualidade · PT", url: "https://feeds.feedburner.com/PublicoRSS" },
-    { id: "observador", name: "Observador", kind: "Atualidade · PT", url: "https://observador.pt/feed/" },
-    { id: "rtp", name: "RTP Notícias", kind: "Atualidade · PT", url: "https://www.rtp.pt/noticias/rss" },
-    { id: "eco", name: "ECO", kind: "Economia · PT", url: "https://eco.sapo.pt/feed/" },
-    { id: "sapotek", name: "SAPO Tek", kind: "Tecnologia · PT", url: "https://tek.sapo.pt/feed/" },
-    { id: "pplware", name: "Pplware", kind: "Tecnologia · PT", url: "https://pplware.sapo.pt/feed/" },
-    { id: "bbc", name: "BBC News", kind: "Atualidade · EN", url: "https://feeds.bbci.co.uk/news/rss.xml" },
-    { id: "verge", name: "The Verge", kind: "Tecnologia · EN", url: "https://www.theverge.com/rss/index.xml" },
-    { id: "ars", name: "Ars Technica", kind: "Ciência e tecnologia · EN", url: "https://feeds.arstechnica.com/arstechnica/index" },
-    { id: "hn", name: "Hacker News", kind: "Tecnologia · EN", url: "https://hnrss.org/frontpage" }
+    { id: "publico", name: "Público", kind: "Atualidade · PT", kindEn: "News · PT", url: "https://feeds.feedburner.com/PublicoRSS" },
+    { id: "observador", name: "Observador", kind: "Atualidade · PT", kindEn: "News · PT", url: "https://observador.pt/feed/" },
+    { id: "rtp", name: "RTP Notícias", kind: "Atualidade · PT", kindEn: "News · PT", url: "https://www.rtp.pt/noticias/rss" },
+    { id: "eco", name: "ECO", kind: "Economia · PT", kindEn: "Business · PT", url: "https://eco.sapo.pt/feed/" },
+    { id: "sapotek", name: "SAPO Tek", kind: "Tecnologia · PT", kindEn: "Technology · PT", url: "https://tek.sapo.pt/feed/" },
+    { id: "pplware", name: "Pplware", kind: "Tecnologia · PT", kindEn: "Technology · PT", url: "https://pplware.sapo.pt/feed/" },
+    { id: "bbc", name: "BBC News", kind: "Atualidade · EN", kindEn: "News · EN", url: "https://feeds.bbci.co.uk/news/rss.xml" },
+    { id: "verge", name: "The Verge", kind: "Tecnologia · EN", kindEn: "Technology · EN", url: "https://www.theverge.com/rss/index.xml" },
+    { id: "ars", name: "Ars Technica", kind: "Ciência e tecnologia · EN", kindEn: "Science and technology · EN", url: "https://feeds.arstechnica.com/arstechnica/index" },
+    { id: "hn", name: "Hacker News", kind: "Tecnologia · EN", kindEn: "Technology · EN", url: "https://hnrss.org/frontpage" }
 ];
 
 function byId(id) {
