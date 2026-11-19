@@ -1,0 +1,39 @@
+1
+00:00:00,200 --> 00:00:04,800
+DMOS 1.2 “Maré” is out, and ready to download.
+
+2
+00:00:05,200 --> 00:00:13,100
+What's new in 1.2: DMOS IA, a search assistant in the dock; a colour and wallpaper picker; a full-screen application launcher with Super + A; and English text in English sessions.
+
+3
+00:00:13,500 --> 00:00:20,900
+New: DMOS IA. Ask in your own words. It is a new app in the dock, and the DMOS Hub panel also gained an “Ask the AI…” field.
+
+4
+00:00:21,300 --> 00:00:29,200
+The answer comes with its sources, numbered and one click away. It is answered by Claude, from Anthropic, which searches the web. In this screenshot the answer comes from a test server.
+
+5
+00:00:29,600 --> 00:00:38,500
+Frankly: the key is yours. Everyone uses their own Anthropic API key, paid per use. The ISO ships with no key, and without a key nothing is sent. The key stays on your computer. You can choose the model.
+
+6
+00:00:38,900 --> 00:00:46,300
+New in the welcome wizard: pick the colour and the wallpaper. Three wallpapers, Maré, Aurora and Âmbar, and six accent colours, applied immediately system-wide.
+
+7
+00:00:46,700 --> 00:00:54,100
+New: all applications, full screen. It is the first button in the dock and also opens with Super + A. By category, with search.
+
+8
+00:00:54,500 --> 00:01:01,400
+New: English in English sessions. The wizard, DMOS Hub and DMOS IA switch language, for example with “Try DMOS (English)” in the boot menu.
+
+9
+00:01:01,800 --> 00:01:11,700
+Fixes and tests: the menu favourites are now the DMOS ones; some English strings and light-theme buttons were fixed. Tested on VMware Workstation with real clicks and a full install. DMOS IA was tested against a test server; the real Anthropic service has not been tried yet.
+
+10
+00:01:12,100 --> 00:01:18,000
+Download DMOS 1.2: free and open source. sourceforge.net/projects/dmos · dmos.cc

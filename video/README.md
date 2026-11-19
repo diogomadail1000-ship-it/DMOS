@@ -12,6 +12,8 @@ Os vídeos do canal, em 1920x1080 a 30 fps (o Short em 1080x1920), feitos a part
   Estes dois vídeos usam o estilo e o motor partilhados `lista.css` e `lista.js`.
 - **Lançamento da 1.1** (cerca de 63 s): `lancamento-1-1.html`, texto em `youtube-lancamento-1-1.txt`. Usa as
   novidades do `CHANGELOG.md` e as capturas 12 a 15.
+- **Lançamento da 1.2** (cerca de 80 s): `lancamento-1-2.html`, texto em `youtube-lancamento-1-2.txt` e legendas em
+  inglês em `dmos-lancamento-1-2.en.srt`. Usa as novidades do `CHANGELOG.md` e as capturas 16 a 20.
 - **Instalar no VMware** (cerca de 2 min 16 s): `vmware.html`, texto em `youtube-vmware.txt`. As janelas do VMware são
   ilustrações (cenas do tipo `dialog`); a configuração é a testada na 1.1.
 - **Instalar no Hyper-V** (cerca de 2 min 10 s): `hyperv.html`, texto em `youtube-hyperv.txt`. Gémeo do tutorial do
