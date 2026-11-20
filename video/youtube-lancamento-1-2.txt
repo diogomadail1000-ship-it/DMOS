@@ -1,0 +1,51 @@
+TÍTULO
+DMOS 1.2 «Maré» já chegou: DMOS IA, cor e fundo, e painel de aplicações
+
+TÍTULO EM INGLÊS (Studio › Legendas › Adicionar idioma › Inglês › Título e descrição)
+DMOS 1.2 is out: AI search assistant, colour and wallpaper picker, full-screen app launcher
+
+DESCRIÇÃO
+A versão 1.2 do DMOS já está disponível! 🌊
+
+✨ Novidades
+• DMOS IA: um assistente de pesquisa, na dock. Faz-se a pergunta por palavras nossas e a resposta vem com as páginas em que se baseia, numeradas e a um clique. Quem responde é o Claude, da Anthropic. Cada pessoa usa a sua própria chave da API da Anthropic, paga à utilização: a ISO não traz chave nenhuma, e sem chave nada é enviado.
+• Cor e fundo no assistente Bem-vindo ao DMOS: três fundos (o Maré e os novos Aurora e Âmbar) e seis cores de destaque, aplicados de imediato a todo o sistema.
+• Painel de aplicações em ecrã inteiro: o primeiro botão da dock, ou Super + A. Por categoria, com pesquisa.
+• Em inglês na sessão em inglês: o assistente, o DMOS Hub e a DMOS IA mudam de língua.
+
+🔧 Correções
+• Os favoritos do menu de aplicações passam a ser os do DMOS.
+• Textos que apareciam em inglês e botões pouco legíveis no tema claro.
+
+🧪 Testada no VMware Workstation, com cliques e teclado reais e instalação completa. A DMOS IA foi testada com um servidor de ensaio; a ligação real ao serviço da Anthropic ainda não foi experimentada.
+
+⬇️ Descarregar o DMOS 1.2: https://sourceforge.net/projects/dmos/files/latest/download
+📝 Notas da versão: https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🌊 Site: https://dmos.cc/
+💬 Dúvidas e sugestões: https://github.com/diogomadail1000-ship-it/DMOS/discussions
+
+Capítulos
+0:00 Novidades da 1.2
+0:13 DMOS IA
+0:38 Cor e fundo, painel de aplicações e inglês
+1:01 Correções, testes e descarga
+
+English subtitles available (CC). Música original gerada para este vídeo.
+O DMOS não é um projeto oficial do Debian, do KDE nem da Anthropic.
+
+DESCRIÇÃO EM INGLÊS
+DMOS 1.2 is out. New: DMOS IA, a search assistant that answers with numbered sources (it uses Claude, with your own Anthropic API key; no key ships with the ISO and nothing is sent without one); a colour and wallpaper page in the welcome wizard; a full-screen application launcher (Super + A); and English text in English sessions. No voice-over; English subtitles available.
+Download: https://sourceforge.net/projects/dmos/files/latest/download · Website: https://dmos.cc/
+
+LEGENDAS EM INGLÊS
+Ficheiro dmos-lancamento-1-2.en.srt (Studio › Legendas › Inglês › Carregar ficheiro › Com temporização).
+
+ETIQUETAS
+DMOS, DMOS 1.2, Linux, nova versão, Debian 13, KDE Plasma 6, assistente IA Linux, Claude, distribuição Linux, Linux português
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-lancamento-1-2-miniatura.png (1280x720), gerada por video/render.js
