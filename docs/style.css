@@ -859,3 +859,6 @@ kbd {
   .assistente-painel { animation: assistente-sobe 0.18s ease-out; }
   @keyframes assistente-sobe { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 }
+
+/* O vídeo de lançamento, no topo das novidades, afasta-se da primeira novidade. */
+#novidades .video-layout { margin-bottom: 72px; }
