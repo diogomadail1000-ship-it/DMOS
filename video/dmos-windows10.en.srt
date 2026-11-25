@@ -1,0 +1,51 @@
+1
+00:00:00,200 --> 00:00:03,800
+Your PC can't run Windows 11? Give it a new life with Linux. Free, and risk-free to try.
+
+2
+00:00:04,200 --> 00:00:14,100
+The problem: Windows 10 support ended on 14 October 2025, and extended security updates for home users ended in October 2026. Windows 11 requires TPM 2.0 and a recent processor, so many good PCs are left out. A PC without security updates gets more exposed every month.
+
+3
+00:00:14,500 --> 00:00:23,400
+The alternative: Linux. Same computer, a current system. Free, no licences. Years of security updates straight from Debian. No TPM needed: 64-bit, 4 GB of RAM and 15 GB of disk. DMOS is a Portuguese Linux.
+
+4
+00:00:23,800 --> 00:00:31,700
+1. It feels familiar. A top bar, a dock, windows with close, minimise and maximise. Coming from Windows, you won't feel lost.
+
+5
+00:00:32,100 --> 00:00:39,500
+All applications in one panel, by category and with search, like a full-screen Start menu. Opens with Super + A.
+
+6
+00:00:39,900 --> 00:00:46,800
+Light or dark, as you prefer. Two complete themes, and a welcome wizard on first login.
+
+7
+00:00:47,200 --> 00:00:57,100
+2. Your programs. Edge or Chrome: Firefox is installed, Chrome is one click away. Microsoft Office: LibreOffice opens and saves .docx, .xlsx and .pptx. Media player: VLC. App store: Discover, with Flathub enabled.
+
+8
+00:00:57,500 --> 00:01:05,400
+The most requested apps, one click away: Spotify, Visual Studio Code, Steam, Discord, GIMP, OBS Studio, Telegram and Google Chrome.
+
+9
+00:01:05,800 --> 00:01:13,200
+Installing works like a store: search, read the details, click Install. No hunting for installers on the web.
+
+10
+00:01:13,600 --> 00:01:23,000
+Frankly, what will not work: Windows-only programs such as installed Microsoft Office or Adobe apps; some games with anti-cheat. DMOS is a new, one-person project, tested on virtual machines and a few real computers. So: try before you install.
+
+11
+00:01:24,400 --> 00:01:34,300
+3. Risk-free. Try it without touching Windows: from a USB stick, which writes nothing to your disk, or in a window inside Windows with Hyper-V or VMware. Like it? The Install DMOS icon does the rest. Back up first: “Erase disk” really erases everything.
+
+12
+00:01:34,700 --> 00:01:42,100
+Install only when you are sure. The live session is the complete system. Use it as long as you like.
+
+13
+00:01:42,500 --> 00:01:49,400
+Try DMOS today. Free and open source. dmos.cc · sourceforge.net/projects/dmos
