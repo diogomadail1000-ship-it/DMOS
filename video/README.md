@@ -21,6 +21,9 @@ Os vídeos do canal, em 1920x1080 a 30 fps (o Short em 1080x1920), feitos a part
   Seguro desligado, memória dinâmica desligada).
 - **Tour da 1.1** (cerca de 2 min 19 s): `tour.html`, texto em `youtube-tour.txt` e legendas em inglês em
   `dmos-tour.en.srt`. Responde a «é só mais um Debian com KDE?» com capturas reais, e diz o que ainda falta.
+- **«O seu PC não corre o Windows 11?»** (cerca de 1 min 50 s): `windows10.html`, texto em `youtube-windows10.txt` e
+  legendas em inglês em `dmos-windows10.en.srt`. Para quem tem o Windows 10 sem suporte: o problema, a alternativa,
+  os programas, o que não funciona e como experimentar sem risco.
 - **Comunidade**: `comunidade-tutorial.txt` e `comunidade-distrowatch.txt` têm as publicações e sondagens para o
   separador Comunidade do canal. `GUIAO-primeiros-10-minutos.md` é o guião do próximo vídeo longo.
 - **Comparativo de desempenho**: `desempenho.html`. Só usa números medidos com `medir.sh`. Veja `COMPARATIVO.md`.

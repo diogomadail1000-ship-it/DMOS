@@ -1,0 +1,50 @@
+TÍTULO
+O seu PC não corre o Windows 11? Dê-lhe vida nova com Linux (grátis e sem risco)
+
+TÍTULO EM INGLÊS (Studio › Legendas › Adicionar idioma › Inglês › Título e descrição)
+Your PC can't run Windows 11? Give it a new life with Linux (free, and risk-free to try)
+
+DESCRIÇÃO
+⬇️ Descarregar o DMOS (grátis): https://sourceforge.net/projects/dmos/files/latest/download
+
+O suporte do Windows 10 terminou e o Windows 11 não aceita muitos computadores que ainda funcionam bem. Este vídeo mostra a alternativa: instalar Linux no mesmo computador. Usamos o DMOS, um Linux português baseado no Debian 13 e no KDE Plasma 6, e dizemos com franqueza o que funciona e o que não funciona.
+
+💻 Requisitos: 64 bits, 4 GB de RAM e 15 GB de disco. Não pede TPM.
+📦 Programas: Firefox, LibreOffice e VLC já instalados; Spotify, Steam, Discord, Chrome e outros a um clique.
+⚠️ O que não corre: programas só para Windows (Microsoft Office instalado, Adobe) e alguns jogos com anti-cheat.
+🧪 Experimente sem risco: a partir de uma pen USB, sem tocar no disco, ou numa janela do Windows.
+
+🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A
+🪟 Experimentar dentro do Windows: Hyper-V https://youtu.be/NariiOTl-0o · VMware https://youtu.be/j-9vXxhwyh4
+🌊 Site: https://dmos.cc/
+💬 Dúvidas: https://github.com/diogomadail1000-ship-it/DMOS/discussions
+
+Capítulos
+0:00 O Windows 10 ficou sem atualizações
+0:14 A alternativa: um Linux que lhe parece familiar
+0:47 Os seus programas
+1:13 Com franqueza: o que não vai funcionar
+1:24 Experimente sem tocar no Windows
+
+English subtitles available (CC). Música original gerada para este vídeo.
+Windows é uma marca da Microsoft. O DMOS não está associado à Microsoft, ao Debian nem ao KDE.
+
+DESCRIÇÃO EM INGLÊS
+Windows 10 support has ended and Windows 11 rejects many PCs that still work fine. This video shows the alternative: Linux on the same computer, using DMOS (Debian 13 + KDE Plasma 6), with a frank look at what works and what does not. No voice-over; English subtitles available.
+Download: https://sourceforge.net/projects/dmos/files/latest/download · Website: https://dmos.cc/
+
+LEGENDAS EM INGLÊS
+Ficheiro dmos-windows10.en.srt (Studio › Legendas › Inglês › Carregar ficheiro › Com temporização).
+
+COMENTÁRIO FIXADO
+⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download
+Que computador tem que não aceita o Windows 11? Diga o modelo 👇
+
+ETIQUETAS
+Windows 10 fim do suporte, PC não corre Windows 11, alternativa ao Windows, instalar Linux, Linux para PC antigo, DMOS, Debian 13, KDE Plasma 6, Linux português, TPM 2.0
+
+CATEGORIA
+Ciência e tecnologia
+
+MINIATURA
+dmos-windows10-miniatura.png (1280x720), gerada por video/render.js
