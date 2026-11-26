@@ -3,10 +3,6 @@
 Distribuição Linux baseada no Debian 13 (trixie), com KDE Plasma 6 e uma identidade visual
 própria, gerada a partir do código deste repositório.
 
-> **Aviso (26 de novembro de 2026):** a página do DMOS na SourceForge está em baixo e a descarga da ISO está
-> temporariamente indisponível. Estamos a tratar de um novo alojamento. Entretanto, pode
-> [compilar a ISO](#compilar-a-iso) a partir do código.
-
 *In English: see [About DMOS](#about-dmos-english).*
 
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
@@ -27,17 +23,19 @@ O [tutorial em vídeo](https://youtu.be/glLq_Hi9V1A) mostra todos os passos, do 
 veja o [tutorial do VMware Workstation](https://youtu.be/j-9vXxhwyh4) ou, no Windows Pro e Education, o
 [tutorial do Hyper-V](https://youtu.be/NariiOTl-0o).
 
-**[Descarregar a ISO do DMOS 1.2](https://sourceforge.net/projects/dmos/files/latest/download)** (2,9 GB, na SourceForge). Para confirmar que a ISO
-chegou inteira, compare-a com o [`SHA256SUMS`](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download):
+**[Descarregar a ISO do DMOS 1.2](https://drive.usercontent.google.com/download?id=1Nmlq_qE3JB-yecodCvutBpRvI5nKBd2Y&export=download)** (2,9 GB, no Google Drive). O Google avisa que
+não verifica vírus em ficheiros grandes: escolha «Transferir mesmo assim». Para confirmar que a ISO chegou
+inteira, compare o código SHA-256 com o da [página de descarga](https://dmos.cc/download/):
 
 ```bash
-sha256sum -c SHA256SUMS --ignore-missing
+sha256sum dmos-1.2-mare-amd64.hybrid.iso
 ```
 
-No Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO.
-O código-fonte de todos os pacotes da ISO está na [mesma pasta da SourceForge](https://sourceforge.net/projects/dmos/files/1.2/).
-As versões [1.1](https://sourceforge.net/projects/dmos/files/1.1/) e [1.0](https://sourceforge.net/projects/dmos/files/1.0/)
-continuam disponíveis na SourceForge. O que mudou está nas [notas de versão](CHANGELOG.md).
+No Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell.
+O código-fonte de todos os pacotes da ISO é fornecido a pedido, nas
+[Discussões](https://github.com/diogomadail1000-ship-it/DMOS/discussions), enquanto não está publicado ao lado da ISO.
+As versões [1.1](https://drive.google.com/file/d/1pDWnEgrgYnnWE1pjymgAmhXMhWEPtNY1/view) e [1.0](https://drive.google.com/file/d/1wDzD6g8zmucUc8iDxwd855RLJ0irh68a/view) continuam disponíveis. A ligação permanente para a versão
+mais recente é <https://dmos.cc/download/>. O que mudou está nas [notas de versão](CHANGELOG.md).
 
 A ISO não faz parte do repositório, por ser demasiado grande para o GitHub. Depois de a
 [compilar](#compilar-a-iso), fica em `dist/dmos-1.2-mare-amd64.hybrid.iso`, com o checksum em
@@ -320,8 +318,9 @@ On top of that, DMOS has:
 | Default language | European Portuguese (an English live session is in the boot menu) |
 | License | GPL-3.0-or-later; the wallpapers under CC BY-SA 4.0 |
 
-**Download:** [DMOS 1.2 ISO](https://sourceforge.net/projects/dmos/files/latest/download) (2.9 GB, on SourceForge), with `SHA256SUMS` and the source code of
-every package in the ISO in the [same folder](https://sourceforge.net/projects/dmos/files/1.2/).
+**Download:** [DMOS 1.2 ISO](https://drive.usercontent.google.com/download?id=1Nmlq_qE3JB-yecodCvutBpRvI5nKBd2Y&export=download) (2.9 GB, on Google Drive; choose "Download anyway" on
+Google's virus-scan notice). The SHA-256 checksum and older versions are on the [download page](https://dmos.cc/download/).
+The source code of every package in the ISO is available on request in the Discussions.
 What changed: [release notes](CHANGELOG.md) (in Portuguese).
 Requirements: 64-bit PC, 4 GB of RAM, 2 CPU cores, 15 GB of disk to install.
 
