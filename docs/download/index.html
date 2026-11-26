@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-PT" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Descarregar o DMOS 1.2</title>
+  <meta name="description" content="Descarregar a ISO do DMOS 1.2 «Maré», com o código de verificação SHA-256 e as versões anteriores.">
+  <meta name="theme-color" content="#0C1122">
+  <link rel="canonical" href="https://dmos.cc/download/">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <script>try { var t = localStorage.getItem("dmos-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .dl-page { max-width: 760px; margin: 0 auto; padding: 56px 20px 80px; }
+    .dl-page h1 { font-size: clamp(34px, 6vw, 52px); letter-spacing: -0.03em; line-height: 1.05; margin: 18px 0 12px; }
+    .dl-page h2 { font-size: 22px; margin: 44px 0 10px; }
+    .dl-page p, .dl-page li { color: var(--muted); line-height: 1.6; }
+    .dl-page .btn { margin: 18px 0 6px; }
+    .dl-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-top: 14px; }
+    .dl-hash { display: block; font-family: var(--mono); font-size: 14px; color: var(--text); word-break: break-all; margin: 8px 0; }
+    .dl-page ol { padding-left: 22px; }
+    .dl-top { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <!-- Endereço permanente da descarga: https://dmos.cc/download/. Os vídeos e as redes apontam para aqui,
+       por isso basta mudar esta página quando a ISO mudar de versão ou de alojamento. -->
+  <main class="dl-page">
+    <a class="dl-top" href="../"><img src="../assets/logo.svg" alt="" width="28" height="28"> DMOS</a>
+    <h1>Descarregar o DMOS 1.2</h1>
+    <p>ISO híbrida de 2,9 GB para computadores de 64 bits, BIOS e UEFI. Grátis e de código aberto.</p>
+    <a class="btn btn-primary" href="https://drive.usercontent.google.com/download?id=1Nmlq_qE3JB-yecodCvutBpRvI5nKBd2Y&amp;export=download">Descarregar a ISO (2,9 GB)</a>
+    <p class="small">Ficheiro: <code>dmos-1.2-mare-amd64.hybrid.iso</code>, alojado no Google Drive.</p>
+
+    <h2>O aviso do Google é normal</h2>
+    <p>O Google Drive não verifica vírus em ficheiros com mais de 100 MB, e por isso mostra a mensagem «não é possível verificar se este ficheiro tem vírus». Acontece com qualquer ficheiro grande. Escolha <strong>«Transferir mesmo assim»</strong>.</p>
+    <p>Se aparecer a indicação de que o ficheiro atingiu o limite de transferências, é um limite diário do Google: tente de novo dentro de algumas horas.</p>
+
+    <h2>Confirmar que chegou inteira</h2>
+    <div class="dl-box">
+      <p>Código SHA-256 da ISO do DMOS 1.2:</p>
+      <code class="dl-hash" id="sha256">f9c5fe4ff06321a6aaaa1c47c580b7998184aeb9c5fa80e6dfa4d54a7eed7148</code>
+      <p>No Linux: <code>sha256sum dmos-1.2-mare-amd64.hybrid.iso</code><br>No Windows, no PowerShell: <code>Get-FileHash dmos-1.2-mare-amd64.hybrid.iso</code></p>
+      <p>O resultado tem de ser igual ao código acima, sem diferenças.</p>
+    </div>
+
+    <h2>E depois?</h2>
+    <ol>
+      <li><a href="https://youtu.be/glLq_Hi9V1A">Tutorial de instalação</a>, do download ao primeiro dia.</li>
+      <li>Dentro do Windows, sem tocar no disco: <a href="https://youtu.be/NariiOTl-0o">Hyper-V</a> ou <a href="https://youtu.be/j-9vXxhwyh4">VMware</a>.</li>
+      <li>Numa pen USB: grave a ISO com o Rufus em modo DD.</li>
+    </ol>
+
+    <h2>Versões anteriores e código-fonte</h2>
+    <p><a href="https://drive.google.com/file/d/1pDWnEgrgYnnWE1pjymgAmhXMhWEPtNY1/view">DMOS 1.1</a> · <a href="https://drive.google.com/file/d/1wDzD6g8zmucUc8iDxwd855RLJ0irh68a/view">DMOS 1.0</a> · <a href="https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md">Notas de versão</a></p>
+    <p>O código do DMOS está no <a href="https://github.com/diogomadail1000-ship-it/DMOS">GitHub</a>. O código-fonte de todos os pacotes incluídos na ISO é fornecido a pedido, nas <a href="https://github.com/diogomadail1000-ship-it/DMOS/discussions">Discussões</a>.</p>
+  </main>
+</body>
+</html>

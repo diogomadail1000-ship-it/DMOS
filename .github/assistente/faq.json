@@ -36,7 +36,7 @@
         "compatibilidade grafica",
         "nomodeset"
       ],
-      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando-a com o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
+      "resposta": "Experimente estes passos, por esta ordem:\n\n1. No menu de arranque, escolha **Modo de compatibilidade gráfica** em vez de «Experimentar o DMOS».\n2. Numa máquina virtual, ative a **aceleração 3D** e dê pelo menos **4 GB de RAM** e **2 CPUs**.\n3. Confirme que a ISO chegou inteira, comparando o código SHA-256 com o da [página de descarga](https://dmos.cc/download/).\n\nSe continuar, diga-nos onde está a correr (que máquina virtual, ou que computador e placa gráfica) e se arranca em UEFI ou BIOS.\n\n🎬 Tutorial, no passo «Arrancar»: https://youtu.be/glLq_Hi9V1A?t=52"
     },
     {
       "id": "maquina-virtual",
@@ -103,10 +103,10 @@
         "sha256",
         "sha256sums",
         "checksum",
-        "sourceforge",
+        "google drive",
         "onde esta a iso"
       ],
-      "resposta": "⚠️ **Aviso (26 de novembro de 2026):** a página do DMOS na SourceForge está em baixo e a descarga está temporariamente indisponível. Estamos a tratar de um novo alojamento; a ligação nova vai aparecer em https://dmos.cc/. Entretanto, pode compilar a ISO a partir do código (secção «Compilar a ISO» do README).\n\n⬇️ A ISO do DMOS 1.2 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
+      "resposta": "⬇️ A ISO do DMOS 1.2 descarrega-se em https://dmos.cc/download/ (2,9 GB, alojada no Google Drive).\n\nO Google mostra um aviso a dizer que não verifica vírus em ficheiros grandes: é normal, escolha **«Transferir mesmo assim»**.\n\nPara confirmar que chegou inteira, compare o código SHA-256 com o que está nessa página. No Linux:\n\n```bash\nsha256sum dmos-1.2-mare-amd64.hybrid.iso\n```\n\nNo Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell.\n\nSe o Google disser que o ficheiro atingiu o limite de transferências, tente de novo dentro de algumas horas."
     },
     {
       "id": "tema",

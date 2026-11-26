@@ -168,7 +168,7 @@ def faq_matches(title: str, body: str) -> list[dict]:
 def faq_answer(kind: str, title: str, body: str) -> str:
     links = (
         "Links úteis:\n"
-        "- ⬇️ Descarregar o DMOS: https://sourceforge.net/projects/dmos/files/latest/download\n"
+        "- ⬇️ Descarregar o DMOS: https://dmos.cc/download/\n"
         "- 🛠️ Tutorial de instalação: https://youtu.be/glLq_Hi9V1A\n"
         "- ▶️ Todos os vídeos: https://www.youtube.com/playlist?list=PLbQLRzz4S7rQ"
     )
