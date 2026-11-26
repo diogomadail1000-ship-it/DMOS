@@ -862,3 +862,6 @@ kbd {
 
 /* O vídeo de lançamento, no topo das novidades, afasta-se da primeira novidade. */
 #novidades .video-layout { margin-bottom: 72px; }
+
+/* Um vídeo no topo de uma secção afasta-se do bloco seguinte. */
+.video-layout.video-lead { margin-bottom: 72px; }
