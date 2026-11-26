@@ -3,6 +3,10 @@
 Distribuição Linux baseada no Debian 13 (trixie), com KDE Plasma 6 e uma identidade visual
 própria, gerada a partir do código deste repositório.
 
+> **Aviso (26 de novembro de 2026):** a página do DMOS na SourceForge está em baixo e a descarga da ISO está
+> temporariamente indisponível. Estamos a tratar de um novo alojamento. Entretanto, pode
+> [compilar a ISO](#compilar-a-iso) a partir do código.
+
 *In English: see [About DMOS](#about-dmos-english).*
 
 [![Ver o vídeo de apresentação do DMOS no YouTube](docs/assets/video-miniatura.jpg)](https://youtu.be/6xOphpjiomE)
