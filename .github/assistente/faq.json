@@ -106,7 +106,7 @@
         "sourceforge",
         "onde esta a iso"
       ],
-      "resposta": "⬇️ A ISO do DMOS 1.2 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
+      "resposta": "⚠️ **Aviso (26 de novembro de 2026):** a página do DMOS na SourceForge está em baixo e a descarga está temporariamente indisponível. Estamos a tratar de um novo alojamento; a ligação nova vai aparecer em https://dmos.cc/. Entretanto, pode compilar a ISO a partir do código (secção «Compilar a ISO» do README).\n\n⬇️ A ISO do DMOS 1.2 está na SourceForge: https://sourceforge.net/projects/dmos/files/latest/download\n\nPara confirmar que chegou inteira, descarregue também o [SHA256SUMS](https://sourceforge.net/projects/dmos/files/1.2/SHA256SUMS/download) para a mesma pasta e corra:\n\n```bash\nsha256sum -c SHA256SUMS --ignore-missing\n```\n\nNo Windows, use `Get-FileHash dmos-1.2-mare-amd64.hybrid.iso` no PowerShell e compare com a linha da ISO."
     },
     {
       "id": "tema",
