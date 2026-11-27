@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Só HTTPS. O Android 7.0 não conhece a raiz da Let's Encrypt (ISRG Root X1), usada por dmos.cc e
+     por várias fontes de notícias; vai incluída aqui, ao lado das autoridades do sistema. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="@raw/isrg_root_x1" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

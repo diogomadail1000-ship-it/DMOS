@@ -53,6 +53,14 @@ mesma chave, senão o Android recusa a atualização.
 
 ## Estado dos testes
 
-A interface foi testada no Chromium com uma ponte simulada, incluindo notícias reais de quatro fontes.
-O APK foi verificado com o `aapt2` e o `apksigner`. **Ainda não foi experimentado num telemóvel nem num
-emulador.**
+- A interface foi testada no Chromium com uma ponte simulada, nos temas claro e escuro: versão e descarga,
+  notícias reais de sete fontes, fontes próprias, notícias guardadas, cores, assistente e guias.
+- A leitura das fontes dá o mesmo resultado que a do DMOS Hub nas dez fontes, e responde em milésimos de
+  segundo a documentos malformados de 3 MB.
+- A página foi aberta diretamente do disco com a política de conteúdo ativa.
+- O APK foi verificado com o `aapt2` e o `apksigner`.
+- O código passou por uma revisão automática (arranque em Android 7 a 15, segurança da ponte, lógica e
+  usabilidade); os 19 problemas confirmados foram corrigidos.
+
+**Ainda não foi experimentado num telemóvel nem num emulador.** `targetSdk` é 34: serve para instalar a
+partir do site, mas a Google Play exige 35, o que pede tratar as margens do ecrã inteiro em `MainActivity`.

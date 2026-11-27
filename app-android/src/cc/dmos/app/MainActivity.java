@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -19,14 +20,19 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,12 +47,18 @@ import java.util.regex.Pattern;
 public class MainActivity extends Activity {
     private static final String HOME = "file:///android_asset/www/index.html";
     private static final int MAX_BYTES = 3 * 1024 * 1024;
+    private static final int MAX_REDIRECTS = 5;
+    private static final int DEADLINE_SECONDS = 25;
     private static final Pattern SAFE_ID = Pattern.compile("[A-Za-z0-9_-]{1,40}");
     private static final Pattern XML_ENCODING = Pattern.compile("<\\?xml[^>]*encoding=[\"']([A-Za-z0-9._-]+)[\"']");
 
     private WebView web;
     private final Set<String> hosts = java.util.Collections.synchronizedSet(new HashSet<String>());
     private final ExecutorService pool = Executors.newFixedThreadPool(4);
+    // Respostas prontas, à espera de serem recolhidas pela página com take().
+    private final ConcurrentHashMap<String, String> prontas = new ConcurrentHashMap<>();
+    // Corta os pedidos que se arrastam, para um servidor lento não prender a rede da aplicação.
+    private final ScheduledExecutorService watchdog = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle state) {
@@ -61,7 +73,7 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(false);
         s.setAllowContentAccess(false);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-        s.setTextZoom(100);
+        s.setTextZoom(textZoom(getResources().getConfiguration()));
         web.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
         web.addJavascriptInterface(new Bridge(), "DmosNative");
         web.setWebViewClient(new WebViewClient() {
@@ -75,6 +87,17 @@ public class MainActivity extends Activity {
         });
         setContentView(web);
         if (state == null || web.restoreState(state) == null) web.loadUrl(HOME);
+    }
+
+    /** O tamanho de letra da página segue o que o utilizador escolheu no telemóvel. */
+    private static int textZoom(Configuration config) {
+        return Math.max(85, Math.min(200, Math.round(100 * config.fontScale)));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        if (web != null) web.getSettings().setTextZoom(textZoom(config));
     }
 
     @Override
@@ -92,6 +115,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         pool.shutdownNow();
+        watchdog.shutdownNow();
         web.removeJavascriptInterface("DmosNative");
         web.destroy();
         super.onDestroy();
@@ -127,6 +151,19 @@ public class MainActivity extends Activity {
         }
     }
 
+    /** Recusa nomes locais e endereços privados, para a aplicação nunca ser usada para sondar a rede de casa. */
+    private static boolean isPublicHost(String host) {
+        if (host == null || host.isEmpty() || !host.contains(".") || host.endsWith(".local") || host.endsWith(".internal")) return false;
+        try {
+            for (InetAddress a : InetAddress.getAllByName(host)) {
+                if (a.isAnyLocalAddress() || a.isLoopbackAddress() || a.isLinkLocalAddress() || a.isSiteLocalAddress() || a.isMulticastAddress()) return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private static byte[] readAll(InputStream in, int max) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[16384];
@@ -159,8 +196,9 @@ public class MainActivity extends Activity {
 
     private final class Bridge {
         /**
-         * Pede um endereço HTTPS de um dos anfitriões permitidos e devolve o texto à página com
-         * window.__dmosDone(id, estado, textoEmBase64). Estado 0 significa falha de rede ou pedido recusado.
+         * Pede um endereço HTTPS de um dos anfitriões permitidos. Quando termina, avisa a página com
+         * window.__dmosReady(id), e a página recolhe a resposta com take(id). Estado 0 significa falha
+         * de rede ou pedido recusado.
          */
         @JavascriptInterface
         public void fetch(final String id, final String address) {
@@ -170,32 +208,57 @@ public class MainActivity extends Activity {
                 public void run() {
                     int status = 0;
                     String body = "";
-                    HttpURLConnection c = null;
+                    final HttpURLConnection[] atual = new HttpURLConnection[1];
+                    // Prazo para o pedido inteiro, redirecionamentos incluídos.
+                    ScheduledFuture<?> prazo = watchdog.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            HttpURLConnection c = atual[0];
+                            if (c != null) c.disconnect();
+                        }
+                    }, DEADLINE_SECONDS, TimeUnit.SECONDS);
                     try {
                         URL url = new URL(address);
-                        String host = url.getHost() == null ? "" : url.getHost().toLowerCase(Locale.ROOT);
-                        if (!"https".equals(url.getProtocol()) || !hosts.contains(host)) throw new SecurityException(host);
-                        c = (HttpURLConnection) url.openConnection();
-                        c.setConnectTimeout(10000);
-                        c.setReadTimeout(15000);
-                        c.setInstanceFollowRedirects(true);
-                        c.setRequestProperty("User-Agent", "DMOS-Android/" + BuildInfo.VERSION + " (+https://dmos.cc)");
-                        c.setRequestProperty("Accept", "application/rss+xml, application/atom+xml, application/xml, text/xml, application/json, text/plain, */*");
-                        status = c.getResponseCode();
-                        if (!"https".equals(c.getURL().getProtocol())) throw new SecurityException("redirecionamento sem HTTPS");
-                        InputStream in = status < 400 ? c.getInputStream() : c.getErrorStream();
-                        if (in != null) {
-                            byte[] data = readAll(in, MAX_BYTES);
-                            String text = new String(data, charsetOf(c.getContentType(), data));
-                            body = Base64.encodeToString(text.getBytes(StandardCharsets.UTF_8), Base64.NO_WRAP);
+                        String primeiro = url.getHost() == null ? "" : url.getHost().toLowerCase(Locale.ROOT);
+                        if (!hosts.contains(primeiro)) throw new SecurityException(primeiro);
+                        for (int salto = 0; ; salto++) {
+                            // Cada passo tem de ser HTTPS e para um endereço público.
+                            if (!"https".equals(url.getProtocol()) || url.getUserInfo() != null || !isPublicHost(url.getHost())) throw new SecurityException(url.getHost());
+                            HttpURLConnection c = (HttpURLConnection) url.openConnection();
+                            atual[0] = c;
+                            if (prazo.isDone()) throw new IllegalStateException("prazo");
+                            c.setConnectTimeout(10000);
+                            c.setReadTimeout(15000);
+                            c.setInstanceFollowRedirects(false);
+                            c.setRequestProperty("User-Agent", "DMOS-Android/" + BuildInfo.VERSION + " (+https://dmos.cc)");
+                            c.setRequestProperty("Accept", "application/rss+xml, application/atom+xml, application/xml, text/xml, application/json, text/plain, */*");
+                            status = c.getResponseCode();
+                            String para = c.getHeaderField("Location");
+                            if (status >= 300 && status < 400 && para != null) {
+                                if (salto >= MAX_REDIRECTS) throw new IllegalStateException("demasiados redirecionamentos");
+                                url = new URL(url, para);
+                                c.disconnect();
+                                continue;
+                            }
+                            InputStream in = status < 400 ? c.getInputStream() : c.getErrorStream();
+                            if (in != null) {
+                                byte[] data = readAll(in, MAX_BYTES);
+                                String text = new String(data, charsetOf(c.getContentType(), data));
+                                body = Base64.encodeToString(text.getBytes(StandardCharsets.UTF_8), Base64.NO_WRAP);
+                            }
+                            break;
                         }
                     } catch (Exception e) {
                         status = 0;
                         body = "";
                     } finally {
-                        if (c != null) c.disconnect();
+                        prazo.cancel(false);
+                        if (atual[0] != null) atual[0].disconnect();
                     }
-                    final String js = "window.__dmosDone&&window.__dmosDone(" + JSONObject.quote(id) + "," + status + ",\"" + body + "\")";
+                    // A resposta fica guardada e a página é avisada. A página também pergunta por ela
+                    // de tempos a tempos, por isso o aviso pode falhar sem se perder nada.
+                    prontas.put(id, status + "," + body);
+                    final String js = "window.__dmosReady&&window.__dmosReady(" + JSONObject.quote(id) + ")";
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -204,6 +267,14 @@ public class MainActivity extends Activity {
                     });
                 }
             });
+        }
+
+        /** Entrega à página a resposta de um pedido, como «estado,textoEmBase64», ou vazio se ainda não chegou. */
+        @JavascriptInterface
+        public String take(String id) {
+            if (id == null) return "";
+            String r = prontas.remove(id);
+            return r == null ? "" : r;
         }
 
         /** Abre uma ligação http(s) no navegador do telemóvel. */

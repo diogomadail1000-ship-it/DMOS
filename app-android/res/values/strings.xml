@@ -7,7 +7,8 @@
     <style name="DmosTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/dmos_bg</item>
         <item name="android:statusBarColor">@color/dmos_bg</item>
-        <item name="android:navigationBarColor">@color/dmos_bg</item>
+        <!-- Antes do Android 8.1 não há ícones escuros na barra de navegação: a barra fica escura. -->
+        <item name="android:navigationBarColor">#0C1122</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorAccent">#0B7A74</item>
     </style>

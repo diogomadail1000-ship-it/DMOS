@@ -26,7 +26,7 @@ mkdir -p "$OUT/gen" "$OUT/classes" "$OUT/dex" "$OUT/assets/www/data"
 # 1. Dados que acompanham a aplicação, para funcionar sem rede: as fontes do DMOS Hub, as perguntas
 #    frequentes, as notas de versão e os guias. Vêm do resto do repositório, para não haver duas cópias.
 cp -r "$HERE/www/." "$OUT/assets/www/"
-node - "$ROOT" "$OUT/assets/www/data" <<'NODE'
+DMOS_BUILD="$VERSION_CODE-$(date -u +%Y%m%d%H%M)" node - "$ROOT" "$OUT/assets/www/data" <<'NODE'
 const fs = require("fs"), path = require("path");
 const [root, out] = process.argv.slice(2);
 const hub = fs.readFileSync(path.join(root, "live/config/includes.chroot_after_packages/usr/share/plasma/plasmoids/org.dmos.hub/contents/code/sources.js"), "utf8");
@@ -34,6 +34,7 @@ const list = new Function(hub.replace(".pragma library", "") + "; return list;")
 const sources = list.map(({ id, name, kind, url }) => ({ id, name, kind, url }));
 if (!sources.length || sources.some(s => !/^https:\/\//.test(s.url))) throw new Error("fontes inválidas");
 const bundle = {
+  build: process.env.DMOS_BUILD,
   sources,
   faq: JSON.parse(fs.readFileSync(path.join(root, ".github/assistente/faq.json"), "utf8")),
   changelog: fs.readFileSync(path.join(root, "CHANGELOG.md"), "utf8"),
