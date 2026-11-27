@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DMOS para Android</title>
-  <meta name="description" content="A aplicação gratuita do DMOS para Android: novidades, notícias das fontes do DMOS Hub, ajuda e guias.">
+  <title>DMOS para Android e iPhone</title>
+  <meta name="description" content="A aplicação gratuita do DMOS para Android e iPhone: novidades, notícias das fontes do DMOS Hub, ajuda e guias.">
   <meta name="theme-color" content="#0C1122">
-  <meta property="og:title" content="DMOS para Android">
+  <meta property="og:title" content="DMOS para Android e iPhone">
   <meta property="og:description" content="A aplicação gratuita do DMOS para o telemóvel.">
   <meta property="og:image" content="https://dmos.cc/app/capturas/1-inicio.jpg">
   <link rel="canonical" href="https://dmos.cc/app/">
@@ -42,11 +42,12 @@
 
     <div class="app-hero">
       <div>
-        <span class="app-tag">Android · gratuita · versão 1.0</span>
+        <span class="app-tag">Android e iPhone · gratuita · versão 1.0</span>
         <h1>O DMOS no telemóvel.</h1>
         <p>Uma aplicação pequena para acompanhar o DMOS: as novidades de cada versão, as notícias das mesmas fontes do painel DMOS Hub, o assistente de ajuda e os guias em vídeo. Sem publicidade, sem contas e sem rastreio.</p>
         <p><a class="btn btn-primary" href="dmos-android-1.0.apk" download>Descarregar para Android (92 KB)</a></p>
         <p class="small">Android 7 ou mais recente · só pede acesso à internet · <a href="https://github.com/diogomadail1000-ship-it/DMOS/tree/main/app-android">código aberto</a></p>
+        <p class="small">Tem um iPhone ou um iPad? <a href="#iphone">Há uma versão para iOS</a>, com uma instalação diferente.</p>
       </div>
       <img src="capturas/1-inicio.jpg" alt="Ecrã inicial da aplicação, com a versão atual do DMOS e as novidades" width="618" height="1320">
     </div>
@@ -67,7 +68,7 @@
       <img src="capturas/4-guias.jpg" alt="Guias: lista de vídeos" loading="lazy" width="618" height="1320">
     </div>
 
-    <h2>Como instalar</h2>
+    <h2>Como instalar no Android</h2>
     <p>A aplicação não está na Google Play: instala-se a partir do ficheiro. O Android pede uma autorização, uma só vez.</p>
     <ol>
       <li>No telemóvel, carregue em <strong>Descarregar para Android</strong> e abra o ficheiro quando a transferência terminar.</li>
@@ -76,16 +77,29 @@
     </ol>
     <p>Se o Play Protect perguntar se quer analisar a aplicação, pode aceitar: é uma verificação normal para aplicações de fora da loja.</p>
 
+    <h2 id="iphone">iPhone e iPad</h2>
+    <p>A mesma aplicação, feita para o iOS 15 ou mais recente. Não está na App Store, e a Apple não deixa instalar uma aplicação só com o ficheiro, como no Android: o ficheiro tem de ser assinado com uma conta Apple. Por isso a instalação precisa de um computador, uma vez.</p>
+    <p><a class="btn btn-primary" href="dmos-ios-1.0.ipa" download>Descarregar para iPhone e iPad (__TAMANHO__)</a></p>
+    <ol>
+      <li>No computador (Windows ou Mac), descarregue o ficheiro acima e instale o <a href="https://sideloadly.io/" rel="noopener">Sideloadly</a> ou a <a href="https://altstore.io/" rel="noopener">AltStore</a>, dois programas gratuitos para este fim.</li>
+      <li>Ligue o iPhone por cabo, escolha o ficheiro <code>dmos-ios-1.0.ipa</code> e indique o seu ID Apple. O programa assina a aplicação com a sua conta e instala-a.</li>
+      <li>No iPhone, em <strong>Definições › Geral › VPN e gestão de dispositivos</strong>, toque no seu ID Apple e em <strong>Confiar</strong>. No iOS 16 ou mais recente, ligue também o <strong>Modo de programador</strong> em <strong>Definições › Privacidade e segurança</strong>.</li>
+    </ol>
+    <p>Com um ID Apple gratuito, a Apple só deixa a aplicação funcionar durante sete dias; depois é preciso repetir a instalação (a AltStore faz essa renovação sozinha quando o computador está por perto). É uma regra da Apple, não do DMOS.</p>
+
     <h2>Verificar o ficheiro</h2>
     <div class="app-card">
       <p>Código SHA-256 de <code>dmos-android-1.0.apk</code>:</p>
       <code class="app-hash">4db8fe3f8d2b9b4d54fce83979ba00a89aa7445452da9f49e8730ebc221eb08d</code>
-      <p>Impressão digital do certificado com que todas as versões são assinadas:</p>
+      <p>Código SHA-256 de <code>dmos-ios-1.0.ipa</code> (não vai assinado: é assinado por quem o instala):</p>
+      <code class="app-hash">__SHA_IPA__</code>
+      <p>Impressão digital do certificado com que todas as versões para Android são assinadas:</p>
       <code class="app-hash">84:1D:01:BE:4A:67:BC:3F:59:1A:73:EF:B1:7A:89:57:EF:13:F9:06:D4:36:E9:FD:DD:0D:60:7D:94:7E:52:72</code>
     </div>
 
     <h2>Com franqueza</h2>
     <p>Esta é a primeira versão. Foi testada no computador, com a interface completa e notícias reais, e o código passou por uma revisão, mas é nova e pode ter falhas em telemóveis onde ainda não foi experimentada. Se alguma coisa falhar no seu, <a href="https://github.com/diogomadail1000-ship-it/DMOS/issues/new/choose">conte-nos</a>: diga o modelo e a versão do Android.</p>
+    <p>A versão para iPhone é compilada num Mac do GitHub e experimentada no simulador de iPhone da Apple, onde abre, lê as notícias e guarda as preferências. Ainda não foi experimentada num iPhone verdadeiro: se a instalar, diga-nos como correu.</p>
     <p>A aplicação não é o DMOS: o sistema instala-se no computador, a partir da <a href="../download/">página de descarga</a>.</p>
     <p class="small">Esta página conta, de forma anónima, quantas vezes é aberta e quantas vezes o botão é usado, sem cookies nem dados pessoais. <a href="../estatisticas/">Ver os totais</a>.</p>
   </main>

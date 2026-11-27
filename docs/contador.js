@@ -25,5 +25,6 @@
     var destino = a.getAttribute("href");
     if (/drive\.usercontent\.google\.com\/download|drive\.google\.com\/file/.test(destino)) contar(/1Nmlq_qE3JB/.test(destino) ? "iso-" + pagina : "iso-anterior");
     else if (/\.apk$/.test(destino)) contar("apk");
+    else if (/\.ipa$/.test(destino)) contar("ipa");
   }, true);
 })();

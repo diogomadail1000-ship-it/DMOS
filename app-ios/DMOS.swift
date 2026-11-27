@@ -278,12 +278,15 @@ final class Ecra: UIViewController, WKNavigationDelegate, WKScriptMessageHandler
 
     #if targetEnvironment(simulator)
     // Só no simulador, para o teste automático (.github/workflows/ios.yml): depois de a página
-    // carregar, abre as notícias, espera e escreve em Documents/teste.json o que a página mostra.
+    // carregar, abre as notícias, liga três fontes, espera e escreve em Documents/teste.json o que a página mostra.
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard ProcessInfo.processInfo.environment["DMOS_TESTE"] == "1" else { return }
         let destino = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("teste.json")
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             webView.evaluateJavaScript("location.hash = 'noticias'; 1", completionHandler: nil)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            webView.evaluateJavaScript("Array.prototype.slice.call(document.querySelectorAll('#fontes button'), 0, 3).forEach(function (b) { b.click(); }); 1", completionHandler: nil)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
             let js = """

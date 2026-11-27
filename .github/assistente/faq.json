@@ -236,7 +236,7 @@
     },
     {
       "id": "android",
-      "titulo": "Aplicação do DMOS para Android",
+      "titulo": "Aplicação do DMOS para Android e iPhone",
       "palavras": [
         "android",
         "telemovel",
@@ -249,7 +249,7 @@
         "iphone",
         "ios"
       ],
-      "resposta": "Há uma aplicação gratuita do DMOS para Android, em https://dmos.cc/app/. Mostra as novidades de cada versão, as notícias das fontes do DMOS Hub, o assistente de ajuda e os guias em vídeo.\n\nNão está na Google Play: descarrega-se o ficheiro APK nessa página e o Android pede autorização para instalar a partir do navegador. Precisa do Android 7 ou mais recente e só pede acesso à internet.\n\nA aplicação acompanha o projeto, não é o DMOS: o sistema instala-se no computador, a partir de https://dmos.cc/download/. Não há versão para iPhone."
+      "resposta": "Há uma aplicação gratuita do DMOS para Android, em https://dmos.cc/app/. Mostra as novidades de cada versão, as notícias das fontes do DMOS Hub, o assistente de ajuda e os guias em vídeo.\n\nNão está na Google Play: descarrega-se o ficheiro APK nessa página e o Android pede autorização para instalar a partir do navegador. Precisa do Android 7 ou mais recente e só pede acesso à internet.\n\nA aplicação acompanha o projeto, não é o DMOS: o sistema instala-se no computador, a partir de https://dmos.cc/download/.\n\nPara iPhone e iPad (iOS 15 ou mais recente) há a mesma aplicação, na mesma página. Não está na App Store: descarrega-se o ficheiro .ipa e instala-se a partir de um computador com o Sideloadly ou a AltStore, que o assinam com o seu ID Apple. Com um ID Apple gratuito, a Apple obriga a repetir a instalação de sete em sete dias."
     }
   ]
 }
