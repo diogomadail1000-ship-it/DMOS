@@ -3,6 +3,7 @@ package cc.dmos.app;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -44,7 +45,7 @@ public class MainActivity extends Activity {
     private static final Pattern XML_ENCODING = Pattern.compile("<\\?xml[^>]*encoding=[\"']([A-Za-z0-9._-]+)[\"']");
 
     private WebView web;
-    private final Set<String> hosts = new HashSet<>();
+    private final Set<String> hosts = java.util.Collections.synchronizedSet(new HashSet<String>());
     private final ExecutorService pool = Executors.newFixedThreadPool(4);
 
     @Override
@@ -109,6 +110,12 @@ public class MainActivity extends Activity {
         } catch (Exception ignored) {
             // Sem a lista, as notícias ficam indisponíveis; o resto da aplicação funciona.
         }
+        // Os anfitriões das fontes que o utilizador acrescentou.
+        hosts.addAll(prefs().getStringSet("fontes", new HashSet<String>()));
+    }
+
+    private SharedPreferences prefs() {
+        return getSharedPreferences("dmos", MODE_PRIVATE);
     }
 
     private void openExternal(String url) {
@@ -228,6 +235,29 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public String version() {
             return BuildInfo.VERSION;
+        }
+
+        /**
+         * Autoriza o anfitrião de uma fonte acrescentada pelo utilizador. Só aceita
+         * endereços HTTPS com um nome de anfitrião público; devolve false se recusar.
+         */
+        @JavascriptInterface
+        public boolean allowSource(String address) {
+            if (address == null || address.length() > 500) return false;
+            try {
+                URL url = new URL(address);
+                String host = url.getHost() == null ? "" : url.getHost().toLowerCase(Locale.ROOT);
+                if (!"https".equals(url.getProtocol()) || url.getUserInfo() != null) return false;
+                if (!host.matches("[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+") || host.matches("[0-9.]+")) return false;
+                if (hosts.add(host)) {
+                    Set<String> saved = new HashSet<String>(prefs().getStringSet("fontes", new HashSet<String>()));
+                    saved.add(host);
+                    prefs().edit().putStringSet("fontes", saved).apply();
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 }

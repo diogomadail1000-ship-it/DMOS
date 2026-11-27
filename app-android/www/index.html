@@ -36,6 +36,11 @@
         <code id="sha256"></code>
       </div>
     </article>
+    <article class="cartao" id="cartao-cor">
+      <p class="sobre">Cor de destaque</p>
+      <p class="fraco">As mesmas seis cores do DMOS no computador.</p>
+      <div id="cores" class="cores" role="radiogroup" aria-label="Cor de destaque"></div>
+    </article>
     <article class="cartao">
       <p class="sobre">O projeto</p>
       <div class="lista-ligacoes">
@@ -53,10 +58,19 @@
       <p class="sobre">As suas fontes</p>
       <p class="fraco">As mesmas do painel DMOS Hub. Só as que ligar são contactadas, diretamente a partir do telemóvel.</p>
       <div id="fontes" class="fontes"></div>
+      <p class="aviso">Tem outra fonte preferida? Acrescente o endereço RSS dela.</p>
+      <form id="fonte-form">
+        <input id="fonte-url" type="url" inputmode="url" placeholder="https://exemplo.pt/feed" autocomplete="off" maxlength="300" aria-label="Endereço RSS de uma fonte sua">
+        <button class="botao pequeno" type="submit">Acrescentar</button>
+      </form>
+      <p id="fonte-erro" class="aviso" hidden></p>
     </article>
     <div class="barra-noticias">
       <span id="noticias-estado" class="fraco"></span>
-      <button class="botao pequeno fantasma" id="atualizar">Atualizar</button>
+      <span class="linha">
+        <button class="botao pequeno fantasma" id="ver-guardadas" aria-pressed="false">Guardadas</button>
+        <button class="botao pequeno fantasma" id="atualizar">Atualizar</button>
+      </span>
     </div>
     <div id="noticias" class="noticias"></div>
   </section>

@@ -5,13 +5,15 @@ ter à mão o que ajuda a usar o DMOS no computador.
 
 - **Início:** a versão atual e as novidades, lidas das [notas de versão](../CHANGELOG.md), e a ligação de
   descarga pronta a enviar para o computador, com o código SHA-256 da ISO.
-- **Notícias:** as mesmas dez fontes do painel DMOS Hub. Só as que ligar são contactadas, diretamente a
-  partir do telemóvel, sem servidor do DMOS pelo meio.
+- **Notícias:** as mesmas dez fontes do painel DMOS Hub, e as suas: acrescenta-se qualquer endereço RSS ou
+  Atom. Só as fontes ligadas são contactadas, diretamente a partir do telemóvel, sem servidor do DMOS pelo
+  meio. Cada notícia pode ser guardada para ler depois.
 - **Ajuda:** as perguntas frequentes do projeto, com a mesma lógica do assistente do site, e a passagem
   para as Discussões quando não há resposta.
 - **Guias:** os vídeos do canal e os atalhos de teclado do DMOS.
 
-Só pede a permissão de internet, não recolhe dados e não tem publicidade nem rastreio.
+A cor de destaque escolhe-se entre as seis do DMOS. A aplicação é gratuita, só pede a permissão de
+internet, não recolhe dados e não tem publicidade nem rastreio.
 
 ## Como está feita
 
@@ -19,7 +21,7 @@ Uma `Activity` com uma `WebView` que mostra uma página local (`www/`). O códig
 (`src/cc/dmos/app/MainActivity.java`) dá à página o que um navegador não dá: ler as fontes de notícias
 sem as restrições de origem, abrir ligações no navegador e partilhar texto. Nenhuma página da internet
 é carregada dentro da aplicação. Os pedidos à rede só são aceites em HTTPS e para o site do DMOS, o
-repositório no GitHub e as fontes de notícias.
+repositório no GitHub, as fontes de notícias do Hub e as que o utilizador acrescentar.
 
 Não usa bibliotecas nem código nativo, por isso o APK tem cerca de 80 KB e serve qualquer processador.
 Funciona a partir do Android 7.

@@ -64,4 +64,23 @@ kbd { display: inline-block; font: 600 13px ui-monospace, "Roboto Mono", monospa
 .abas a { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 9px; min-height: 60px; font-size: 12px; font-weight: 600; color: var(--muted); text-decoration: none; }
 .abas a[aria-current="page"] { color: var(--accent); }
 .abas svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.aviso { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+#fonte-form { display: flex; gap: 8px; margin-top: 14px; }
+#fonte-url { flex: 1; min-width: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-size: 15px; }
+.noticia-linha { display: flex; align-items: stretch; gap: 8px; margin: 8px 0; }
+.noticia-linha .noticia { margin: 0; }
+.guardar { flex: none; appearance: none; width: 48px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); font: inherit; font-size: 20px; }
+.guardar[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+#ver-guardadas[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.cores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.cores button { appearance: none; width: 46px; height: 46px; border-radius: 50%; border: 3px solid transparent; background: var(--amostra); outline: 1px solid var(--border); }
+.cores button[aria-checked="true"] { border-color: var(--text); }
+/* As seis cores de destaque do DMOS: tom escuro no tema claro, tom vivo no escuro. */
+:root[data-cor="coral"] { --accent: #B8432A; } :root[data-cor="azul"] { --accent: #1F5FBF; } :root[data-cor="violeta"] { --accent: #6B46C1; }
+:root[data-cor="verde"] { --accent: #1E7B3F; } :root[data-cor="ambar"] { --accent: #9A5B00; }
+@media (prefers-color-scheme: dark) {
+  :root[data-cor="coral"] { --accent: #FF8A70; --accent-ink: #2A0F08; } :root[data-cor="azul"] { --accent: #6DB3FF; --accent-ink: #06182E; }
+  :root[data-cor="violeta"] { --accent: #B79CFF; --accent-ink: #170B36; } :root[data-cor="verde"] { --accent: #5EDC8A; --accent-ink: #062412; }
+  :root[data-cor="ambar"] { --accent: #FFC15E; --accent-ink: #2A1A02; }
+}
 [hidden] { display: none !important; }

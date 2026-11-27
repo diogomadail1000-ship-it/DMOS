@@ -129,7 +129,12 @@
   }
 
   // ---------- Notícias: as fontes do DMOS Hub ----------
-  var FONTES = BUNDLE.sources || [];
+  var FONTES_HUB = BUNDLE.sources || [];
+  var FONTES = FONTES_HUB.slice();
+  // As fontes acrescentadas pelo utilizador ficam a seguir às do Hub.
+  function fontesProprias() { return ler("proprias", []); }
+  function refazerFontes() { FONTES = FONTES_HUB.concat(fontesProprias()); }
+  refazerFontes();
   var MAX_NOTICIAS = 30;
   // Texto simples de um fragmento XML (igual a sources.js do Hub).
   function limpar(t) {
@@ -187,7 +192,52 @@
         atualizarNoticias();
       });
       caixa.appendChild(b);
+      if (f.propria) {
+        // Uma fonte própria pode ser retirada da lista.
+        var x = el("button", { type: "button", "aria-label": "Retirar " + f.name }, "×");
+        x.addEventListener("click", function () {
+          guardar("proprias", fontesProprias().filter(function (p) { return p.id !== f.id; }));
+          guardar("fontes", ler("fontes", []).filter(function (id) { return id !== f.id; }));
+          refazerFontes(); desenharFontes(); atualizarNoticias();
+        });
+        caixa.appendChild(x);
+      }
     });
+  }
+  // Acrescenta uma fonte a partir do endereço do feed.
+  function acrescentarFonte(endereco) {
+    var erro = $("fonte-erro");
+    function falhar(texto) { erro.textContent = texto; erro.hidden = false; }
+    erro.hidden = true;
+    var url;
+    try { url = new URL(endereco.trim()); } catch (e) { return falhar("Esse endereço não é válido."); }
+    if (url.protocol !== "https:") return falhar("O endereço tem de começar por https://");
+    if (FONTES.some(function (f) { return f.url === url.href; })) return falhar("Essa fonte já está na lista.");
+    if (nativo && nativo.allowSource && !nativo.allowSource(url.href)) return falhar("Esse endereço não pode ser usado.");
+    var botao = $("fonte-form").querySelector("button");
+    botao.disabled = true;
+    pedir(url.href).then(function (r) {
+      botao.disabled = false;
+      var nome = url.hostname.replace(/^www\./, "");
+      var titulo = limpar(etiqueta(r.text.slice(0, 20000), "title"));
+      var fonte = { id: "p" + Date.now().toString(36), name: (titulo || nome).slice(0, 40), kind: "A sua fonte", url: url.href, propria: true };
+      if (r.status !== 200 || !lerFonte(r.text, fonte).length) return falhar("Não encontrei notícias nesse endereço. Confirme que é um feed RSS ou Atom.");
+      guardar("proprias", fontesProprias().concat([fonte]));
+      guardar("fontes", ler("fontes", []).concat([fonte.id]));
+      $("fonte-url").value = "";
+      refazerFontes(); desenharFontes(); atualizarNoticias();
+    });
+  }
+  // Notícias guardadas para ler depois.
+  var aVerGuardadas = false;
+  function guardadas() { return ler("guardadas", []); }
+  function estaGuardada(n) { return guardadas().some(function (g) { return g.link === n.link; }); }
+  function alternarGuardada(n) {
+    var lista = guardadas();
+    if (estaGuardada(n)) lista = lista.filter(function (g) { return g.link !== n.link; });
+    else lista.unshift({ titulo: n.titulo, link: n.link, hora: n.hora, fonte: n.fonte });
+    guardar("guardadas", lista.slice(0, 200));
+    $("ver-guardadas").textContent = "Guardadas (" + guardadas().length + ")";
   }
   function desenharNoticias(lista) {
     var caixa = $("noticias");
@@ -200,11 +250,20 @@
       b.appendChild(cab);
       b.appendChild(document.createTextNode(n.titulo));
       b.addEventListener("click", function () { abrir(n.link); });
-      caixa.appendChild(b);
+      var linha = el("div", { "class": "noticia-linha" });
+      var g = el("button", { type: "button", "class": "guardar", "aria-pressed": estaGuardada(n) ? "true" : "false", "aria-label": "Guardar para ler depois" }, "★");
+      g.addEventListener("click", function () {
+        alternarGuardada(n);
+        g.setAttribute("aria-pressed", estaGuardada(n) ? "true" : "false");
+        if (aVerGuardadas) desenharNoticias(guardadas());
+      });
+      linha.appendChild(b); linha.appendChild(g);
+      caixa.appendChild(linha);
     });
   }
   var aCarregar = false, ultimaVez = 0;
   function atualizarNoticias() {
+    if (aVerGuardadas) return;
     var ligadas = fontesLigadas(), estado = $("noticias-estado");
     $("atualizar").hidden = ligadas.length === 0;
     if (ligadas.length === 0) {
@@ -254,6 +313,22 @@
     $("atualizar").hidden = fontesLigadas().length === 0;
     $("noticias-estado").textContent = fontesLigadas().length ? "" : "Escolha pelo menos uma fonte.";
     $("atualizar").addEventListener("click", atualizarNoticias);
+    $("fonte-form").addEventListener("submit", function (e) { e.preventDefault(); acrescentarFonte($("fonte-url").value); });
+    var ver = $("ver-guardadas");
+    ver.textContent = "Guardadas (" + guardadas().length + ")";
+    ver.addEventListener("click", function () {
+      aVerGuardadas = !aVerGuardadas;
+      ver.setAttribute("aria-pressed", aVerGuardadas ? "true" : "false");
+      $("atualizar").hidden = aVerGuardadas || fontesLigadas().length === 0;
+      if (aVerGuardadas) {
+        desenharNoticias(guardadas());
+        $("noticias-estado").textContent = guardadas().length ? "" : "Ainda não guardou nenhuma notícia.";
+      } else {
+        desenharNoticias(ler("noticias", []));
+        $("noticias-estado").textContent = "";
+        atualizarNoticias();
+      }
+    });
   }
 
   // ---------- Ajuda: perguntas frequentes (a mesma lógica do assistente do site) ----------
@@ -386,5 +461,20 @@
     });
   }
 
-  inicio(); noticias(); ajuda(); guias(); mostrar();
+  // ---------- Cor de destaque ----------
+  var CORES = [["turquesa", "Turquesa", "#2DD4BF"], ["coral", "Coral", "#FF8A70"], ["azul", "Azul", "#6DB3FF"], ["violeta", "Violeta", "#B79CFF"], ["verde", "Verde", "#5EDC8A"], ["ambar", "Âmbar", "#FFC15E"]];
+  function aplicarCor(id) {
+    if (id && id !== "turquesa") document.documentElement.dataset.cor = id; else delete document.documentElement.dataset.cor;
+    document.querySelectorAll("#cores button").forEach(function (b) { b.setAttribute("aria-checked", b.dataset.cor === (id || "turquesa") ? "true" : "false"); });
+  }
+  function cores() {
+    CORES.forEach(function (c) {
+      var b = el("button", { type: "button", role: "radio", "aria-label": c[1], "data-cor": c[0], style: "--amostra:" + c[2] });
+      b.addEventListener("click", function () { guardar("cor", c[0]); aplicarCor(c[0]); });
+      $("cores").appendChild(b);
+    });
+    aplicarCor(ler("cor", "turquesa"));
+  }
+
+  cores(); inicio(); noticias(); ajuda(); guias(); mostrar();
 })();
