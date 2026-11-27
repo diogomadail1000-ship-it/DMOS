@@ -92,6 +92,15 @@ capturas reais e acaba a pedir uma resposta nos comentários. Texto em `youtube-
 node video/render.js video/out short-tema.html dmos-short-tema
 ```
 
+## Short «O DMOS agora cabe no bolso»
+
+`short-app.html` apresenta a aplicação para Android (1080x1920, 23 s) com as capturas reais de
+`docs/app/capturas`. O texto para o YouTube, o TikTok e a comunidade está em `youtube-short-app.txt`.
+
+```bash
+node video/render.js video/out short-app.html dmos-short-app
+```
+
 ## Short «Linux sem apagar o Windows»
 
 `short-vmware.html` é um terceiro Short (1080x1920, 23 s) para quem tem Windows e quer experimentar o DMOS sem
