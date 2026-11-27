@@ -13,7 +13,7 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, "Roboto", sans-serif; }
 body { padding-bottom: 76px; padding-bottom: calc(76px + env(safe-area-inset-bottom)); overflow-wrap: break-word; overflow-wrap: anywhere; }
-.top { display: flex; align-items: center; gap: 12px; padding: 16px 18px 6px; }
+.top { display: flex; align-items: center; gap: 12px; padding: 16px 18px 6px; padding-top: calc(16px + env(safe-area-inset-top)); }
 .top h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
 main { padding: 8px 14px 0; max-width: 640px; margin: 0 auto; }
 .cartao { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin: 12px 0; }
