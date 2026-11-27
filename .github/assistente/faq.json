@@ -233,6 +233,23 @@
         "lb build"
       ],
       "resposta": "No Windows com o WSL 2, abra o PowerShell na pasta do projeto e corra `.\\build.ps1`. Precisa de cerca de 20 GB livres e demora perto de 20 minutos. A ISO fica em `dist\\`. Os passos todos estão no [README](https://github.com/diogomadail1000-ship-it/DMOS#compilar-a-iso)."
+    },
+    {
+      "id": "android",
+      "titulo": "Aplicação do DMOS para Android",
+      "palavras": [
+        "android",
+        "telemovel",
+        "telemóvel",
+        "apk",
+        "aplicacao para android",
+        "app",
+        "play store",
+        "google play",
+        "iphone",
+        "ios"
+      ],
+      "resposta": "Há uma aplicação gratuita do DMOS para Android, em https://dmos.cc/app/. Mostra as novidades de cada versão, as notícias das fontes do DMOS Hub, o assistente de ajuda e os guias em vídeo.\n\nNão está na Google Play: descarrega-se o ficheiro APK nessa página e o Android pede autorização para instalar a partir do navegador. Precisa do Android 7 ou mais recente e só pede acesso à internet.\n\nA aplicação acompanha o projeto, não é o DMOS: o sistema instala-se no computador, a partir de https://dmos.cc/download/. Não há versão para iPhone."
     }
   ]
 }

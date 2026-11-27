@@ -346,6 +346,12 @@ Website: <https://dmos.cc/> · [2-minute tour with English subtitles](https://yo
 
 DMOS is an independent project and is not affiliated with Debian, KDE or Anthropic.
 
+## Aplicação para Android
+
+Há uma [aplicação gratuita para Android](https://dmos.cc/app/) para acompanhar o DMOS no telemóvel: as
+novidades de cada versão, as notícias das fontes do DMOS Hub, o assistente de ajuda e os guias. Tem 92 KB,
+só pede acesso à internet e o código está em [`app-android/`](app-android/).
+
 ## Apoiar
 
 O DMOS é gratuito e feito nas horas livres. Se lhe for útil, pode
