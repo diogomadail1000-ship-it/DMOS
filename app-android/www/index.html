@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>DMOS</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <img src="logo.svg" alt="" width="30" height="30">
+  <h1 id="titulo">DMOS</h1>
+</header>
+
+<main>
+  <!-- Início: a versão atual do DMOS e a descarga para o computador. -->
+  <section id="p-inicio" class="pagina">
+    <article class="cartao destaque">
+      <p class="sobre">Versão atual</p>
+      <h2 id="versao-nome">DMOS</h2>
+      <p class="fraco" id="versao-data"></p>
+      <ul id="versao-novidades" class="novidades"></ul>
+      <button class="botao fantasma" data-abrir="https://github.com/diogomadail1000-ship-it/DMOS/blob/main/CHANGELOG.md">Notas de versão completas</button>
+    </article>
+    <article class="cartao">
+      <p class="sobre">Levar o DMOS para o computador</p>
+      <h3>Envie a ligação de descarga</h3>
+      <p>A ISO tem 2,9 GB e descarrega-se no computador. Envie a ligação para si, por email ou mensagem, e abra-a lá.</p>
+      <div class="linha">
+        <button class="botao" id="enviar-ligacao">Enviar a ligação</button>
+        <button class="botao fantasma" data-abrir="https://dmos.cc/download/">Abrir a página</button>
+      </div>
+      <div class="verificacao" id="verificacao" hidden>
+        <p class="fraco">Código SHA-256 da ISO, para comparar no computador depois de descarregar:</p>
+        <code id="sha256"></code>
+      </div>
+    </article>
+    <article class="cartao">
+      <p class="sobre">O projeto</p>
+      <div class="lista-ligacoes">
+        <button data-abrir="https://dmos.cc/">Site do DMOS<span>dmos.cc</span></button>
+        <button data-abrir="https://www.youtube.com/@DMOS-w3z">Canal no YouTube<span>Tutoriais e novidades</span></button>
+        <button data-abrir="https://github.com/diogomadail1000-ship-it/DMOS">Código no GitHub<span>Livre, GPL-3.0</span></button>
+        <button data-abrir="https://github.com/sponsors/diogomadail1000-ship-it">Apoiar o projeto<span>GitHub Sponsors</span></button>
+      </div>
+    </article>
+  </section>
+
+  <!-- Notícias: as mesmas fontes do painel DMOS Hub. Só as escolhidas são contactadas. -->
+  <section id="p-noticias" class="pagina" hidden>
+    <article class="cartao">
+      <p class="sobre">As suas fontes</p>
+      <p class="fraco">As mesmas do painel DMOS Hub. Só as que ligar são contactadas, diretamente a partir do telemóvel.</p>
+      <div id="fontes" class="fontes"></div>
+    </article>
+    <div class="barra-noticias">
+      <span id="noticias-estado" class="fraco"></span>
+      <button class="botao pequeno fantasma" id="atualizar">Atualizar</button>
+    </div>
+    <div id="noticias" class="noticias"></div>
+  </section>
+
+  <!-- Ajuda: as perguntas frequentes do projeto, as mesmas do assistente do site. -->
+  <section id="p-ajuda" class="pagina" hidden>
+    <article class="cartao">
+      <p class="sobre">Assistente do DMOS</p>
+      <form id="pergunta-form">
+        <input id="pergunta" type="text" placeholder="Escreva a sua pergunta" autocomplete="off" maxlength="300" aria-label="A sua pergunta">
+        <button class="botao" type="submit">Perguntar</button>
+      </form>
+      <div id="sugestoes" class="sugestoes"></div>
+    </article>
+    <div id="respostas"></div>
+  </section>
+
+  <!-- Guias: os vídeos do canal e os atalhos de teclado do DMOS. -->
+  <section id="p-guias" class="pagina" hidden>
+    <article class="cartao">
+      <p class="sobre">Vídeos</p>
+      <div id="videos" class="lista-ligacoes"></div>
+    </article>
+    <article class="cartao">
+      <p class="sobre">Atalhos de teclado do DMOS</p>
+      <div id="atalhos" class="atalhos"></div>
+    </article>
+  </section>
+</main>
+
+<nav class="abas" aria-label="Secções">
+  <a href="#inicio" data-aba="inicio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>Início</a>
+  <a href="#noticias" data-aba="noticias"><svg viewBox="0 0 24 24"><path d="M5 5h11v14H6a1 1 0 0 1-1-1zM16 9h3v9a1 1 0 0 1-1 1h-2M8 9h5M8 12h5M8 15h3"/></svg>Notícias</a>
+  <a href="#ajuda" data-aba="ajuda"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>Ajuda</a>
+  <a href="#guias" data-aba="guias"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM10 9.5v5l4.5-2.5z"/></svg>Guias</a>
+</nav>
+<script src="data/bundle.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

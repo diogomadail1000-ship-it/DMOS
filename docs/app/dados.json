@@ -1,0 +1,23 @@
+{
+  "_comentario": "Conteúdo da aplicação DMOS para Android que pode mudar sem publicar uma versão nova: vídeos e atalhos. A aplicação lê este ficheiro de https://dmos.cc/app/dados.json e traz uma cópia para quando não há rede.",
+  "videos": [
+    { "id": "njocnzT8bzA", "titulo": "O seu PC não corre o Windows 11?", "nota": "Porquê e como passar para Linux", "duracao": "1:50" },
+    { "id": "glLq_Hi9V1A", "titulo": "Experimentar e instalar o DMOS", "nota": "Tutorial passo a passo", "duracao": "2:52" },
+    { "id": "NariiOTl-0o", "titulo": "DMOS no Hyper-V", "nota": "Dentro do Windows, sem instalar nada", "duracao": "2:10" },
+    { "id": "j-9vXxhwyh4", "titulo": "DMOS no VMware Workstation", "nota": "Dentro do Windows", "duracao": "2:17" },
+    { "id": "C-d2rYN2Q1I", "titulo": "Novidades da 1.2", "nota": "DMOS IA, cor e fundo, painel de aplicações", "duracao": "1:20" },
+    { "id": "v97XyyNyhDE", "titulo": "O DMOS por dentro", "nota": "Tour em dois minutos", "duracao": "2:20" },
+    { "id": "mBz9nvQ8iWE", "titulo": "Instalar programas com o Flathub", "nota": "Spotify, Steam, GIMP, OBS", "duracao": "2:12" },
+    { "id": "X7Uiz9RR-KA", "titulo": "Deixe o DMOS à sua medida", "nota": "Oito ajustes do Plasma 6", "duracao": "1:51" }
+  ],
+  "atalhos": [
+    { "teclas": ["Super", "A"], "faz": "Abrir o painel de aplicações" },
+    { "teclas": ["Alt", "Espaço"], "faz": "Procurar aplicações, ficheiros e definições" },
+    { "teclas": ["Super", "W"], "faz": "Ver todas as janelas e áreas de trabalho" },
+    { "teclas": ["Alt", "Tab"], "faz": "Trocar de janela" },
+    { "teclas": ["Super", "←"], "faz": "Encaixar a janela à esquerda (→ para a direita)" },
+    { "teclas": ["Ctrl", "Alt", "T"], "faz": "Abrir o terminal" },
+    { "teclas": ["Impr Ecrã"], "faz": "Tirar uma captura de ecrã" },
+    { "teclas": ["Super", "L"], "faz": "Bloquear o ecrã" }
+  ]
+}
