@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-PT" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DMOS para Android</title>
+  <meta name="description" content="A aplicação gratuita do DMOS para Android: novidades, notícias das fontes do DMOS Hub, ajuda e guias.">
+  <meta name="theme-color" content="#0C1122">
+  <meta property="og:title" content="DMOS para Android">
+  <meta property="og:description" content="A aplicação gratuita do DMOS para o telemóvel.">
+  <meta property="og:image" content="https://dmos.cc/app/capturas/1-inicio.jpg">
+  <link rel="canonical" href="https://dmos.cc/app/">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <script>try { var t = localStorage.getItem("dmos-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .app-page { max-width: 1040px; margin: 0 auto; padding: 56px 20px 80px; }
+    .app-top { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); text-decoration: none; }
+    .app-hero { display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: center; margin-top: 28px; }
+    .app-hero h1 { font-size: clamp(36px, 6vw, 56px); letter-spacing: -0.03em; line-height: 1.05; margin: 14px 0; }
+    .app-hero p, .app-page li, .app-page section p { color: var(--muted); line-height: 1.6; }
+    .app-hero img { width: 100%; border-radius: 28px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .app-page h2 { font-size: 26px; margin: 56px 0 12px; }
+    .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .app-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+    .app-card h3 { margin: 0 0 6px; font-size: 18px; }
+    .app-card p { margin: 0; font-size: 15px; }
+    .app-shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .app-shots img { width: 100%; border-radius: 18px; border: 1px solid var(--border); }
+    .app-hash { display: block; font-family: var(--mono); font-size: 14px; color: var(--text); word-break: break-all; margin: 8px 0; }
+    .app-tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .app-page ol { padding-left: 22px; }
+    @media (max-width: 760px) { .app-hero { grid-template-columns: 1fr; } .app-hero img { max-width: 280px; margin: 0 auto; } .app-shots { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <main class="app-page">
+    <a class="app-top" href="../"><img src="../assets/logo.svg" alt="" width="28" height="28"> DMOS</a>
+
+    <div class="app-hero">
+      <div>
+        <span class="app-tag">Android · gratuita · versão 1.0</span>
+        <h1>O DMOS no telemóvel.</h1>
+        <p>Uma aplicação pequena para acompanhar o DMOS: as novidades de cada versão, as notícias das mesmas fontes do painel DMOS Hub, o assistente de ajuda e os guias em vídeo. Sem publicidade, sem contas e sem rastreio.</p>
+        <p><a class="btn btn-primary" href="dmos-android-1.0.apk" download>Descarregar para Android (92 KB)</a></p>
+        <p class="small">Android 7 ou mais recente · só pede acesso à internet · <a href="https://github.com/diogomadail1000-ship-it/DMOS/tree/main/app-android">código aberto</a></p>
+      </div>
+      <img src="capturas/1-inicio.jpg" alt="Ecrã inicial da aplicação, com a versão atual do DMOS e as novidades" width="618" height="1320">
+    </div>
+
+    <h2>O que faz</h2>
+    <div class="app-grid">
+      <div class="app-card"><h3>Novidades e descarga</h3><p>A versão atual do DMOS e o que traz. A ligação de descarga envia-se para o computador com um toque, com o código de verificação da ISO.</p></div>
+      <div class="app-card"><h3>Notícias, as suas</h3><p>As dez fontes do DMOS Hub e as que acrescentar, com qualquer endereço RSS. Só as fontes que ligar são contactadas, diretamente do telemóvel.</p></div>
+      <div class="app-card"><h3>Ajuda à mão</h3><p>O assistente responde com as perguntas frequentes do projeto, mesmo sem rede, e leva a pergunta para a comunidade quando não sabe.</p></div>
+      <div class="app-card"><h3>Guias e atalhos</h3><p>Os tutoriais em vídeo e os atalhos de teclado do DMOS, para ter ao lado enquanto instala ou usa o sistema.</p></div>
+    </div>
+
+    <h2>Como é</h2>
+    <div class="app-shots">
+      <img src="capturas/1-inicio.jpg" alt="Início: versão atual e novidades" loading="lazy" width="618" height="1320">
+      <img src="capturas/2-noticias.jpg" alt="Notícias: escolha das fontes e lista de notícias" loading="lazy" width="618" height="1320">
+      <img src="capturas/3-ajuda.jpg" alt="Ajuda: o assistente a responder a uma pergunta" loading="lazy" width="618" height="1320">
+      <img src="capturas/4-guias.jpg" alt="Guias: lista de vídeos" loading="lazy" width="618" height="1320">
+    </div>
+
+    <h2>Como instalar</h2>
+    <p>A aplicação não está na Google Play: instala-se a partir do ficheiro. O Android pede uma autorização, uma só vez.</p>
+    <ol>
+      <li>No telemóvel, carregue em <strong>Descarregar para Android</strong> e abra o ficheiro quando a transferência terminar.</li>
+      <li>O Android avisa que, por segurança, não instala aplicações desta origem. Carregue em <strong>Definições</strong> e ligue <strong>Permitir desta fonte</strong> para o navegador que está a usar.</li>
+      <li>Volte atrás e carregue em <strong>Instalar</strong>.</li>
+    </ol>
+    <p>Se o Play Protect perguntar se quer analisar a aplicação, pode aceitar: é uma verificação normal para aplicações de fora da loja.</p>
+
+    <h2>Verificar o ficheiro</h2>
+    <div class="app-card">
+      <p>Código SHA-256 de <code>dmos-android-1.0.apk</code>:</p>
+      <code class="app-hash">4db8fe3f8d2b9b4d54fce83979ba00a89aa7445452da9f49e8730ebc221eb08d</code>
+      <p>Impressão digital do certificado com que todas as versões são assinadas:</p>
+      <code class="app-hash">84:1D:01:BE:4A:67:BC:3F:59:1A:73:EF:B1:7A:89:57:EF:13:F9:06:D4:36:E9:FD:DD:0D:60:7D:94:7E:52:72</code>
+    </div>
+
+    <h2>Com franqueza</h2>
+    <p>Esta é a primeira versão. Foi testada no computador, com a interface completa e notícias reais, e o código passou por uma revisão, mas é nova e pode ter falhas em telemóveis onde ainda não foi experimentada. Se alguma coisa falhar no seu, <a href="https://github.com/diogomadail1000-ship-it/DMOS/issues/new/choose">conte-nos</a>: diga o modelo e a versão do Android.</p>
+    <p>A aplicação não é o DMOS: o sistema instala-se no computador, a partir da <a href="../download/">página de descarga</a>.</p>
+  </main>
+</body>
+</html>

@@ -865,3 +865,7 @@ kbd {
 
 /* Um vídeo no topo de uma secção afasta-se do bloco seguinte. */
 .video-layout.video-lead { margin-bottom: 72px; }
+
+/* Pré-visualização da aplicação Android na página inicial: dois ecrãs lado a lado. */
+.app-previa { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 460px; margin: 0 auto; }
+.app-previa img { width: 100%; height: auto; border-radius: 22px; border: 1px solid var(--border); box-shadow: var(--shadow); }
