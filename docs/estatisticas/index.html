@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-PT" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Estatísticas de descarga · DMOS</title>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <script>try { var t = localStorage.getItem("dmos-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .est { max-width: 720px; margin: 0 auto; padding: 56px 20px 80px; }
+    .est h1 { font-size: clamp(30px, 5vw, 44px); letter-spacing: -0.03em; margin: 18px 0 8px; }
+    .est p { color: var(--muted); line-height: 1.6; }
+    .est table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    .est th, .est td { text-align: left; padding: 14px 12px; border-top: 1px solid var(--border); }
+    .est td:last-child, .est th:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; font-size: 20px; color: var(--text); }
+    .est td span { display: block; color: var(--muted); font-size: 14px; }
+    .est-top { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="est">
+    <a class="est-top" href="../"><img src="../assets/logo.svg" alt="" width="28" height="28"> DMOS</a>
+    <h1>Estatísticas de descarga</h1>
+    <p>Contagem anónima desde 27 de novembro de 2026. Cada número é o total de cliques num botão de descarga; não distingue pessoas nem confirma que a transferência chegou ao fim. Quem tem «Não rastrear» ligado no navegador não é contado.</p>
+    <table>
+      <thead><tr><th>O que foi contado</th><th>Total</th></tr></thead>
+      <tbody id="linhas"></tbody>
+    </table>
+    <p id="estado" class="small"></p>
+  </main>
+  <script>
+    (function () {
+      var LINHAS = [
+        ["iso-inicio", "ISO do DMOS, a partir da página inicial", "Os botões «Descarregar o DMOS»"],
+        ["iso-download", "ISO do DMOS, a partir da página de descarga", "dmos.cc/download, o endereço usado nos vídeos"],
+        ["iso-anterior", "Versões anteriores da ISO", "DMOS 1.1 e 1.0"],
+        ["pagina-download", "Visitas à página de descarga", "Quem chegou a dmos.cc/download"],
+        ["apk", "Aplicação para Android", "O ficheiro APK"],
+        ["pagina-app", "Visitas à página da aplicação", "Quem chegou a dmos.cc/app"]
+      ];
+      var corpo = document.getElementById("linhas"), falhas = 0;
+      LINHAS.forEach(function (l) {
+        var tr = document.createElement("tr"), a = document.createElement("td"), b = document.createElement("td"), s = document.createElement("span");
+        a.textContent = l[1]; s.textContent = l[2]; a.appendChild(s); b.textContent = "…";
+        tr.appendChild(a); tr.appendChild(b); corpo.appendChild(tr);
+        fetch("https://abacus.jasoncameron.dev/get/dmos-cc/" + l[0], { cache: "no-store" })
+          .then(function (r) { return r.status === 404 ? { value: 0 } : r.json(); })
+          .then(function (d) { b.textContent = typeof d.value === "number" ? String(d.value) : "?"; })
+          .catch(function () { b.textContent = "?"; if (++falhas === LINHAS.length) document.getElementById("estado").textContent = "Não foi possível ler os totais. Tente mais tarde."; });
+      });
+    })();
+  </script>
+</body>
+</html>
