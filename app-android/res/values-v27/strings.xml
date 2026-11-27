@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 8.1 ou mais recente: barra de navegação clara com ícones escuros, no tema claro. -->
+<resources>
+    <style name="DmosTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/dmos_bg</item>
+        <item name="android:statusBarColor">@color/dmos_bg</item>
+        <item name="android:navigationBarColor">@color/dmos_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:colorAccent">#0B7A74</item>
+    </style>
+</resources>

@@ -1,0 +1,92 @@
+/* DMOS para Android. Cores do site (docs/style.css); o tema segue o do telemóvel. */
+:root {
+  --bg: #F3F6FA; --surface: #FFFFFF; --surface-2: #EDF2F7; --border: rgba(26, 34, 56, 0.1);
+  --text: #1A2238; --muted: #5E6883; --accent: #0B7A74; --accent-ink: #FFFFFF; --link: #0B5CAD;
+  --tide: linear-gradient(120deg, #5EEAD4 0%, #46B6E0 45%, #FF8A70 80%, #FFC38A 100%);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0C1122; --surface: #161D35; --surface-2: #1C2440; --border: rgba(255, 255, 255, 0.09);
+    --text: #E8ECF5; --muted: #8D96B0; --accent: #2DD4BF; --accent-ink: #04201C; --link: #7CC8FF;
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, "Roboto", sans-serif; }
+body { padding-bottom: 76px; padding-bottom: calc(76px + env(safe-area-inset-bottom)); overflow-wrap: break-word; overflow-wrap: anywhere; }
+.top { display: flex; align-items: center; gap: 12px; padding: 16px 18px 6px; }
+.top h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+main { padding: 8px 14px 0; max-width: 640px; margin: 0 auto; }
+.cartao { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin: 12px 0; }
+.cartao.destaque { border-color: transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--tide) border-box; border: 2px solid transparent; }
+.sobre { margin: 0 0 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+h2 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+h3 { margin: 0 0 6px; font-size: 19px; font-weight: 700; }
+h4 { margin: 14px 0 6px; font-size: 16px; }
+p { margin: 0 0 12px; }
+.fraco { color: var(--muted); font-size: 14px; }
+.novidades { margin: 14px 0; padding: 0; list-style: none; }
+.novidades li { padding: 10px 0; border-top: 1px solid var(--border); }
+.novidades strong { display: block; }
+.novidades span { color: var(--muted); font-size: 14px; }
+.linha { display: flex; flex-wrap: wrap; gap: 10px; }
+.botao { -webkit-appearance: none; appearance: none; border: 0; border-radius: 999px; padding: 12px 20px; min-height: 46px; font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-ink); }
+.botao.fantasma { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.botao.pequeno { padding: 8px 14px; min-height: 48px; font-size: 14px; }
+.botao:active, .lista-ligacoes button:active, .noticia:active { opacity: 0.7; }
+.verificacao { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+code { font-family: ui-monospace, "Roboto Mono", monospace; font-size: 13px; background: var(--surface-2); padding: 2px 6px; border-radius: 6px; }
+#sha256 { display: block; padding: 10px 12px; user-select: all; }
+pre { margin: 0 0 12px; padding: 12px; border-radius: 10px; background: var(--surface-2); overflow-x: auto; }
+pre code { padding: 0; background: none; }
+.lista-ligacoes { display: grid; }
+.lista-ligacoes button { -webkit-appearance: none; appearance: none; background: none; border: 0; border-top: 1px solid var(--border); padding: 14px 0; min-height: 48px; text-align: left; font: inherit; font-weight: 600; color: var(--text); display: flex; flex-direction: column; }
+.lista-ligacoes button:first-child { border-top: 0; }
+.lista-ligacoes span { font-weight: 400; font-size: 14px; color: var(--muted); }
+.fontes, .sugestoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.fontes button, .sugestoes button { -webkit-appearance: none; appearance: none; font: inherit; font-size: 14px; padding: 9px 14px; min-height: 48px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text); }
+.fontes button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+.barra-noticias { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 4px 0; min-height: 40px; }
+.noticia { display: block; width: 100%; -webkit-appearance: none; appearance: none; text-align: left; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin: 8px 0; }
+.noticia small { display: block; color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; margin-bottom: 4px; }
+.noticia small span { color: var(--muted); font-weight: 400; }
+#pergunta-form { display: flex; gap: 8px; }
+#pergunta { flex: 1; min-width: 0; padding: 12px 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; }
+#pergunta:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.pergunta-feita { margin: 14px 0 0 auto; width: fit-content; max-width: 88%; padding: 10px 16px; border-radius: 16px 16px 6px 16px; background: var(--accent); color: var(--accent-ink); }
+.resposta ul, .resposta ol { margin: 0 0 12px; padding-left: 20px; }
+.resposta a { color: var(--link); }
+.atalhos { display: grid; gap: 2px; }
+.atalho { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
+.atalho:first-child { border-top: 0; }
+.atalho .teclas { flex: none; min-width: 132px; }
+kbd { display: inline-block; font: 600 13px ui-monospace, "Roboto Mono", monospace; padding: 4px 8px; border-radius: 7px; background: var(--surface-2); border: 1px solid var(--border); margin-right: 3px; }
+.abas { position: fixed; left: 0; right: 0; bottom: 0; display: flex; background: var(--surface); border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom); }
+.abas a { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 9px; min-height: 60px; font-size: 12px; font-weight: 600; color: var(--muted); text-decoration: none; }
+.abas a[aria-current="page"] { color: var(--accent); }
+.abas svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.aviso { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+#fonte-form { display: flex; gap: 8px; margin-top: 14px; }
+#fonte-url { flex: 1; min-width: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-size: 15px; }
+.noticia-linha { display: flex; align-items: stretch; gap: 8px; margin: 8px 0; }
+.noticia-linha .noticia { margin: 0; }
+.guardar { flex: none; -webkit-appearance: none; appearance: none; width: 48px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); font: inherit; font-size: 20px; }
+.guardar[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+#ver-guardadas[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.cores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.cores button { -webkit-appearance: none; appearance: none; width: 48px; height: 48px; border-radius: 50%; border: 3px solid transparent; background: var(--amostra); outline: 1px solid var(--border); }
+.cores button[aria-checked="true"] { border-color: var(--text); }
+/* As seis cores de destaque do DMOS: tom escuro no tema claro, tom vivo no escuro. */
+:root[data-cor="coral"] { --accent: #B8432A; } :root[data-cor="azul"] { --accent: #1F5FBF; } :root[data-cor="violeta"] { --accent: #6B46C1; }
+:root[data-cor="verde"] { --accent: #1E7B3F; } :root[data-cor="ambar"] { --accent: #9A5B00; }
+@media (prefers-color-scheme: dark) {
+  :root[data-cor="coral"] { --accent: #FF8A70; --accent-ink: #2A0F08; } :root[data-cor="azul"] { --accent: #6DB3FF; --accent-ink: #06182E; }
+  :root[data-cor="violeta"] { --accent: #B79CFF; --accent-ink: #170B36; } :root[data-cor="verde"] { --accent: #5EDC8A; --accent-ink: #062412; }
+  :root[data-cor="ambar"] { --accent: #FFC15E; --accent-ink: #2A1A02; }
+}
+/* WebViews anteriores a 2020 não têm «gap» em caixas flexíveis: aí o espaço vem de margens. */
+@supports not (inset: 0) {
+  .linha > *, .fontes > *, .sugestoes > *, .cores > * { margin: 0 8px 8px 0; }
+  .top > * + *, #pergunta-form > * + *, #fonte-form > * + *, .atalho > * + *, .noticia-linha > * + * { margin-left: 10px; }
+  .abas a > svg { margin-bottom: 3px; }
+}
+[hidden] { display: none !important; }
