@@ -18,24 +18,3 @@ O seu PC não corre o Windows 11? Dê-lhe vida nova com Linux
 
 ETIQUETAS
 DMOS, Linux, Shorts, Android, aplicação Android, app Linux, código aberto, Debian 13, KDE Plasma 6, Linux português
-
-
-PUBLICAÇÃO PARA A COMUNIDADE DO YOUTUBE
-Imagem: a captura 1-inicio.jpg de docs/app/capturas, ou a miniatura do Short.
-
-📱 O DMOS já tem aplicação para Android!
-
-É gratuita, tem 92 KB e não tem publicidade nem contas. Serve para acompanhar o projeto no telemóvel:
-
-🆕 As novidades de cada versão do DMOS
-📰 As notícias das fontes que escolher: as do painel DMOS Hub, e as suas
-💬 Um assistente de ajuda que responde mesmo sem rede
-🎬 Os guias em vídeo e os atalhos de teclado
-
-👉 https://dmos.cc/app/
-
-Não está na Google Play: descarrega-se o ficheiro na página, que explica como instalar. Funciona a partir do Android 7.
-
-Experimentem e digam o que acham. O que gostavam de ver na próxima versão da aplicação? 👇
-
-#DMOS #Linux #Android
