@@ -95,7 +95,7 @@ node video/render.js video/out short-tema.html dmos-short-tema
 ## Short «O DMOS agora cabe no bolso»
 
 `short-app.html` apresenta a aplicação para Android (1080x1920, 23 s) com as capturas reais de
-`docs/app/capturas`. O texto para o YouTube, o TikTok e a comunidade está em `youtube-short-app.txt`.
+`docs/app/capturas`. O texto para o YouTube e para a comunidade está em `youtube-short-app.txt`.
 
 ```bash
 node video/render.js video/out short-app.html dmos-short-app

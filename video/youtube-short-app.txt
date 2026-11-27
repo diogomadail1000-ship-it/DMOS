@@ -20,10 +20,6 @@ ETIQUETAS
 DMOS, Linux, Shorts, Android, aplicação Android, app Linux, código aberto, Debian 13, KDE Plasma 6, Linux português
 
 
-TIKTOK (o mesmo vídeo; carregar o ficheiro original)
-Fiz uma app para o Linux que criei 📱🌊 Notícias, ajuda e guias, grátis e sem anúncios. dmos.cc/app #linux #android #app #programação #opensource #tecnologia #portugal
-
-
 PUBLICAÇÃO PARA A COMUNIDADE DO YOUTUBE
 Imagem: a captura 1-inicio.jpg de docs/app/capturas, ou a miniatura do Short.
 
