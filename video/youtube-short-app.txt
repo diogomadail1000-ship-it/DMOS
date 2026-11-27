@@ -1,0 +1,41 @@
+SHORT: «O DMOS agora cabe no bolso»
+Vídeo: dmos-short-app.mp4 (1080x1920, 23 s), gerado por: node video/render.js video/out short-app.html dmos-short-app
+
+TÍTULO
+O DMOS agora cabe no bolso 📱🌊 Nova app para Android #Shorts
+
+DESCRIÇÃO
+Há uma aplicação nova do DMOS para Android, gratuita: as novidades de cada versão, as notícias das fontes que escolher, um assistente de ajuda que responde mesmo sem rede, e os guias em vídeo. Tem 92 KB, sem publicidade nem contas.
+
+📱 Descarregar a aplicação: https://dmos.cc/app/
+⬇️ Descarregar o DMOS para o computador: https://dmos.cc/download/
+🌊 Site: https://dmos.cc/
+
+#DMOS #Linux #Android #app #opensource #Shorts
+
+VÍDEO RELACIONADO
+O seu PC não corre o Windows 11? Dê-lhe vida nova com Linux
+
+ETIQUETAS
+DMOS, Linux, Shorts, Android, aplicação Android, app Linux, código aberto, Debian 13, KDE Plasma 6, Linux português
+
+
+PUBLICAÇÃO PARA A COMUNIDADE DO YOUTUBE
+Imagem: a captura 1-inicio.jpg de docs/app/capturas, ou a miniatura do Short.
+
+📱 O DMOS já tem aplicação para Android!
+
+É gratuita, tem 92 KB e não tem publicidade nem contas. Serve para acompanhar o projeto no telemóvel:
+
+🆕 As novidades de cada versão do DMOS
+📰 As notícias das fontes que escolher: as do painel DMOS Hub, e as suas
+💬 Um assistente de ajuda que responde mesmo sem rede
+🎬 Os guias em vídeo e os atalhos de teclado
+
+👉 https://dmos.cc/app/
+
+Não está na Google Play: descarrega-se o ficheiro na página, que explica como instalar. Funciona a partir do Android 7.
+
+Experimentem e digam o que acham. O que gostavam de ver na próxima versão da aplicação? 👇
+
+#DMOS #Linux #Android
